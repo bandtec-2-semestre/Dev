@@ -46,6 +46,10 @@
     font-size: 1.2em;
 }
 
+.infoSistema {
+    display: none;
+}
+
 .linha {
     display: flex;
     flex-direction: row;
@@ -98,4 +102,14 @@
 .texto-componentes {
     font-weight: 600;
     font-size: 0.99em;
+}
+
+.bg-white,
+.content,
+.page-header  {
+    background-color: #f1f2f7 !important;
+}
+
+.detalhesOff {
+    cursor:pointer;
 }
