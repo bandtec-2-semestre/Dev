@@ -1,4 +1,4 @@
-# Documentação do Projeto
+# Projeto acadêmico sobre monitoração de sistemas de segurança
 
 ## Indice
 
