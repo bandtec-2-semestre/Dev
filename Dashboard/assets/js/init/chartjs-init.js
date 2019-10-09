@@ -3,19 +3,20 @@
 
     // single bar chart
     var ctx = document.getElementById( "singelBarChart" );
-    ctx.width = 550;
-    ctx.height = 550;
+    ctx.width = 500;
+    ctx.height = 500;
     var myChart = new Chart( ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: [ "Sun", "Mon", "Tu", "Wed", "Th", "Fri", "Sat" ],
+            labels: [ "21:00", "21:10", "21:20", "21:30", "21:40", "21:50", "22:00" ],
             datasets: [
                 {
                     label: "My First dataset",
-                    data: [ 55, 50, 75, 80, 56, 55, 60 ],
-                    borderColor: "rgba(0, 194, 146, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 194, 146, 0.5)"
+                    data: [ 10, 20, 45, 80, 56, 55, 60 ],
+                    borderColor: "#fdb416",
+                    borderWidth: "2",
+                    backgroundColor: "rgba(253, 180, 22, 0.27)",
+                    
                             }
                         ]
         },
