@@ -46,6 +46,12 @@
     font-size: 1.2em;
 }
 
+.subtitulo{
+    font-weight: 400;
+    font-size: .8em;
+}
+
+
 .infoSistema {
     display: none;
 }
@@ -115,6 +121,19 @@
 }
 
 .detalhesOff,
-.openGraph {
+.openGraph,
+.click {
     cursor:pointer;
+}
+
+.click:hover {
+    background-color: #fbe38d73 !important;
+    transition: all ease .3s;
+}
+
+select,
+input {
+    padding: 8px 6px;
+    border-radius: 5px
+
 }
