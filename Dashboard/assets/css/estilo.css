@@ -137,3 +137,7 @@ input {
     border-radius: 5px
 
 }
+
+.infoSistema .btn {
+    width: 100%;
+}
