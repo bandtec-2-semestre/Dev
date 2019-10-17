@@ -1,19 +1,9 @@
 package com.mycompany.securit;
 
-import java.awt.Dimension;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-import org.jfree.chart.ChartColor;
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
-
+import oshi.SystemInfo;
 public class dashboard extends javax.swing.JFrame {
     
     Timer timer = new Timer();
@@ -25,7 +15,8 @@ public class dashboard extends javax.swing.JFrame {
     ChartPanel cp = cpuGraph.getGraph(System.currentTimeMillis(), 0);
     ChartPanel cp2 = cpuGraph2.getGraph(System.currentTimeMillis(), 0);
     ChartPanel cp3 = cpuGraph3.getGraph(System.currentTimeMillis(), 0);
-
+    SystemInfo si = new SystemInfo();
+    
     public dashboard() {
         initComponents();
         insert();
@@ -239,12 +230,12 @@ public class dashboard extends javax.swing.JFrame {
         lblDisk.setText(disk.toString());
         
         
-        lblCPU.setForeground(comp.validateCPU(cpu));
-        lblMemory.setForeground(comp.validateMemory(memory));
-        lblDisk.setForeground(comp.validateDisk(disk));
+        //lblCPU.setForeground(comp.validateCPU(cpu));
+        //lblMemory.setForeground(comp.validateMemory(memory));
+        //lblDisk.setForeground(comp.validateDisk(disk));
         
-        cp = cpuGraph.getGraph(System.currentTimeMillis(), cpu);
-        cp2 = cpuGraph2.getGraph(System.currentTimeMillis(), memory);
+        System.out.println(cpu);
+        //cp2 = cpuGraph2.getGraph(System.currentTimeMillis(), memory);
         cp3 = cpuGraph3.getGraph(System.currentTimeMillis(), disk);
         
         panGraph.add(cp);

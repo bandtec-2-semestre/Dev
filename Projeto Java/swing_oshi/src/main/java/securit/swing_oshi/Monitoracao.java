@@ -76,7 +76,6 @@ public class Monitoracao {
     
     }
     
-    
     public String getProcessQtd() {
         processQtd = String.valueOf(os.getProcessCount());
         return processQtd;
