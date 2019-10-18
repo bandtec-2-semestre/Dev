@@ -226,12 +226,12 @@ public class dashboard extends javax.swing.JFrame {
         Integer disk = comp.getDisk();
         
         lblCPU.setText(cpu.toString()+"%");
-        /* lblMemory.setText(memory.toString());
-        lblDisk.setText(disk.toString()); */
+        lblMemory.setText(memory.toString());
+        //lblDisk.setText(disk.toString());
         
         
         lblCPU.setForeground(comp.validateCPU(cpu));
-        //lblMemory.setForeground(comp.validateMemory(memory));
+        lblMemory.setForeground(comp.validateMemory(memory));
         //lblDisk.setForeground(comp.validateDisk(disk));
         
         cp = cpuGraph.getGraph(System.currentTimeMillis(), cpu);

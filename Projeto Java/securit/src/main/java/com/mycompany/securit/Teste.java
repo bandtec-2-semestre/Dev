@@ -103,7 +103,7 @@ public class Teste {
                 output.append('\n');
             }
         }
-        //System.out.println("Output: "+output);
+        System.out.println("Output: "+output);
     }
 
     private static void printOperatingSystem(final OperatingSystem os) {
@@ -123,17 +123,14 @@ public class Teste {
         oshi.add(processor.toString());
     }
 
-    private static void printMemory(GlobalMemory memory) {
-        oshi.add("Memory: \n " + memory.toString());
-        VirtualMemory vm = memory.getVirtualMemory();
-        oshi.add("Swap: \n " + vm.toString());
-        PhysicalMemory[] pmArray = memory.getPhysicalMemory();
-        if (pmArray.length > 0) {
-            oshi.add("Physical Memory: ");
-            for (PhysicalMemory pm : pmArray) {
-                oshi.add(" " + pm.toString());
-            }
-        }
+    public static Integer printMemory(GlobalMemory memory) {
+        Integer total = (int)memory.getTotal();
+        Integer available = (int)memory.getAvailable();
+        Integer used = (int) total - available;
+        Integer porc = Math.round((used / total) * 10);
+        oshi.add("Memory: \n " + porc.toString() + "%");
+        System.out.println("Mem: "+ porc);
+        return porc;
     }
 
     public static Double printCpu(CentralProcessor processor) {

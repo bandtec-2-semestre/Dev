@@ -11,6 +11,10 @@ public class Components {
     private HardwareAbstractionLayer hal = si.getHardware();
     long[] cpu = hal.getProcessor().getSystemCpuLoadTicks();
     
+    public Components(){
+        //Teste.main(null);
+    }
+    
     
     public Double getCPU(){
         Double cpu = Teste.printCpu(this.hal.getProcessor());
@@ -18,8 +22,8 @@ public class Components {
     }
     
     public Integer getMemory(){
-        //return memory = sorteio.nextInt(100);
-        return 0;
+       Integer memory = Teste.printMemory(this.hal.getMemory());
+       return memory;
     }
     
     public Integer setMemory(Integer memory){
