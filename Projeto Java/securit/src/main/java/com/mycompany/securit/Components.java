@@ -6,20 +6,15 @@ import oshi.SystemInfo;
 import oshi.hardware.HardwareAbstractionLayer;
 
 public class Components {
-    Random sorteio = new Random();
+    
     SystemInfo si = new SystemInfo();
-    private Integer soma = 0;
-    private long[] cpu;
+    private HardwareAbstractionLayer hal = si.getHardware();
+    long[] cpu = hal.getProcessor().getSystemCpuLoadTicks();
     
-  
-    public Integer getCPU(){
-        //return cpu = sorteio.nextInt(100);
-        return soma;
-    }
     
-    public Integer setCPU(Integer cpu){
-        //return 1;
-        return 0;
+    public Double getCPU(){
+        Double cpu = Teste.printCpu(this.hal.getProcessor());
+        return cpu;
     }
     
     public Integer getMemory(){
@@ -43,12 +38,11 @@ public class Components {
     }
     
     public Color validateCPU(Integer cpu){
-        /* if(cpu > 85){
+        if(cpu > 85){
             return Color.red;
         } else {
             return Color.BLACK;
-        } */
-        return Color.BLACK;
+        }
     }
     
     public Color validateMemory(Integer memory){

@@ -221,21 +221,21 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     private String insert(){
-        Integer cpu = comp.getCPU();
+        Integer cpu = (int)Math.round(comp.getCPU());
         Integer memory = comp.getMemory();
         Integer disk = comp.getDisk();
         
-        lblCPU.setText(cpu.toString());
-        lblMemory.setText(memory.toString());
-        lblDisk.setText(disk.toString());
+        lblCPU.setText(cpu.toString()+"%");
+        /* lblMemory.setText(memory.toString());
+        lblDisk.setText(disk.toString()); */
         
         
-        //lblCPU.setForeground(comp.validateCPU(cpu));
+        lblCPU.setForeground(comp.validateCPU(cpu));
         //lblMemory.setForeground(comp.validateMemory(memory));
         //lblDisk.setForeground(comp.validateDisk(disk));
         
-        System.out.println(cpu);
-        //cp2 = cpuGraph2.getGraph(System.currentTimeMillis(), memory);
+        cp = cpuGraph.getGraph(System.currentTimeMillis(), cpu);
+        cp2 = cpuGraph2.getGraph(System.currentTimeMillis(), memory);
         cp3 = cpuGraph3.getGraph(System.currentTimeMillis(), disk);
         
         panGraph.add(cp);
