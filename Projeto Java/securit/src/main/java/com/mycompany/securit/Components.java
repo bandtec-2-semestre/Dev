@@ -15,6 +15,9 @@ public class Components {
         //Teste.main(null);
     }
     
+     public String getProcessorInfo() {
+        return hal.getProcessor().getProcessorIdentifier().getName();
+    }   
     
     public Double getCPU(){
         Double cpu = Teste.printCpu(this.hal.getProcessor());
@@ -63,5 +66,10 @@ public class Components {
         } else {
             return Color.BLACK;
         }
+    }
+    
+    public static void main(String[] args) {
+        Components c = new Components();
+        System.out.println(c.getProcessorInfo());
     }
 }
