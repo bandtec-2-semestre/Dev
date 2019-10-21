@@ -1,47 +1,34 @@
 package com.mycompany.securit;
 
-import java.util.Random;
 import java.awt.Color;
 import oshi.SystemInfo;
 import oshi.hardware.HardwareAbstractionLayer;
+import oshi.hardware.HWDiskStore;
 
 public class Components {
     
     SystemInfo si = new SystemInfo();
-    private HardwareAbstractionLayer hal = si.getHardware();
-    long[] cpu = hal.getProcessor().getSystemCpuLoadTicks();
+    private final HardwareAbstractionLayer hal = si.getHardware();
+    private final HWDiskStore diskStore = new HWDiskStore();
     
     public Components(){
-        //Teste.main(null);
+        //Sistema.main(null);
     }
     
      public String getProcessorInfo() {
         return hal.getProcessor().getProcessorIdentifier().getName();
     }   
     
-    public Double getCPU(){
-        Double cpu = Teste.printCpu(this.hal.getProcessor());
-        return cpu;
+    public Integer getCPU(){
+       return Sistema.getCPU(this.hal.getProcessor());
     }
     
     public Integer getMemory(){
-       Integer memory = Teste.printMemory(this.hal.getMemory());
-       return memory;
-    }
-    
-    public Integer setMemory(Integer memory){
-       //return 1;
-        return 0;
+       return Sistema.getMemory(this.hal.getMemory());
     }
     
     public Integer getDisk(){
-        //return disk = sorteio.nextInt(100);
-        return 0;
-    }
-    
-    public Integer setDisk(Integer disk){
-        //return 1;
-        return 0;
+       return Sistema.getDisk(this.diskStore);
     }
     
     public Color validateCPU(Integer cpu){
@@ -66,10 +53,5 @@ public class Components {
         } else {
             return Color.BLACK;
         }
-    }
-    
-    public static void main(String[] args) {
-        Components c = new Components();
-        System.out.println(c.getProcessorInfo());
     }
 }

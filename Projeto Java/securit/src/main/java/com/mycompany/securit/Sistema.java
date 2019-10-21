@@ -33,10 +33,11 @@ import oshi.software.os.OperatingSystem.ProcessSort;
 import oshi.util.FormatUtil;
 import oshi.util.Util;
 import oshi.SystemInfo;
+import oshi.hardware.HWDiskStore;
 
-public class Teste {
+public class Sistema {
 
-    private static final Logger logger = LoggerFactory.getLogger(Teste.class);
+    private static final Logger logger = LoggerFactory.getLogger(Sistema.class);
 
     static List<String> oshi = new ArrayList<>();
     
@@ -46,6 +47,7 @@ public class Teste {
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
         OperatingSystem os = si.getOperatingSystem();
+        HWDiskStore diskStore = new HWDiskStore();
         
         printOperatingSystem(os);
 
@@ -56,7 +58,7 @@ public class Teste {
         printProcessor(hal.getProcessor());
 
         logger.info("Checking Memory...");
-        printMemory(hal.getMemory());
+        getMemory(hal.getMemory());
 
         //logger.info("Checking CPU...");
         //printCpu(hal.getProcessor()); 
@@ -122,18 +124,24 @@ public class Teste {
     private static void printProcessor(CentralProcessor processor) {
         oshi.add(processor.toString());
     }
-
-    public static Integer printMemory(GlobalMemory memory) {
-        Integer total = (int)memory.getTotal();
-        Integer available = (int)memory.getAvailable();
-        Integer used = (int) total - available;
-        Integer porc = Math.round((used / total) * 10);
-        oshi.add("Memory: \n " + porc.toString() + "%");
-        System.out.println("Mem: "+ porc);
-        return porc;
+    
+    public static Integer getDisk(HWDiskStore diskStore){
+        Integer RB = (int)diskStore.getReadBytes();
+        System.out.println("Disk: "+RB);
+        Integer RB2 = (int)diskStore.getWriteBytes();
+        System.out.println("Disk 2: "+RB2+"\n");
+        return RB + RB2;
     }
 
-    public static Double printCpu(CentralProcessor processor) {
+    public static Integer getMemory(GlobalMemory memory) {
+        long total = memory.getTotal();
+        long available = memory.getAvailable();
+        long used = total - available;
+        long porc = (used / total * 10);
+        return (int) Math.round(porc);
+    }
+
+    public static Integer getCPU(CentralProcessor processor) {
         oshi.add("Context Switches/Interrupts: " + processor.getContextSwitches() + " / " + processor.getInterrupts());
 
         long[] prevTicks = processor.getSystemCpuLoadTicks();
@@ -158,7 +166,7 @@ public class Teste {
                 100d * user / totalCpu, 100d * nice / totalCpu, 100d * sys / totalCpu, 100d * idle / totalCpu,
                 100d * iowait / totalCpu, 100d * irq / totalCpu, 100d * softirq / totalCpu, 100d * steal / totalCpu));
         oshi.add(String.format("CPU load: %.1f%%", processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100));
-        return processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100;
+        return (int) Math.round(processor.getSystemCpuLoadBetweenTicks(prevTicks) * 100);
     }
 
     private static void printProcesses(OperatingSystem os, GlobalMemory memory) {

@@ -10,16 +10,25 @@ public class dashboard extends javax.swing.JFrame {
     Components comp = new Components();
     Boolean isVisible[] = {false, false, false};
     Graph cpuGraph = new Graph("CPU");
-    Graph cpuGraph2 = new Graph("Memory");
-    Graph cpuGraph3 = new Graph("Disk");
-    ChartPanel cp = cpuGraph.getGraph(System.currentTimeMillis(), 0);
-    ChartPanel cp2 = cpuGraph2.getGraph(System.currentTimeMillis(), 0);
-    ChartPanel cp3 = cpuGraph3.getGraph(System.currentTimeMillis(), 0);
+    Graph memoryGraph = new Graph("Memory");
+    Graph diskGraph = new Graph("Disk");
+    ChartPanel cg = cpuGraph.getGraph(System.currentTimeMillis(), 0);
+    ChartPanel mg = memoryGraph.getGraph(System.currentTimeMillis(), 0);
+    ChartPanel dg = diskGraph.getGraph(System.currentTimeMillis(), 0);
     SystemInfo si = new SystemInfo();
+    Integer cpu, memory, disk;
     
     public dashboard() {
         initComponents();
         insert();
+    }
+    
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new dashboard().setVisible(true);
+            }
+        });
     }
     
     class task extends TimerTask{
@@ -43,9 +52,9 @@ public class dashboard extends javax.swing.JFrame {
         lblCPU = new javax.swing.JLabel();
         lblMemory = new javax.swing.JLabel();
         lblDisk = new javax.swing.JLabel();
-        panGraph = new javax.swing.JPanel();
-        memoryGraph = new javax.swing.JPanel();
-        diskGraph = new javax.swing.JPanel();
+        panCpu = new javax.swing.JPanel();
+        panMemory = new javax.swing.JPanel();
+        panDisk = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         lbCpuDetalhe = new javax.swing.JLabel();
 
@@ -61,7 +70,6 @@ public class dashboard extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("A SEGURANÇA QUE VOCÊ MERECE");
         jLabel5.setToolTipText("");
-        jLabel5.setBorder(null);
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -74,7 +82,6 @@ public class dashboard extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText("securIT");
         jLabel6.setToolTipText("");
-        jLabel6.setBorder(null);
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -87,7 +94,6 @@ public class dashboard extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel8.setText("SISTEMA X");
         jLabel8.setToolTipText("");
-        jLabel8.setBorder(null);
         jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -131,7 +137,6 @@ public class dashboard extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("CPU");
         jLabel2.setToolTipText("");
-        jLabel2.setBorder(null);
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -144,7 +149,6 @@ public class dashboard extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("MEMÓRIA");
         jLabel3.setToolTipText("");
-        jLabel3.setBorder(null);
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -152,72 +156,65 @@ public class dashboard extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("DISCO RÍGIDO");
         jLabel4.setToolTipText("");
-        jLabel4.setBorder(null);
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lblCPU.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        lblCPU.setForeground(java.awt.Color.black);
         lblCPU.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCPU.setText("%");
         lblCPU.setToolTipText("");
-        lblCPU.setBorder(null);
         lblCPU.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lblMemory.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        lblMemory.setForeground(java.awt.Color.black);
         lblMemory.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblMemory.setText("%");
         lblMemory.setToolTipText("");
-        lblMemory.setBorder(null);
         lblMemory.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         lblDisk.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        lblDisk.setForeground(java.awt.Color.black);
         lblDisk.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblDisk.setText("%");
         lblDisk.setToolTipText("");
-        lblDisk.setBorder(null);
         lblDisk.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        panGraph.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153))));
-        panGraph.setPreferredSize(new java.awt.Dimension(320, 240));
+        panCpu.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153))));
+        panCpu.setPreferredSize(new java.awt.Dimension(320, 240));
 
-        javax.swing.GroupLayout panGraphLayout = new javax.swing.GroupLayout(panGraph);
-        panGraph.setLayout(panGraphLayout);
-        panGraphLayout.setHorizontalGroup(
-            panGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panCpuLayout = new javax.swing.GroupLayout(panCpu);
+        panCpu.setLayout(panCpuLayout);
+        panCpuLayout.setHorizontalGroup(
+            panCpuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 316, Short.MAX_VALUE)
         );
-        panGraphLayout.setVerticalGroup(
-            panGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panCpuLayout.setVerticalGroup(
+            panCpuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 235, Short.MAX_VALUE)
         );
 
-        memoryGraph.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153))));
-        memoryGraph.setPreferredSize(new java.awt.Dimension(320, 240));
+        panMemory.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153))));
+        panMemory.setPreferredSize(new java.awt.Dimension(320, 240));
 
-        javax.swing.GroupLayout memoryGraphLayout = new javax.swing.GroupLayout(memoryGraph);
-        memoryGraph.setLayout(memoryGraphLayout);
-        memoryGraphLayout.setHorizontalGroup(
-            memoryGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panMemoryLayout = new javax.swing.GroupLayout(panMemory);
+        panMemory.setLayout(panMemoryLayout);
+        panMemoryLayout.setHorizontalGroup(
+            panMemoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 316, Short.MAX_VALUE)
         );
-        memoryGraphLayout.setVerticalGroup(
-            memoryGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panMemoryLayout.setVerticalGroup(
+            panMemoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 235, Short.MAX_VALUE)
         );
 
-        diskGraph.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153))));
-        diskGraph.setPreferredSize(new java.awt.Dimension(320, 240));
+        panDisk.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153))));
+        panDisk.setPreferredSize(new java.awt.Dimension(320, 240));
 
-        javax.swing.GroupLayout diskGraphLayout = new javax.swing.GroupLayout(diskGraph);
-        diskGraph.setLayout(diskGraphLayout);
-        diskGraphLayout.setHorizontalGroup(
-            diskGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panDiskLayout = new javax.swing.GroupLayout(panDisk);
+        panDisk.setLayout(panDiskLayout);
+        panDiskLayout.setHorizontalGroup(
+            panDiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 316, Short.MAX_VALUE)
         );
-        diskGraphLayout.setVerticalGroup(
-            diskGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panDiskLayout.setVerticalGroup(
+            panDiskLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 235, Short.MAX_VALUE)
         );
 
@@ -226,7 +223,6 @@ public class dashboard extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Desempenho atual");
         jLabel7.setToolTipText("");
-        jLabel7.setBorder(null);
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -238,7 +234,6 @@ public class dashboard extends javax.swing.JFrame {
         lbCpuDetalhe.setForeground(java.awt.Color.gray);
         lbCpuDetalhe.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbCpuDetalhe.setToolTipText("");
-        lbCpuDetalhe.setBorder(null);
         lbCpuDetalhe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbCpuDetalhe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -257,20 +252,20 @@ public class dashboard extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(panGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panCpu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lbCpuDetalhe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(memoryGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panMemory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMemory, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(73, 73, 73)
+                        .addGap(91, 91, 91)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(diskGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panDisk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDisk, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(60, 60, 60))
@@ -303,9 +298,9 @@ public class dashboard extends javax.swing.JFrame {
                             .addComponent(lblDisk, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(memoryGraph, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(diskGraph, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panGraph, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(panMemory, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panDisk, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panCpu, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(131, Short.MAX_VALUE))
         );
 
@@ -314,7 +309,7 @@ public class dashboard extends javax.swing.JFrame {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         isVisible[0] = !isVisible[0];
-        panGraph.setVisible(!isVisible[0]);
+        panCpu.setVisible(!isVisible[0]);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -337,44 +332,53 @@ public class dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lbCpuDetalheMouseClicked
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new dashboard().setVisible(true);
-            }
-        });
-    }
-    
-    private String insert(){
-        Integer cpu = (int)Math.round(comp.getCPU());
-        Integer memory = comp.getMemory();
-        Integer disk = comp.getDisk();
+    private void insert(){
+        getData();
         
-        lblCPU.setText(cpu.toString()+"%");
-        lblMemory.setText(memory.toString());
-        //lblDisk.setText(disk.toString());
+        setText();
         
+        setColor();
         
-        lblCPU.setForeground(comp.validateCPU(cpu));
-        lbCpuDetalhe.setText(comp.getProcessorInfo());
-        lblMemory.setForeground(comp.validateMemory(memory));
-        //lblDisk.setForeground(comp.validateDisk(disk));
+        getGraph();
         
-        cp = cpuGraph.getGraph(System.currentTimeMillis(), cpu);
-        cp2 = cpuGraph2.getGraph(System.currentTimeMillis(), memory);
-        cp3 = cpuGraph3.getGraph(System.currentTimeMillis(), disk);
-        
-        panGraph.add(cp);
-        memoryGraph.add(cp2);
-        diskGraph.add(cp3);
+        addGraph();
         
         timer.schedule(new task(), 1000);
-        return "true";
+    }
+    
+    private void getData(){
+        cpu = comp.getCPU();
+        memory = comp.getMemory();
+        disk = comp.getDisk();
+    }
+    
+    private void setText(){
+       lbCpuDetalhe.setText(comp.getProcessorInfo());
+       lblCPU.setText(cpu.toString()+"%");
+       lblMemory.setText(memory.toString()+"%");
+       lblDisk.setText(disk.toString()+"%");
+    }
+    
+    private void setColor(){
+        lblCPU.setForeground(comp.validateCPU(cpu));
+        lblMemory.setForeground(comp.validateMemory(memory));
+        lblDisk.setForeground(comp.validateDisk(disk));
+    }
+    
+    private void getGraph(){
+        cg = cpuGraph.getGraph(System.currentTimeMillis(), cpu);
+        mg = memoryGraph.getGraph(System.currentTimeMillis(), memory);
+        dg = diskGraph.getGraph(System.currentTimeMillis(), disk);
+    }
+    
+    private void addGraph(){
+        panCpu.add(cg);
+        panMemory.add(mg);
+        panDisk.add(dg);
     }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel diskGraph;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -388,7 +392,8 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lblCPU;
     private javax.swing.JLabel lblDisk;
     private javax.swing.JLabel lblMemory;
-    private javax.swing.JPanel memoryGraph;
-    private javax.swing.JPanel panGraph;
+    private javax.swing.JPanel panCpu;
+    private javax.swing.JPanel panDisk;
+    private javax.swing.JPanel panMemory;
     // End of variables declaration//GEN-END:variables
 }
