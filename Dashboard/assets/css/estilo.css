@@ -63,8 +63,11 @@
     align-items: center;
 }
 
-.card {
+.detalhesOff .card{
     border-radius: 0px 10px 10px 0px;
+}
+
+.card{
     box-shadow: 0 0 9px rgba(0, 0, 0, 0.15) !important;
 }
 
@@ -116,14 +119,20 @@
     background-color: #f1f2f7 !important;
 }
 
-#grafico {
-    display: none;
-}
-
 .detalhesOff,
 .openGraph,
 .click {
     cursor:pointer;
+}
+
+.openGraph:hover .card, 
+.activeCard {
+    border: 2px solid #c7911d87 !important;
+    transition: all ease .3s;
+}
+
+.openGraph .card{
+    border: 2px solid #fff;
 }
 
 .click:hover {

@@ -133,7 +133,7 @@
                         <p class="mb-1" id="sistemas-nome">
                             Empresa x - <span class="subtitulo">Rua Haddock Lobo, 545 - Cerqueira Cesar</span>
                         </p>
-                        
+
                         <div class="col-lg-12">
                             <div class="row centralizar">
                                 <h1 class="title-bold pr-5">SISTEMA X</h1>
@@ -158,7 +158,7 @@
 
                         <div class="col-lg-12 col-md-12">
                             <a class="openGraph cpu">
-                                <div class="card">
+                                <div class="card activeCard">
                                     <div class="card-body">
                                         <div class="stat-widget-five">
                                             <div class="row p-2">
@@ -404,22 +404,33 @@
 
     <script type="text/javascript">
         $(document).ready(function ($) {
+
             $('#bootstrap-data-table').DataTable();
 
+            // COMEÇA O GRÁFICO COM TITULO CPU E NUMEROS ALEATÓRIOS
+            $("#title-graph").text("CPU");
+            const numAleatorio = [gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(),]
+            grafico(numAleatorio);
 
+            // FUNÇÃO QUE MUDA O CONTÉUDO DO GRÁFICO 
+            // TITULO E ACIONA A BORDA DOURADA NO CARD
             $('.openGraph').each(function () {
                 $(this).on('click', function (event) {
+                    $(".card").removeClass("activeCard");
+
                     const componente = $(this).attr('class').split(' ')[1];
+                    let card = $(this).children(".card");
+                    card.toggleClass('activeCard');
+
                     $("#title-graph").text(componente.toLocaleUpperCase());
-                    $("#grafico").show();
-                    
+
                     const numAleatorio = [gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(),]
                     grafico(numAleatorio);
                 });
             });
         });
 
-        function gerarNumAleatorio(){
+        function gerarNumAleatorio() {
             return Math.floor(Math.random() * 100);
         }
 
