@@ -37,7 +37,7 @@ public class Log {
 
             BufferedWriter marcar = new BufferedWriter(escrever);
 
-            marcar.write("[" + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)) + "] " + "Sistema em uso");
+            marcar.write("[]" + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)) + "] " + "Sistema em uso");
            
             marcar.newLine();
 
@@ -64,7 +64,7 @@ public class Log {
 
                 for (int i = 0; i < documento.length; i++) {
 
-                   // System.out.println(documento[i]);
+                    System.out.println(documento[i]);
 
                 }
             }
