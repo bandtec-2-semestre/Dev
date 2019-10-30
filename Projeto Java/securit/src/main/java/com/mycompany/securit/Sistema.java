@@ -127,18 +127,20 @@ public class Sistema {
     
     public static Integer getDisk(HWDiskStore diskStore){
         Integer RB = (int)diskStore.getReadBytes();
-        System.out.println("Disk: "+RB);
         Integer RB2 = (int)diskStore.getWriteBytes();
-        System.out.println("Disk 2: "+RB2+"\n");
         return RB + RB2;
     }
 
     public static Integer getMemory(GlobalMemory memory) {
         long total = memory.getTotal();
+        System.out.println("total: "+total);
         long available = memory.getAvailable();
+        System.out.println("available: "+available);
         long used = total - available;
-        long porc = (used / total * 10);
-        return (int) Math.round(porc);
+        System.out.println("used: "+used);
+        double porc = ((double)used / total) * 100;
+        System.out.println("porc: "+porc);
+        return (int)porc;
     }
 
     public static Integer getCPU(CentralProcessor processor) {
