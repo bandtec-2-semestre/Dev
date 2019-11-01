@@ -23,6 +23,17 @@
             <artifactId>oshi-core</artifactId>
             <version>4.1.0</version>
         </dependency>
+        <!-- dependências do spring jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.0.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.5.0</version>
+        </dependency>s
 
     </dependencies>
 </project>

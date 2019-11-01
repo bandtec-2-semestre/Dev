@@ -133,13 +133,9 @@ public class Sistema {
 
     public static Integer getMemory(GlobalMemory memory) {
         long total = memory.getTotal();
-        System.out.println("total: "+total);
         long available = memory.getAvailable();
-        System.out.println("available: "+available);
         long used = total - available;
-        System.out.println("used: "+used);
         double porc = ((double)used / total) * 100;
-        System.out.println("porc: "+porc);
         return (int)porc;
     }
 
