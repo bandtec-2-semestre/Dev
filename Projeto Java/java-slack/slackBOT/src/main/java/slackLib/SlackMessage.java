@@ -20,7 +20,7 @@ public class SlackMessage {
      SEMPRE QUANDO FOR USAR/TESTAR ADICIONE O URL DO WEBHOOK
    */
     
-    private String URL;
+    final private String URL;
     private Slack slack;
     private Payload payload;
     private String message;
@@ -53,12 +53,13 @@ public class SlackMessage {
         return divider;
     }
 
-    private LayoutBlock getButton(String content) {
+    private LayoutBlock getButton(String content, String btnUrl) {
         ButtonElement button = ButtonElement.builder()
             .text(
                     PlainTextObject.builder().emoji(true).text(content).build()
-            ).build();
-        
+            ).url(btnUrl)
+            .build();
+
         LayoutBlock block = ActionsBlock.builder()
                 .elements(Arrays.asList(button))
                 .build();
@@ -68,11 +69,11 @@ public class SlackMessage {
    
          
    private void sendPayload(List<LayoutBlock> blocks) {
-        payload = Payload.builder().blocks(blocks).build();
-        slack = Slack.getInstance();
+        this.payload = Payload.builder().blocks(blocks).build();
+        this.slack = Slack.getInstance();
 
         try{
-               response = slack.send(URL, payload);
+               response = slack.send(this.URL, this.payload);
               // response.code, response.message, response.body
         }
         catch (IOException e){
@@ -102,9 +103,9 @@ public class SlackMessage {
         );
     }
     
-     public void sendMessage(String title, String message, String buttonText, String emoji) {
+     public void sendMessage(String title, String message, String buttonText, String emoji, String btnUrl) {
         this.message = message;
-        this.title = emoji + "  " + title;
+        this.title = emoji + "  " + title + "  " + emoji;
         this.buttonText = buttonText;
         
         DividerBlock divider = getDividerLine();
@@ -115,7 +116,7 @@ public class SlackMessage {
                 getSection(this.title),
                 divider,
                 getSection(this.message),
-                getButton(this.buttonText)
+                getButton(this.buttonText, btnUrl)
             )
         );
     }

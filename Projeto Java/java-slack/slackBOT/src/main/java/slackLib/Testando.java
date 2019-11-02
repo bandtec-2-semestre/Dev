@@ -15,22 +15,26 @@ public class Testando {
         */
         
         SlackMessage mensagem = new SlackMessage("COLOQUE-O-URL-DO-WEBHOOK-QUE-ESTA-NO-PLANNER");
-
-        String title, content, btnText;
         
-        title = "Atenção seu HD está a caminho de sobrecarregar";
+        String title, content, btnText, btnUrl;
+        
+        /// um tipo de mensagem
+        title = "Atenção seu HD está a caminho de sobrecarregar";;
         content = "Mensagem detalhada do erro que está acontecendo.";
         mensagem.sendMessage(title, content, SlackEmoji.EmojiDoubleAttention());
         
+      
+        
+        // outro tipo de mensagem
         mensagem.sendMessage("Alerta seu sistema X está *OFFLINE*", SlackEmoji.EmojiWarning());
+       
         
-        
-        // falta implementar com que o botão direcione ao site
+        /// outro tipo de mensagem
         title = "Atenção redobrada no sistema X";
         content = "Atenção segundo seu histórico de uso a CPU do sistema X vai sobrecarregar esta semana";
-        btnText = "Vá ao seu dashboard";
-        mensagem.sendMessage(title, content, btnText, SlackEmoji.EmojiDoubleAttention());
-        
+        btnText = "Veja mais no seu dashboard";
+        btnUrl = "https://jestjs.io/docs/en/api.html";
+        mensagem.sendMessage(title, content, btnText, SlackEmoji.EmojiDoubleAttention(), btnUrl);
+  
     }
-    
 }
