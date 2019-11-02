@@ -11,37 +11,45 @@ import java.util.List;
 
 public class SlackMessage {
 
-    // CLASSE UTILIZANDO BIBLIOTECA JSLACK - LINK PARA DOCUMENTAÇÃO ABAIXO
-    // https://github.com/seratch/jslack
+    /*
+     CLASSE UTILIZANDO BIBLIOTECA JSLACK - LINK PARA DOCUMENTAÇÃO ABAIXO
+     https://github.com/seratch/jslack
     
-    // LINK CRIADO PELO SLACK AO CRIAR UM "SLACK APP"
-   private final String URL = "https://hooks.slack.com/services/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";
-   private Slack slack;
-   private Payload payload;
-   private String message;
-   private String title;
-   private String buttonText;
-   private WebhookResponse response;
-   private String emoji;
+     PARA QUE ESTA CLASSE FUNCIONA É NECESSÁRIO A URL DO WEBHOOK DESTE SLACKAPP
+     COMO O SLACK IDENTIFICA QUE O LINK ESTÁ PUBLICO NO GIT E O DESATIVA 
+     SEMPRE QUANDO FOR USAR/TESTAR ADICIONE O URL DO WEBHOOK
+   */
+    
+    private String URL;
+    private Slack slack;
+    private Payload payload;
+    private String message;
+    private String title;
+    private String buttonText;
+    private WebhookResponse response;
+    private String emoji;
    
-   private void simplePayload( ) {
-           
+    public SlackMessage(String webhookUrl) {
+       this.URL = webhookUrl;
+    }    
+    
+    private void simplePayload( ) {       
         payload = Payload.builder()
             .text(this.message)
             .build();
-   }
+    }
    
-   public void blockPayload() {
+    public List<LayoutBlock> blockPayload() {
         SectionBlock section = SectionBlock.builder()
-                .text(MarkdownTextObject.builder().verbatim(Boolean.FALSE).text(this.message).build())
-                .build();
+            .text( 
+                    MarkdownTextObject.builder().verbatim(Boolean.FALSE)
+                            .text(this.message).build())
+            .build();
 
-        List<LayoutBlock> blocks = Arrays.asList(section);
-
-        payload = Payload.builder().blocks(blocks).build();
-   }
+        return Arrays.asList(section);
+    }
    
-    public void blockTitlePayload() {
+    public List<LayoutBlock> blockTitlePayload() {
         SectionBlock sectionTitle = SectionBlock.builder()
                 .text(MarkdownTextObject.builder().verbatim(Boolean.FALSE).text(this.title).build())
                 .build();
@@ -53,14 +61,10 @@ public class SlackMessage {
         DividerBlock divider = DividerBlock.builder()
                 .build();
         
-        List<LayoutBlock> blocks = Arrays.asList(divider, sectionTitle, divider, section);
+        return Arrays.asList(divider, sectionTitle, divider, section);
+    }
 
-        payload = Payload.builder().blocks(blocks).build();
-
-
-   }
-
-      public void blockCompletePayload() {
+    public List<LayoutBlock> blockCompletePayload() {
         ButtonElement button = ButtonElement.builder()
             .text(PlainTextObject.builder().emoji(true).text(this.emoji).build())
             .build();
@@ -77,27 +81,33 @@ public class SlackMessage {
         DividerBlock divider = DividerBlock.builder()
                 .build();
         
-        // List<LayoutBlock> blocks = Arrays.asList(block, section);
-         List<LayoutBlock> blocks = Arrays.asList(section);
-
+       return Arrays.asList(section);
+   }
+   
+         
+   public void sendPayload(List<LayoutBlock> blocks) {
         payload = Payload.builder().blocks(blocks).build();
+        slack = Slack.getInstance();
 
-
+        try{
+               response = slack.send(URL, payload);
+              // response.code, response.message, response.body
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
    }
    
     public void sendMessage(String message, String emoji) {
         this.message = emoji + "  " + message;
         
-        blockPayload();
-        sendPayload();
+        sendPayload(blockPayload());
     }
     
     public void sendMessage(String title, String message, String emoji) {
         this.message = message;
         this.title = emoji + "  " + title + "  " + emoji;
-        
-        blockTitlePayload();
-        sendPayload();
+        sendPayload(blockTitlePayload());
     }
     
      public void sendMessage(String title, String message, String buttonText, String emoji) {
@@ -105,35 +115,6 @@ public class SlackMessage {
         this.title = emoji + "  " + title;
         this.buttonText = buttonText;
         
-        blockCompletePayload();
-        sendPayload();
+        sendPayload(blockCompletePayload());
     }
-    
-//    public void sendMessage(String message, String emoji) {
-//        this.message = message;
-//        this.emoji = emoji;
-//        if(typeOfMessage.equalsIgnoreCase("fancy")) {
-//             this.message = emoji + "  " + message;
-//             blockPayload();
-//        } else {
-//            simplePayload();
-//        }
-//       
-//        sendPayload();
-//   }
-   
-   public void sendPayload() {
-
-        slack = Slack.getInstance();
-
-        try{
-               response = slack.send(URL, payload);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        // response.code, response.message, response.body
- 
-   }
-   
 }
