@@ -33,59 +33,41 @@ public class SlackMessage {
        this.URL = webhookUrl;
     }    
     
-    private void simplePayload( ) {       
-        payload = Payload.builder()
-            .text(this.message)
-            .build();
+    private void simplePayloadMessage( ) {       
+        payload = Payload.builder().text(this.message).build();
     }
    
-    public List<LayoutBlock> blockPayload() {
+    private SectionBlock getSection(String content) {
         SectionBlock section = SectionBlock.builder()
-            .text( 
-                    MarkdownTextObject.builder().verbatim(Boolean.FALSE)
-                            .text(this.message).build())
+            .text(
+                MarkdownTextObject.builder().verbatim(Boolean.FALSE
+            ).text(content).build())
             .build();
 
-        return Arrays.asList(section);
+        return section;
     }
    
-    public List<LayoutBlock> blockTitlePayload() {
-        SectionBlock sectionTitle = SectionBlock.builder()
-                .text(MarkdownTextObject.builder().verbatim(Boolean.FALSE).text(this.title).build())
-                .build();
+    private DividerBlock getDividerLine() {
+        DividerBlock divider = DividerBlock.builder().build();
         
-        SectionBlock section = SectionBlock.builder()
-                .text(MarkdownTextObject.builder().verbatim(Boolean.FALSE).text(this.message).build())
-                .build();
-        
-        DividerBlock divider = DividerBlock.builder()
-                .build();
-        
-        return Arrays.asList(divider, sectionTitle, divider, section);
+        return divider;
     }
 
-    public List<LayoutBlock> blockCompletePayload() {
+    private LayoutBlock getButton(String content) {
         ButtonElement button = ButtonElement.builder()
-            .text(PlainTextObject.builder().emoji(true).text(this.emoji).build())
-            .build();
+            .text(
+                    PlainTextObject.builder().emoji(true).text(content).build()
+            ).build();
         
-        
-        SectionBlock section = SectionBlock.builder()
-                .text(MarkdownTextObject.builder().verbatim(Boolean.FALSE).text(this.message).build())
-                .build();
-
         LayoutBlock block = ActionsBlock.builder()
                 .elements(Arrays.asList(button))
                 .build();
-        
-        DividerBlock divider = DividerBlock.builder()
-                .build();
-        
-       return Arrays.asList(section);
+
+       return block;
    }
    
          
-   public void sendPayload(List<LayoutBlock> blocks) {
+   private void sendPayload(List<LayoutBlock> blocks) {
         payload = Payload.builder().blocks(blocks).build();
         slack = Slack.getInstance();
 
@@ -101,13 +83,23 @@ public class SlackMessage {
     public void sendMessage(String message, String emoji) {
         this.message = emoji + "  " + message;
         
-        sendPayload(blockPayload());
+        sendPayload(Arrays.asList(getSection(this.message)));
     }
     
     public void sendMessage(String title, String message, String emoji) {
         this.message = message;
         this.title = emoji + "  " + title + "  " + emoji;
-        sendPayload(blockTitlePayload());
+        
+        DividerBlock divider = getDividerLine();
+        
+        sendPayload(
+            Arrays.asList(
+                divider,
+                getSection(this.title),
+                divider,
+                getSection(this.message)
+            )
+        );
     }
     
      public void sendMessage(String title, String message, String buttonText, String emoji) {
@@ -115,6 +107,16 @@ public class SlackMessage {
         this.title = emoji + "  " + title;
         this.buttonText = buttonText;
         
-        sendPayload(blockCompletePayload());
+        DividerBlock divider = getDividerLine();
+        
+        sendPayload(
+            Arrays.asList(
+                divider,
+                getSection(this.title),
+                divider,
+                getSection(this.message),
+                getButton(this.buttonText)
+            )
+        );
     }
 }

@@ -14,7 +14,7 @@ public class Testando {
             e retira-lo antes de dar o push/ ou gerar um novo depois
         */
         
-         SlackMessage mensagem = new SlackMessage("COLOQUE-O-URL-DO-WEBHOOK-QUE-ESTA-NO-PLANNER");
+        SlackMessage mensagem = new SlackMessage("COLOQUE-O-URL-DO-WEBHOOK-QUE-ESTA-NO-PLANNER");
 
         String title, content, btnText;
         
@@ -24,6 +24,8 @@ public class Testando {
         
         mensagem.sendMessage("Alerta seu sistema X está *OFFLINE*", SlackEmoji.EmojiWarning());
         
+        
+        // falta implementar com que o botão direcione ao site
         title = "Atenção redobrada no sistema X";
         content = "Atenção segundo seu histórico de uso a CPU do sistema X vai sobrecarregar esta semana";
         btnText = "Vá ao seu dashboard";
