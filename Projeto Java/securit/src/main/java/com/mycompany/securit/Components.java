@@ -1,36 +1,34 @@
 package com.mycompany.securit;
 
-import java.util.Random;
 import java.awt.Color;
+import oshi.SystemInfo;
+import oshi.hardware.HardwareAbstractionLayer;
+import oshi.hardware.HWDiskStore;
 
 public class Components {
-    Random sorteio = new Random();
-    private Integer cpu = sorteio.nextInt(100);
-    private Integer memory = sorteio.nextInt(100);
-    private Integer disk = sorteio.nextInt(100);
     
-    public Integer getCPU(){
-        return cpu = sorteio.nextInt(100);
+    SystemInfo si = new SystemInfo();
+    private final HardwareAbstractionLayer hal = si.getHardware();
+    private final HWDiskStore diskStore = new HWDiskStore();
+    
+    public Components(){
+        //Sistema.main(null);
     }
     
-    public Integer setCPU(Integer cpu){
-        return 1;
+     public String getProcessorInfo() {
+        return hal.getProcessor().getProcessorIdentifier().getName();
+    }   
+    
+    public Integer getCPU(){
+       return Sistema.getCPU(this.hal.getProcessor());
     }
     
     public Integer getMemory(){
-        return memory = sorteio.nextInt(100);
-    }
-    
-    public Integer setMemory(Integer memory){
-        return 1;
+       return Sistema.getMemory(this.hal.getMemory());
     }
     
     public Integer getDisk(){
-        return disk = sorteio.nextInt(100);
-    }
-    
-    public Integer setDisk(Integer disk){
-        return 1;
+       return Sistema.getDisk(this.diskStore);
     }
     
     public Color validateCPU(Integer cpu){
