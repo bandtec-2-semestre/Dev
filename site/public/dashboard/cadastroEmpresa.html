@@ -10,12 +10,14 @@
     <link rel="shortcut icon" href="images/faviconSecurit.png">
     <link rel="stylesheet" href="assets/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <!-- AJAX -- biblioteca usada para enviar formulario ou coisas do frontend pro backend - PEGUEI NO W3SCHOOLS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
+    <!-- CSS stylesheet -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <!-- biblioteca Swall - alerts-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
 </head>
 
 <body>
@@ -24,42 +26,44 @@
         <div class="login">
             <img src="images/logo.png" alt="logo SecurIT" class="logo">
             <h2 class="login-title">Cadastro</h2>
-            <form id="form" class="form-login">
-                <label for="nomeEmpresa" >Nome da Companhia</label>
-                <div class="input-email">
+            <form id="form" method="POST" class="form-login">
+                <label for="nomeEmpresa">Nome da Companhia</label>
+                <div class="input-text">
                     <i class="fa fa-building icon"></i>
-                    <input type="text" name="nomeEmpresa" placeholder="Nome da Empresa">
+                    <input class="form-control " type="text" placeholder="Nome Empresa " name="nomeEmpresa"
+                        id="nomeEmpresa" autofocus required>
                 </div>
 
                 <label for="representante">Representante</label>
-                <div class="input-email">
+                <div class="input-text">
                     <i class="fa fa-user icon"></i>
-                    <input type="email" name="nomeRepresentante" placeholder="Representante da Empresa">
+                    <input class="form-control" type="text" name="nomeRepresentante" id="nomeRepresentante"
+                        placeholder="Representante da Empresa" required>
                 </div>
 
                 <label for="cnpj">CNPJ</label>
-                <div class="input-email">
+                <div class="input-text">
                     <i class="fa fa-tag icon"></i>
-                    <input type="email" name="cnpj" placeholder=" Informe o CNPJ">
+                    <input class="form-control" type="text" name="cnpj" id="cnpj" placeholder=" Informe o CNPJ">
                 </div>
 
                 <label for="email">Email</label>
-                <div class="input-email">
+                <div class="input-text">
                     <i class="fa fa-envelope icon"></i>
-                    <input type="email" name="email" placeholder="Email">
+                    <input class="form-control" type="email" name="email" id="email" placeholder="Email">
                 </div>
 
                 <label for="password">Senha</label>
                 <div class="input-password">
                     <i class="fa fa-lock icon"></i>
-                    <input type="password" name="senha" placeholder="Informe a senha">
+                    <input class="form-control" type="password" name="senha" id="senha" placeholder="Informe a senha">
                 </div>
-
-                <input type="submit" value="Cadastrar" onclick="verificarDados()">
+                <button class="button" type="submit" onclick="verificarDados(event)">Cadastrar</button>
+                <!--<input type="submit" value="Cadastrar" onclick="verificarDados()">-->
             </form>
             <div class="alinhar">
 
-                <a href="login.html">Já estou cadstrado</a>
+                <a href="login.html">Já estou cadastrado</a>
             </div>
         </div>
         <div class="background">
@@ -72,10 +76,12 @@
 
 </body>
 
-
-
 <script>
-    function verificarDados() {
+    function verificarDados(e) {
+        e.preventDefault();
+        console.log("Clicou no Botão");
+        console.log("Chegou na function");
+
 
         form.email.value = form.email.value.toLowerCase();
         form.senha.value = form.senha.value.toLowerCase();
@@ -157,6 +163,7 @@
         });
         var dados = $("#form").serialize();
         console.log(dados); //pra mostrar os dados do form no console.
+        console.log("Chegou no metodo cadastrar");
 
         $.ajax({
             url: "../cadastro",
@@ -164,23 +171,20 @@
             data: dados
 
         }).done(function (resposta) {
+            console.log("res OK");
             if (resposta == "ok") {
                 window.location = "login.html";
             } else {
-                //alert("Este email já está cadastrado no sistema!");
                 swal({
-                    text: "Este email já está cadastrado no sistema!",
+                    title: "Aviso!",
+                    type: "warning",
+                    dangerMode: true,
+                    text: "O CNPJ já está cadastrado no sistema!",
                     closeOnClickOutside: true,
-
                 });
             }
         });
     }
-
-
-
-
-
 </script>
 
 </html>

@@ -42,7 +42,7 @@ a {
   display: block;
   color: #666;
 }
-.input-email,
+.input-text,
 .input-password {
   width: 100%;
   background: #DDD;
@@ -54,6 +54,7 @@ a {
   margin-bottom: 15px;
   
 }
+
 .icon {
   padding: 4px;
   color: #666;
@@ -69,6 +70,21 @@ input[type="password"] {
   padding: 4px 0;
   outline: none;
   
+}
+button{
+  width: 100%;
+  border: 0;
+  border-radius: 25px;
+  padding: 14px;
+  background: #c59220;
+  color: #FFF !important;
+  font-weight: bold !important;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+
 }
 input[type="submit"] {
   width: 100%;
