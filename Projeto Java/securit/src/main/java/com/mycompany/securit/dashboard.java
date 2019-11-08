@@ -1,5 +1,6 @@
 package com.mycompany.securit;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,7 +19,7 @@ public class dashboard extends javax.swing.JFrame {
     ChartPanel mg = memoryGraph.getGraph(System.currentTimeMillis(), 0);
     ChartPanel dg = diskGraph.getGraph(System.currentTimeMillis(), 0);
     SystemInfo si = new SystemInfo();
-    Integer cpu, memory, disk;
+    Integer cpu, memory, disk, sistemaId, cpuId, memoryId, diskId;
     DadosConexao dadosConexao = new DadosConexao();
         
     JdbcTemplate jdbcTemplate = 
@@ -386,8 +387,28 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     private void insertDB(){
-        List lista = jdbcTemplate.queryForList("SELECT * FROM ServerLog");
-        System.out.println("Lista: "+lista);
+        sistemaId = 1;
+        diskId = 1;
+        memoryId = 6;
+        cpuId = 11;
+        
+        jdbcTemplate.update(
+                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
+                        + "VALUES(?, ?, ?, ?)",
+                disk, LocalDateTime.now(), sistemaId, diskId
+        );
+        
+        jdbcTemplate.update(
+                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
+                        + "VALUES(?, ?, ?, ?)",
+                memory, LocalDateTime.now(), sistemaId, memoryId
+        );
+        
+        jdbcTemplate.update(
+                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
+                        + "VALUES(?, ?, ?, ?)",
+                cpu, LocalDateTime.now(), sistemaId, cpuId
+        );
     }
     
 
