@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,24 +10,31 @@
     <link rel="shortcut icon" href="images/faviconSecurit.png">
     <link rel="stylesheet" href="assets/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- AJAX -- biblioteca usada para enviar formulario ou coisas do frontend pro backend - PEGUEI NO W3SCHOOLS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!-- biblioteca Swall - alerts-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
+
 <body>
-    
+
     <div id="login-page">
         <div class="login">
             <img src="images/logo.png" alt="logo SecurIT" class="logo">
             <h2 class="login-title">Cadastro</h2>
-            <form class="form-login">
-                <label for="email">Nome da Companhia</label>
+            <form id="form" class="form-login">
+                <label for="nomeEmpresa" >Nome da Companhia</label>
                 <div class="input-email">
                     <i class="fa fa-building icon"></i>
-                    <input type="email" name="email" placeholder="Nome da Empresa">
+                    <input type="text" name="nomeEmpresa" placeholder="Nome da Empresa">
                 </div>
 
                 <label for="representante">Representante</label>
                 <div class="input-email">
                     <i class="fa fa-user icon"></i>
-                    <input type="email" name="email" placeholder="Representante da Empresa">
+                    <input type="email" name="nomeRepresentante" placeholder="Representante da Empresa">
                 </div>
 
                 <label for="cnpj">CNPJ</label>
@@ -44,13 +52,13 @@
                 <label for="password">Senha</label>
                 <div class="input-password">
                     <i class="fa fa-lock icon"></i>
-                    <input type="password" name="password" placeholder="Informe a senha">
+                    <input type="password" name="senha" placeholder="Informe a senha">
                 </div>
 
-                <input type="submit" value="Cadastrar">
+                <input type="submit" value="Cadastrar" onclick="verificarDados()">
             </form>
             <div class="alinhar">
-              
+
                 <a href="login.html">Já estou cadstrado</a>
             </div>
         </div>
@@ -63,4 +71,116 @@
     </div>
 
 </body>
+
+
+
+<script>
+    function verificarDados() {
+
+        form.email.value = form.email.value.toLowerCase();
+        form.senha.value = form.senha.value.toLowerCase();
+
+        if (nomeEmpresa.value == "") {
+            swal({
+                title: "Aviso",
+                text: "Preencha campo NOME corretamente!",
+                type: "warning",
+                confirmButtonClass: "btn-danger",
+                closeOnConfirm: false,
+                dangerMode: true,
+                confirmButtonClass: "btn-danger",
+                closeOnClickOutside: true,
+            });
+            nomeEmpresa.focus();
+            return false;
+        } else if (nomeRepresentante.value == "" && cnpj.value == "") {
+
+            swal({
+                title: "Aviso",
+                text: "Preencha os campos corretamente!",
+                type: "warning",
+                confirmButtonClass: "btn-danger",
+                closeOnConfirm: false,
+                dangerMode: true,
+                confirmButtonClass: "btn-danger",
+                closeOnClickOutside: true,
+            });
+            nomeRepresentante.focus();
+            return false;
+
+        } else if (form.email.value == "" || form.email.value.indexOf('@') == -1 || form.email.value.indexOf('.com') == -1) {
+            swal({
+                title: "Aviso",
+                text: "Insira um E-MAIL válido!",
+                type: "warning",
+                confirmButtonClass: "btn-danger",
+                closeOnConfirm: false,
+                dangerMode: true,
+                confirmButtonClass: "btn-danger",
+                closeOnClickOutside: true,
+            });
+            form.email.focus();
+            return false;
+        } else if (form.senha.value == "" || form.senha.value.length < 8) {
+            swal({
+                title: "Aviso",
+                text: "A senha deve ter no mínimo 8 caracteres!",
+                type: "warning",
+                confirmButtonClass: "btn-danger",
+                closeOnConfirm: false,
+                dangerMode: true,
+                confirmButtonClass: "btn-danger",
+                closeOnClickOutside: true,
+            });
+            form.senha.focus();
+            return false;
+        } else {
+            cadastrar();
+            swal({
+                title: "Aguarde...",
+                text: "Enquanto o cadastro é realizado",
+                buttons: false,
+                closeOnClickOutside: false,
+            });
+        }
+    }
+
+
+    //Função pra enviar os dados do formulário para o cadastro.js e  retornar a resposta
+    function cadastrar() {
+
+        swal({
+            title: "Aguarde...",
+            text: "alguns instantes enquanto o cadastro é realizado",
+            buttons: false,
+            closeOnClickOutside: false,
+        });
+        var dados = $("#form").serialize();
+        console.log(dados); //pra mostrar os dados do form no console.
+
+        $.ajax({
+            url: "../cadastro",
+            type: 'post',
+            data: dados
+
+        }).done(function (resposta) {
+            if (resposta == "ok") {
+                window.location = "login.html";
+            } else {
+                //alert("Este email já está cadastrado no sistema!");
+                swal({
+                    text: "Este email já está cadastrado no sistema!",
+                    closeOnClickOutside: true,
+
+                });
+            }
+        });
+    }
+
+
+
+
+
+</script>
+
 </html>
