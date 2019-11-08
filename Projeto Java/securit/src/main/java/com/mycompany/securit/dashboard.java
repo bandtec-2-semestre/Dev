@@ -1,8 +1,10 @@
 package com.mycompany.securit;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.jfree.chart.ChartPanel;
+import org.springframework.jdbc.core.JdbcTemplate;
 import oshi.SystemInfo;
 public class dashboard extends javax.swing.JFrame {
     
@@ -17,6 +19,10 @@ public class dashboard extends javax.swing.JFrame {
     ChartPanel dg = diskGraph.getGraph(System.currentTimeMillis(), 0);
     SystemInfo si = new SystemInfo();
     Integer cpu, memory, disk;
+    DadosConexao dadosConexao = new DadosConexao();
+        
+    JdbcTemplate jdbcTemplate = 
+        new JdbcTemplate(dadosConexao.getDataSource());
     
     public dashboard() {
         initComponents();
@@ -343,6 +349,8 @@ public class dashboard extends javax.swing.JFrame {
         
         addGraph();
         
+        insertDB();
+        
         timer.schedule(new task(), 1000);
     }
     
@@ -375,6 +383,11 @@ public class dashboard extends javax.swing.JFrame {
         panCpu.add(cg);
         panMemory.add(mg);
         panDisk.add(dg);
+    }
+    
+    private void insertDB(){
+        List lista = jdbcTemplate.queryForList("SELECT * FROM ServerLog");
+        System.out.println("Lista: "+lista);
     }
     
 
