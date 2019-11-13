@@ -40,7 +40,18 @@
             <artifactId>mssql-jdbc</artifactId>
             <version>7.2.0.jre8</version>
         </dependency>
-
+        
+        <dependency>
+          <groupId>com.github.seratch</groupId>
+          <artifactId>jslack</artifactId>
+          <version>3.0.1</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>com.github.seratch</groupId>
+            <artifactId>jslack-api-client</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
     </dependencies>
 </project>

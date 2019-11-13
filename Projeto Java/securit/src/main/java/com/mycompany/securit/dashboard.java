@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.jfree.chart.ChartPanel;
-import org.springframework.jdbc.core.JdbcTemplate;
 import oshi.SystemInfo;
 public class dashboard extends javax.swing.JFrame {
     
@@ -20,10 +19,7 @@ public class dashboard extends javax.swing.JFrame {
     ChartPanel dg = diskGraph.getGraph(System.currentTimeMillis(), 0);
     SystemInfo si = new SystemInfo();
     Integer cpu, memory, disk, sistemaId, cpuId, memoryId, diskId;
-    DadosConexao dadosConexao = new DadosConexao();
-        
-    JdbcTemplate jdbcTemplate = 
-        new JdbcTemplate(dadosConexao.getDataSource());
+    Banco banco = new Banco();
     
     public dashboard() {
         initComponents();
@@ -392,23 +388,7 @@ public class dashboard extends javax.swing.JFrame {
         memoryId = 6;
         cpuId = 11;
         
-        jdbcTemplate.update(
-                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
-                        + "VALUES(?, ?, ?, ?)",
-                disk, LocalDateTime.now(), sistemaId, diskId
-        );
-        
-        jdbcTemplate.update(
-                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
-                        + "VALUES(?, ?, ?, ?)",
-                memory, LocalDateTime.now(), sistemaId, memoryId
-        );
-        
-        jdbcTemplate.update(
-                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
-                        + "VALUES(?, ?, ?, ?)",
-                cpu, LocalDateTime.now(), sistemaId, cpuId
-        );
+        banco.insertComp(sistemaId, disk, memory, cpu, diskId, memoryId, cpuId);
     }
     
 
