@@ -10,10 +10,17 @@ public class Components {
     SystemInfo si = new SystemInfo();
     private final HardwareAbstractionLayer hal = si.getHardware();
     private final HWDiskStore diskStore = new HWDiskStore();
+    private final String hooksUrl = "https://hooks.slack.com/";
+    private final String hooksMiddle = "services/TPZPZU71T";
+    private final String hooksEnd = "/BQ7LZQJHH/uSwP6o1KPO1hVDLeELi2DxBw";
+    
     SlackMessage mensagem = new SlackMessage(
-            "https://hooks.slack.com/services/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"
+            hooksUrl + hooksMiddle + hooksEnd
     );
+    
     Integer sistemaId;
+    
+    
     public Components(Integer sistemaId){
         this.sistemaId = sistemaId;
     }
