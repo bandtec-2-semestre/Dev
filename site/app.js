@@ -6,6 +6,8 @@ var logger = require('morgan');
 
 var cadastroRouter = require('./routes/cadastro');
 //var loginRouter = require('./routes/login');
+var cadastroDispositivoRouter = require('./routes/cadastroDispositivo');
+var consultaUserRouter = require('./routes/consultaUser');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -22,8 +24,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/cadastro', cadastroRouter);
+app.use('/cadastroDispositivo', cadastroDispositivoRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/consultaUser', consultaUserRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

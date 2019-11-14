@@ -99,7 +99,7 @@
             });
             nomeEmpresa.focus();
             return false;
-        } else if (nomeRepresentante.value == "" && cnpj.value == "") {
+        } else if (nomeRepresentante.value == "" || cnpj.value == "") {
 
             swal({
                 title: "Aviso",

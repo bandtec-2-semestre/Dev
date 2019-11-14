@@ -32,7 +32,13 @@
 
     <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
-
+    <!-- AJAX -- biblioteca usada para enviar formulario ou coisas do frontend pro backend - PEGUEI NO W3SCHOOLS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- CSS stylesheet -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- biblioteca Swall - alerts-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -48,7 +54,7 @@
                     <li class="active">
                         <a href="cadastroDispositivo.html"><i class="menu-icon ti-plus"></i>Cadastros </a>
                     </li>
-                    <li >
+                    <li>
                         <a href="consultaSistemas.html"><i class="menu-icon ti-search"></i>Sistemas </a>
                     </li>
                     <li>
@@ -138,7 +144,7 @@
                 </div>
 
                 <div class="form-register-device">
-                    <form class="col-lg-10">
+                    <form id="formDispositivo" class="col-lg-10">
 
                         <div class="row mb-3">
                             <div class="form-group col-lg-6">
@@ -147,8 +153,6 @@
 
                                 <select name="sistema" id="sistema" class="form-control">
                                     <option disabled selected>Selecione o Sistema</option>
-                                    <option value="id">Cameras</option>
-                                    <option value="id">Alarmes</option>
                                 </select>
 
                             </div>
@@ -157,38 +161,44 @@
 
                                 <label>Ou adicione um novo Sistema</label>
 
-                                <input type="text" class="form-control" placeholder="Nome do Sistema">
+                                <input type="text" class="form-control" id="nomeSistema" placeholder="Nome do Sistema">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="form-group col-lg-6">
                                 <label>Nome do Dispositivo</label>
-                                <input type="text" class="form-control" placeholder="Nome do Dispositivo">
+                                <input type="text" class="form-control" name="nomeDispositivo" id="nomeDispositivo"
+                                    placeholder="Nome do Dispositivo">
                             </div>
 
                             <div class="form-group col-lg-6">
                                 <label>Tipo</label>
-                                <input type="text" class="form-control" placeholder="Tipo de Dispositivo">
+                                <input type="text" class="form-control" name="tipoDispositivo" id="tipoDispositivo"
+                                    placeholder="Tipo de Dispositivo">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="form-group  col-lg-6">
                                 <label>Modelo</label>
-                                <input type="text" class="form-control" placeholder="Modelo do Dispositivo">
+                                <input type="text" class="form-control" name="modeloDispositivo" id="modeloDispositivo"
+                                    placeholder="Modelo do Dispositivo">
                             </div>
                             <div class="form-group  col-lg-3">
                                 <label>Andar</label>
-                                <input type="text" class="form-control" placeholder="Andar localizado">
+                                <input type="text" class="form-control" name="localDispositivo" id="localDispositivo"
+                                    placeholder="Andar localizado">
                             </div>
                             <div class="form-group col-lg-3">
                                 <label>Sala</label>
-                                <input type="text" class="form-control" placeholder="Sala localizado">
+                                <input type="text" class="form-control" name="salaDispositivo" id="salaDispositivo"
+                                    placeholder="Sala localizado">
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-info  ">Cadastrar</button>
+                        <button type="submit" class="btn btn-info"
+                            onclick="cadastrarDispositivo(event)">Cadastrar</button>
                     </form>
 
                 </div>
@@ -235,5 +245,94 @@
         <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
         <script src="assets/js/init/datatables-init.js"></script>
 </body>
+
+<script>
+    consultarSistema();
+
+    function consultarSistema() {
+        console.log("res OK");
+        
+    fetch("../consultaUser", {
+        method: "POST",
+        body: " "
+    }).then(function (resposta) {
+      
+        resposta.json().then(function (rer) {
+                console.log(rer[0]);
+                var conteudo = '';
+                for (r = 0; r < rer.length; r++) {
+                    var atual = rer[r];
+
+                    conteudo += `<option value="${atual.idServer}">${atual.name}</option>`;
+                }
+                sistema.innerHTML = conteudo;
+            }
+            );
+        });
+
+
+}
+    function cadastrarDispositivo(e) {
+        e.preventDefault();
+        console.log("caiu na function");
+        if (nomeDispositivo.value == "" || tipoDispositivo.value == "" || modeloDispositivo.value == "") {
+
+            swal({
+
+                text: "Preencha os campos em branco!",
+                type: "warning",
+                icon: "warning",
+                confirmButtonClass: "btn-danger",
+                closeOnConfirm: false,
+                dangerMode: true,
+                confirmButtonClass: "btn-danger",
+                closeOnClickOutside: true,
+            });
+            nomeDispositivo.focus();
+            return false;
+
+        } else {
+            console.log("CHEGOU NO else");
+            var dadosDispositivo = $("#formDispositivo").serialize();
+            console.log(dadosDispositivo);
+
+            $.ajax({
+                url: "../cadastroDispositivo",
+                type: 'post',
+                data: dadosDispositivo
+
+            }).done(function (resposta) {
+                console.log("res OK");
+                if (resposta == "ok") {
+                    swal({
+                        title: "Aviso!",
+                        type: "info",
+                        text: "Dispositivo cadstrado!",
+                        closeOnClickOutside: true,
+                    });
+
+                    window.location = "cadastroDispositivo.html";
+                } else {
+                    //alert("Dispositivo NAO cadastrado!");
+                    swal({
+                        title: "Aviso!",
+                        type: "warning",
+                        dangerMode: true,
+                        text: "Nao foi possível cadastrar o dispositivo!",
+                        closeOnClickOutside: true,
+                    });
+                }
+            });
+        }
+    }
+
+
+
+
+
+
+
+
+</script>
 
 </html>
