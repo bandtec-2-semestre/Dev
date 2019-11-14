@@ -1,11 +1,12 @@
 package com.mycompany.securit;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class Banco {
-    private DadosConexao dadosConexao;
-    private JdbcTemplate jdbcTemplate;
+    private final DadosConexao dadosConexao;
+    private final JdbcTemplate jdbcTemplate;
     
     public Banco(){
         dadosConexao = new DadosConexao();
@@ -13,6 +14,22 @@ public class Banco {
         jdbcTemplate = new JdbcTemplate(dadosConexao.getDataSource());
     }
     
+    public String validateLogin(String login, String senha){
+        List lista = jdbcTemplate.queryForList(
+                "SELECT * FROM Client WHERE email = ?", login
+        );
+        return "Logado";
+        /* if(lista.size() >= 1){
+            lista.get(0);
+            if(senha.equals(senha)){
+                return "Logado";
+            } else {
+                return "Senha inválida";
+            }
+        } else {
+            return "Login Inválido";
+        } */
+    }
     
     public void insertComp(
             Integer sistemaId, Integer disk, Integer memory, Integer cpu,

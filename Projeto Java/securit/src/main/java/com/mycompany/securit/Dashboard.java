@@ -6,10 +6,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import org.jfree.chart.ChartPanel;
 import oshi.SystemInfo;
-public class dashboard extends javax.swing.JFrame {
+public class Dashboard extends javax.swing.JFrame {
     
     Timer timer = new Timer();
-    Components comp = new Components();
     Boolean isVisible[] = {false, false, false};
     Graph cpuGraph = new Graph("CPU");
     Graph memoryGraph = new Graph("Memory");
@@ -18,10 +17,15 @@ public class dashboard extends javax.swing.JFrame {
     ChartPanel mg = memoryGraph.getGraph(System.currentTimeMillis(), 0);
     ChartPanel dg = diskGraph.getGraph(System.currentTimeMillis(), 0);
     SystemInfo si = new SystemInfo();
-    Integer cpu, memory, disk, sistemaId, cpuId, memoryId, diskId;
+    Integer cpu, memory, disk, sistemaId = 1, cpuId = 11, memoryId = 6,
+            diskId = 1;
+    Components comp = new Components(sistemaId);
     Banco banco = new Banco();
+    SlackMessage mensagem = new SlackMessage(
+            "https://hooks.slack.com/services/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"
+    );
     
-    public dashboard() {
+    public Dashboard() {
         initComponents();
         insert();
     }
@@ -29,7 +33,7 @@ public class dashboard extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new dashboard().setVisible(true);
+                new Dashboard().setVisible(true);
             }
         });
     }
@@ -311,8 +315,7 @@ public class dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        isVisible[0] = !isVisible[0];
-        panCpu.setVisible(!isVisible[0]);
+        
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -383,11 +386,6 @@ public class dashboard extends javax.swing.JFrame {
     }
     
     private void insertDB(){
-        sistemaId = 1;
-        diskId = 1;
-        memoryId = 6;
-        cpuId = 11;
-        
         banco.insertComp(sistemaId, disk, memory, cpu, diskId, memoryId, cpuId);
     }
     

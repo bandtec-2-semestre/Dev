@@ -10,9 +10,12 @@ public class Components {
     SystemInfo si = new SystemInfo();
     private final HardwareAbstractionLayer hal = si.getHardware();
     private final HWDiskStore diskStore = new HWDiskStore();
-    
-    public Components(){
-        //Sistema.main(null);
+    SlackMessage mensagem = new SlackMessage(
+            "https://hooks.slack.com/services/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"
+    );
+    Integer sistemaId;
+    public Components(Integer sistemaId){
+        this.sistemaId = sistemaId;
     }
     
      public String getProcessorInfo() {
@@ -33,6 +36,9 @@ public class Components {
     
     public Color validateCPU(Integer cpu){
         if(cpu > 85){
+            mensagem.sendMessage(
+                    String.format("CPU do sistema %d está em %d%% ", sistemaId, cpu),
+                    SlackEmoji.EmojiAttention());
             return Color.red;
         } else {
             return Color.BLACK;
@@ -41,6 +47,9 @@ public class Components {
     
     public Color validateMemory(Integer memory){
         if(memory > 85){
+            mensagem.sendMessage(
+                    String.format("Memória do sistema %d está em %d%% ", sistemaId, memory),
+                    SlackEmoji.EmojiAttention());
             return Color.red;
         } else {
             return Color.BLACK;
@@ -49,6 +58,9 @@ public class Components {
     
     public Color validateDisk(Integer disk){
         if(disk > 85){
+            mensagem.sendMessage(
+                    String.format("Disco do sistema %d está em %d%% ", sistemaId, disk),
+                    SlackEmoji.EmojiAttention());
             return Color.red;
         } else {
             return Color.BLACK;
