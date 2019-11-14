@@ -27,7 +27,7 @@ public class SlackMessage {
     private String title;
     private String buttonText;
     private WebhookResponse response;
-    private String emoji;
+    private SlackEmoji emoji;
    
     public SlackMessage(String webhookUrl) {
        this.URL = webhookUrl;
@@ -81,15 +81,15 @@ public class SlackMessage {
         }
    }
    
-    public void sendMessage(String message, String emoji) {
-        this.message = emoji + "  " + message;
+    public void sendMessage(String message, SlackEmoji emoji) {
+        this.message = emoji.getDescription() + "  " + message;
         
         sendPayload(Arrays.asList(getSection(this.message)));
     }
     
-    public void sendMessage(String title, String message, String emoji) {
+    public void sendMessage(String title, String message, SlackEmoji emoji) {
         this.message = message;
-        this.title = emoji + "  " + title + "  " + emoji;
+        this.title = emoji.getDescription() + "  " + title + "  " + emoji;
         
         DividerBlock divider = getDividerLine();
         
@@ -103,9 +103,9 @@ public class SlackMessage {
         );
     }
     
-     public void sendMessage(String title, String message, String buttonText, String emoji, String btnUrl) {
+     public void sendMessage(String title, String message, String buttonText, SlackEmoji emoji, String btnUrl) {
         this.message = message;
-        this.title = emoji + "  " + title + "  " + emoji;
+        this.title = emoji.getDescription() + "  " + title + "  " + emoji;
         this.buttonText = buttonText;
         
         DividerBlock divider = getDividerLine();

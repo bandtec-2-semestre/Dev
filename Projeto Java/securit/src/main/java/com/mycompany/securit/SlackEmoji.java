@@ -2,20 +2,20 @@
 package com.mycompany.securit;
 
 
-public class SlackEmoji {
-   static private final String EMOJI_ATENCAO = ":exclamation:";
-   static private final String EMOJI_DUPLA_ATENCAO = ":bangbang:";
-   static private final String EMOJI_ALERTA = ":warning:";
+public enum SlackEmoji {
+    EMOJI_ATTENTION(":exclamation:"),
+    EMOJI_DOUBLE_ATTENTION(":bangbang:"),
+    EMOJI_WARNING(":warning:");
+
+    private String description;
+
+    private SlackEmoji(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
    
-   static public String EmojiAttention(){
-       return EMOJI_ATENCAO;
-   }
    
-    static public String EmojiWarning(){
-       return EMOJI_ALERTA;
-   }
-    
-    static public String EmojiDoubleAttention(){
-       return EMOJI_DUPLA_ATENCAO;
-   }
 }

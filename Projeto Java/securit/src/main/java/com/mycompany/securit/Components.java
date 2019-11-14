@@ -45,7 +45,7 @@ public class Components {
         if(cpu > 85){
             mensagem.sendMessage(
                     String.format("CPU do sistema %d está em %d%% ", sistemaId, cpu),
-                    SlackEmoji.EmojiAttention());
+                    SlackEmoji.EMOJI_WARNING);
             return Color.red;
         } else {
             return Color.BLACK;
@@ -53,10 +53,10 @@ public class Components {
     }
     
     public Color validateMemory(Integer memory){
-        if(memory > 85){
+        if(memory > 3){
             mensagem.sendMessage(
                     String.format("Memória do sistema %d está em %d%% ", sistemaId, memory),
-                    SlackEmoji.EmojiAttention());
+                    SlackEmoji.EMOJI_ATTENTION);
             return Color.red;
         } else {
             return Color.BLACK;
@@ -67,7 +67,7 @@ public class Components {
         if(disk > 85){
             mensagem.sendMessage(
                     String.format("Disco do sistema %d está em %d%% ", sistemaId, disk),
-                    SlackEmoji.EmojiAttention());
+                    SlackEmoji.EMOJI_ATTENTION);
             return Color.red;
         } else {
             return Color.BLACK;
