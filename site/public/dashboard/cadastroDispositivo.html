@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <!-- biblioteca Swall - alerts-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="../js/logout.js"></script>
 </head>
 
 <body>
@@ -121,7 +121,7 @@
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="login.html"><i class="fa fa-power -off"></i>Logout</a>
+                            <a class="nav-link" onclick="logoff()"><i class="fa fa-power -off"></i>Logout</a>
                         </div>
                     </div>
 
@@ -152,7 +152,7 @@
                                 <label>Selecione o Sistema</label>
 
                                 <select name="sistema" id="sistema" class="form-control">
-                                    <option disabled selected>Selecione o Sistema</option>
+
                                 </select>
 
                             </div>
@@ -161,7 +161,8 @@
 
                                 <label>Ou adicione um novo Sistema</label>
 
-                                <input type="text" class="form-control" id="nomeSistema" placeholder="Nome do Sistema">
+                                <input type="text" class="form-control" id="nomeSistema" name="nomeSistema"
+                                    placeholder="Nome do Sistema">
                             </div>
                         </div>
 
@@ -247,19 +248,20 @@
 </body>
 
 <script>
+    verificarAutenticacao();
     consultarSistema();
 
     function consultarSistema() {
         console.log("res OK");
-        
-    fetch("../consultaUser", {
-        method: "POST",
-        body: " "
-    }).then(function (resposta) {
-      
-        resposta.json().then(function (rer) {
+
+        fetch("../consultaUser", {
+            method: "POST",
+            body: " "
+        }).then(function (resposta) {
+
+            resposta.json().then(function (rer) {
                 console.log(rer[0]);
-                var conteudo = '';
+                var conteudo = '<option selected>Selecione o Sistema</option>';
                 for (r = 0; r < rer.length; r++) {
                     var atual = rer[r];
 
@@ -271,14 +273,13 @@
         });
 
 
-}
+    }
     function cadastrarDispositivo(e) {
         e.preventDefault();
-        console.log("caiu na function");
+        console.log("caiu na function cadastrar");
         if (nomeDispositivo.value == "" || tipoDispositivo.value == "" || modeloDispositivo.value == "") {
 
             swal({
-
                 text: "Preencha os campos em branco!",
                 type: "warning",
                 icon: "warning",

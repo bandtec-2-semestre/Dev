@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
 
 function cadastro(name, compName, cnpj, email, pswd, res) {
 
-    verificarCnpj(cnpj).then(resultado => {
+    verificar(cnpj, email).then(resultado => {
 
         let criar = !resultado;
         console.log(`criar: ${criar}`);
@@ -42,10 +42,10 @@ function cadastro(name, compName, cnpj, email, pswd, res) {
 
 //Função que verifica se o e-mail já esta cadastrado no Banco de Dados
 
-function verificarCnpj(cnpj) {
+function verificar(cnpj, email) {
 
     // A seguinte string  'stringSql' verifica se existe algum email ou cnpj que seja igual ao que o usuário está tentanto criar
-    let querystring = `Select * from Client where cnpj = '${cnpj}'`; //email = '${email}' and
+    let querystring = `Select * from Client where cnpj = '${cnpj}' or email = '${email}'`; //email = '${email}' and
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {// É chamada a função para verificar esses dados
             // Caso ela de certo, continua as linhas abaixo

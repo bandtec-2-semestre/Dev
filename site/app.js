@@ -4,12 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+//NÃO ESQUECER DE REGISTRAR ODAS AS ROTAS AQUI
+
 var cadastroRouter = require('./routes/cadastro');
 //var loginRouter = require('./routes/login');
 var cadastroDispositivoRouter = require('./routes/cadastroDispositivo');
 var consultaUserRouter = require('./routes/consultaUser');
+var consultarDispositivosRouter = require('./routes/consultarDispositivos');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -28,14 +32,19 @@ app.use('/cadastroDispositivo', cadastroDispositivoRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/consultaUser', consultaUserRouter);
+app.use('/consultarDispositivos', consultarDispositivosRouter);
+
+app.use('/login', loginRouter);
+
+
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

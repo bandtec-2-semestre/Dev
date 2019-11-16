@@ -4,13 +4,17 @@ const Database = require('../Database');
 const config = require('../config');
 
 router.post('/', (req, res, next) => {
-    var sistema = req.body.nomeSistema;
-carregaComboSistema(res);
+    var sistema = req.body.sistema;
+    console.log("======================" + req.body.sistema);
+    carregaTabela(sistema, res);
 });
 
-//Função que faz a busca do sistema no Banco
-function carregaComboSistema(res) {
-    let querystring = `Select * from Server where FK_client  = 1`; //cliente fixo
+
+//FUNÇÃO PRA CARREGAR OS DADOS NA TBELA
+function carregaTabela(selecionado, res) {
+
+    let querystring = `Select Device.name, Device.description, model, DeviceStatus.description as 'status', DeviceType.name as 'type' from Device inner join DeviceStatus on fk_status = idStatus inner join DeviceType on fk_type = idType where fk_server = '${selecionado}'
+                        `;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
 
@@ -24,5 +28,4 @@ function carregaComboSistema(res) {
         });
     });
 }
-
 module.exports = router;
