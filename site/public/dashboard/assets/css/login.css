@@ -87,7 +87,7 @@ button{
 
 }
 input[type="submit"] {
-  width: 100%;
+  width: 70%;
   border: 0;
   border-radius: 25px;
   padding: 14px;
@@ -100,14 +100,13 @@ input[type="submit"] {
   margin-top: 10px;
 }
 
- input:hover{
-     color: rgba(216, 203, 203, 0.829);
- }
+
 .background {
   width: 70%;
   padding: 40px;
   height: 100vh;
-  background: linear-gradient(60deg, rgba(11, 121, 155, 0.253), rgba(148, 130, 175, 0.37)),  url('https://www.unirede.net/wp-content/uploads/2018/11/noc-unirede-solucoes-corporativas-zabbix.png') center no-repeat;
+  background: linear-gradient(60deg, rgba(11, 121, 155, 0.253), #060606),  
+        url('https://www.unirede.net/wp-content/uploads/2018/11/noc-unirede-solucoes-corporativas-zabbix.png') center no-repeat;
   background-size: cover;
   display: flex;
   flex-wrap: wrap;
