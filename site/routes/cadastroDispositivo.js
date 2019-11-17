@@ -11,67 +11,117 @@ router.post('/', (req, res, next) => {
     var modeloDispositivo = req.body.modeloDispositivo;
     var andarDispositivo = req.body.localDispositivo + " " + req.body.salaDispositivo;
     var nomeSistema = req.body.nomeSistema;
-
-console.log(nomeSistema);
-    console.log(dispositivo, tipoDispositivo, modeloDispositivo, andarDispositivo);
-    cadastrarDevice(dispositivo, andarDispositivo, modeloDispositivo, nomeSistema, res);
+    var idSistema = req.body.sistema;
+    var idCliente = req.body.idCliente;
+    // console.log(dispositivo, tipoDispositivo, modeloDispositivo, andarDispositivo);
+    cadastrarDevice(dispositivo, andarDispositivo, modeloDispositivo, nomeSistema, res, idCliente, tipoDispositivo, idSistema);
 });
 
-function cadastrarDevice(name, description, model, nomeSistema, res) {
-    console.log("Função cadstrar DDevice");
+function cadastrarDevice(name, description, model, nomeSistema, res, idCliente, tipoDispositivo, idSistema) {
+
     verificarIdDevice(name)
         .then(resultado => {
             let criar = !resultado;
-            console.log(`criar: ${criar}`);
-            adicionarServidor(nomeSistema);
-            var idSistema = buscarIdSistema();
-            if (criar) {
-                var stringSql = `insert into Device (name, description, model, idServer) values ('${name}', '${description}', '${model}', '${idServer}')`;
-                Database.query(stringSql).then(resultado => {
-                    res.status(200).send("ok");
-                    console.log("Dispositivo Cadastrado!");
-                });
-            } else {
-                res.status(200).send("Não Ok")
-            }
+
+            console.log(`Dispositio pode ser criado: ${criar}`);
+
+            var sistema = "";
+            let type = "";
+
+            adicionarTipo(tipoDispositivo)
+                .then(r => {
+                    type = r
+                }).finally(() => {
+                    if (criar) {
+                        // SE A PESSOA NÃO SELECIONOU DA COMBO BOX VAI ADICIONAR O SERVIDOR//SISTEMA
+                        if (idSistema == "Selecione o Sistema") {
+                            adicionarServidor(nomeSistema, idCliente).
+                                then(r => {
+                                    sistema = r;
+                                    console.log("Sistema cadastrado " + sistema)
+
+                                    var stringSql = `insert into Device (name, description, model, fk_server) values ('${name}', '${description}', '${model}', '${sistema}')`;
+                                    Database.query(stringSql).then(resultado => {
+                                        res.status(200).send("ok");
+
+                                        console.log("Dispositivo Cadastrado!");
+                                    });
+
+                                });
+                        }
+                        else {
+                            // QUANDO USUARIO SELECIONOU UM SISTEMA JÁ CADASTRADO
+                            var stringSql = `insert into Device (name, description, model, fk_type, fk_server, fk_status) values ('${name}', '${description}', '${model}', ${type} , '${idSistema}', 1)`;
+                            Database.query(stringSql).then(resultado => {
+                                res.status(200).send("ok");
+                                console.log("Dispositivo Cadastrado!");
+                            });
+                        }
+                    } else {
+                        res.status(200).send("Não Ok")
+                    }
+                })
+
         }).catch(error => {
             console.log(error);
         });
 }
 
+// PESQUISA O TIPO SE EXISTIR RETORNA O ID
+// SE NÃO EXISTIR ADICIONA O TIPO AO BANCO DE DADOS E RETORNA O ID ADICIONADO
 function adicionarTipo(name) {
-    let querystring = `Insert into DeviceType (name) values ('${name}') `;
+    let querystring = `Select * from DeviceType where name = '${name}'`;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
-            let existe = results.recordsets[0].length > 0;
-            resolve(existe);
-            console.log("Dispositivo cadastrado!");
 
+            let existe = results.recordsets[0].length > 0;
+            if (!existe) {
+                querystring = `Insert into DeviceType (name) values ('${name}') `;
+
+                Database.query(querystring).then(results => {
+
+                    let existindo = results.rowsAffected.length > 0;
+                    if (existindo) {
+                        let querystring = `SELECT top 1 idType FROM DeviceType ORDER BY idType DESC`;
+
+                        Database.query(querystring).then(results => {
+                            let existe = results.recordsets[0];
+                            console.log("Tipo cadastrado!");
+                            resolve(existe[0].idType);
+                        });
+
+                    }
+
+                }).catch(error => {
+                    reject(error);
+                });
+
+            } else {
+                console.log("Tipo cadastrado!");
+                resolve(results.recordset[0].idType);
+            }
         }).catch(error => {
             reject(error);
         });
     });
-}
-function buscarIdSistema() {
-    let querystring = `SELECT  Server.idServer FROM SERVER ORDER BY idServer DESC limit 1`;
-    return new Promise((resolve, reject) => {
-        Database.query(querystring).then(results => {
-            let existe = results.recordsets[0].ultimo;
-            resolve(existe);
-            console.log('a' + existe);
-        });
-    });
 
 }
-function adicionarServidor(name) {
-    console.log("Sistema indo!");
 
-    let querystring = `Insert into Server (idServer , name, FK_client) values (null, '${name}', 1)`;
+// FUNÇÃO PARA ADICIONAR SISTEMA E RETORNA VALOR DA ID DO SISTEMA CADASTRADO
+function adicionarServidor(name, idClient) {
+    let querystring = `Insert into Server (name, FK_client) values ('${name}', ${idClient})`;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
-            let existe = results.recordsets[0].length > 0;
-            resolve(existe);
-            console.log("Sistema cadastrado!");
+
+
+        }).then(() => {
+            let querystring = `SELECT top 1 idServer FROM SERVER ORDER BY idServer DESC`;
+
+            Database.query(querystring).then(results => {
+                let existe = results.recordsets[0];
+                console.log("Sistema cadastrado!");
+                resolve(existe[0].idServer);
+            });
 
         }).catch(error => {
             reject(error);
@@ -81,7 +131,7 @@ function adicionarServidor(name) {
 
 //FUNÇÃO QUE VERIFICA SE O DISPOSITIVO JÁ ESTÁ CADASTRADO NO SISTEMA
 function verificarIdDevice(name) {
-    console.log("Chegou no verificar Device");
+
     let querystring = `Select * from Device where name = '${name}'`;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
@@ -89,7 +139,7 @@ function verificarIdDevice(name) {
             let existe = results.recordsets[0].length > 0;
 
             resolve(existe);
-            console.log("Informações verificadas!");
+            console.log("Dispositivo verificado!");
         }).catch(error => {
             reject(error);
         });

@@ -148,6 +148,7 @@
 
                         <div class="row mb-3">
                             <div class="form-group col-lg-6">
+                                <input type="text" name="idCliente" id="idCliente" style="display: none">
 
                                 <label>Selecione o Sistema</label>
 
@@ -230,22 +231,6 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
         <script src="assets/js/main.js"></script>
 
-        <!--  Chart js -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
-        <script src="assets/js/init/chartjs-init.js"></script>
-
-
-        <script src="assets/js/lib/data-table/datatables.min.js"></script>
-        <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-        <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-        <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-        <script src="assets/js/lib/data-table/jszip.min.js"></script>
-        <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
-        <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
-        <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
-        <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
-        <script src="assets/js/init/datatables-init.js"></script>
-
         <!-- Start of securithelp Zendesk Widget script -->
         <script id="ze-snippet"
             src="https://static.zdassets.com/ekr/snippet.js?key=2f1c47af-6ca3-4ce8-9188-958944ef0eb5"> </script>
@@ -255,10 +240,12 @@
 <script>
     verificarAutenticacao();
     consultarSistema();
+    var sistemasCadastrados = [];
 
     function consultarSistema() {
 
         var cdCliente = { idCliente: sessionStorage.idClient }
+        idCliente.value = cdCliente;
         var corpo = new URLSearchParams(cdCliente);
         fetch("../consultaUser", {
             method: "POST",
@@ -270,7 +257,7 @@
                 var conteudo = '<option selected>Selecione o Sistema</option>';
                 for (r = 0; r < rer.length; r++) {
                     var atual = rer[r];
-
+                    sistemasCadastrados.push(atual.name.toLowerCase());
                     conteudo += `<option value="${atual.idServer}">${atual.name}</option>`;
                 }
                 sistema.innerHTML = conteudo;
@@ -298,8 +285,42 @@
             nomeDispositivo.focus();
             return false;
 
-        } else {
+        } else if (nomeSistema.value != "" && sistema.value != "Selecione o Sistema") {
+            swal({
+                text: "Por favor escolha se quer cadastrar um novo sistema utilizar um existente!",
+                type: "warning",
+                icon: "warning",
+                confirmButtonClass: "btn-danger",
+                closeOnConfirm: false,
+                dangerMode: true,
+                confirmButtonClass: "btn-danger",
+                closeOnClickOutside: true,
+            });
+            nomeSistema.focus();
+            return false;
+        }
+        else if (nomeSistema.value != "") {
+            sistemasCadastrados.map(item => {
+                if (item == nomeSistema.value.toLowerCase()) {
+                    swal({
+                        text: "Esse sistema já está cadastrado por favor o selecione na caixa de seleção!",
+                        type: "warning",
+                        icon: "warning",
+                        confirmButtonClass: "btn-danger",
+                        closeOnConfirm: false,
+                        dangerMode: true,
+                        confirmButtonClass: "btn-danger",
+                        closeOnClickOutside: true,
+                    });
+                    sistema.focus();
+                }
+            })
+        }
+        else {
             console.log("CHEGOU NO else");
+
+            var cdCliente = sessionStorage.idClient;
+            idCliente.value = cdCliente;
             var dadosDispositivo = $("#formDispositivo").serialize();
             console.log(dadosDispositivo);
 
@@ -314,7 +335,7 @@
                     swal({
                         title: "Aviso!",
                         type: "info",
-                        text: "Dispositivo cadstrado!",
+                        text: "Dispositivo cadastrado!",
                         closeOnClickOutside: true,
                     });
 
