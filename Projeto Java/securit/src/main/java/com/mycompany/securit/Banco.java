@@ -7,6 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class Banco {
     private final DadosConexao dadosConexao;
     private final JdbcTemplate jdbcTemplate;
+    private List client;
+    private List clientSystems;
+    private CharSequence idCliente;
     
     public Banco(){
         dadosConexao = new DadosConexao();
@@ -15,9 +18,11 @@ public class Banco {
     }
     
     public String validateLogin(String login, String senha){
-        List lista = jdbcTemplate.queryForList(
-                "SELECT * FROM Client WHERE email = ?", login
+        client = jdbcTemplate.queryForList(
+                "SELECT * FROM Client WHERE email = ? and pswd = ?", login, senha
         );
+        idCliente = client.get(0).toString().substring(10, 13).replace(",", "").trim();
+        
         return "Logado";
         /* if(lista.size() >= 1){
             lista.get(0);
@@ -31,6 +36,14 @@ public class Banco {
         } */
     }
     
+    public List consultarSistemas(){
+        clientSystems = jdbcTemplate.queryForList(
+                "SELECT * FROM Server WHERE FK_client = ?", idCliente
+        );
+        
+        return clientSystems;
+    }
+ 
     public void insertComp(
             Integer sistemaId, Integer disk, Integer memory, Integer cpu,
             Integer diskId, Integer memoryId, Integer cpuId){

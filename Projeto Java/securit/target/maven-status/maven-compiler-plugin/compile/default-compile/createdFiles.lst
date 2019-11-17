@@ -1,4 +1,5 @@
 com\mycompany\securit\Components.class
+com\mycompany\securit\Login$3.class
 com\mycompany\securit\Dashboard$1.class
 com\mycompany\securit\Login.class
 com\mycompany\securit\Dashboard$2.class
@@ -16,4 +17,5 @@ com\mycompany\securit\Login$1.class
 com\mycompany\securit\Dashboard.class
 com\mycompany\securit\Graph.class
 com\mycompany\securit\SlackMessage.class
+com\mycompany\securit\Login$4.class
 com\mycompany\securit\Dashboard$5.class

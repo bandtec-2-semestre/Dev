@@ -51,7 +51,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lbSistema = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -96,15 +96,15 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel8.setText("SISTEMA X");
-        jLabel8.setToolTipText("");
-        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbSistema.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lbSistema.setForeground(new java.awt.Color(254, 254, 254));
+        lbSistema.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbSistema.setText("SISTEMA");
+        lbSistema.setToolTipText("");
+        lbSistema.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbSistema.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                lbSistemaMouseClicked(evt);
             }
         });
 
@@ -121,7 +121,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(52, 52, 52)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(956, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,7 +135,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                     .addContainerGap(120, Short.MAX_VALUE)
-                    .addComponent(jLabel8)
+                    .addComponent(lbSistema)
                     .addGap(41, 41, 41)))
         );
 
@@ -330,9 +330,9 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel7MouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void lbSistemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbSistemaMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel8MouseClicked
+    }//GEN-LAST:event_lbSistemaMouseClicked
 
     private void lbCpuDetalheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCpuDetalheMouseClicked
         // TODO add your handling code here:
@@ -398,9 +398,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbCpuDetalhe;
+    private javax.swing.JLabel lbSistema;
     private javax.swing.JLabel lblCPU;
     private javax.swing.JLabel lblDisk;
     private javax.swing.JLabel lblMemory;
