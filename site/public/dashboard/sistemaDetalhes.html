@@ -416,7 +416,7 @@
 
             // COMEÇA O GRÁFICO COM TITULO CPU E NUMEROS ALEATÓRIOS
             $("#title-graph").text("CPU");
-            consultarHistorico('cpu', dataHoraLista);
+            consultarHistorico('cpu', dataHoraLista, "CPU");
 
             // FUNÇÃO QUE MUDA O CONTÉUDO DO GRÁFICO 
             // TITULO E ACIONA A BORDA DOURADA NO CARD
@@ -481,7 +481,8 @@
         var historico = [];
         var dataHoraLista = [];
         function consultarHistorico(nomeComponente) {
-
+            historico = [];
+            dataHoraLista = [];
             var info = {
                 codigosistema: sessionStorage.codigo_sistema,
                 componenteNome: nomeComponente
@@ -503,7 +504,7 @@
                         dataHoraLista.push(dataLabel);
                     }
                     console.log(historico)
-                    grafico(historico, dataHoraLista);
+                    grafico(historico, dataHoraLista, nomeComponente);
                 }
                 );
             });
@@ -515,17 +516,17 @@
             return Math.floor(Math.random() * 100);
         }
 
-        function grafico(dadosAleatorios, dataHoraLabel) {
+        function grafico(dadosAleatorios, dataHoraLabel, nome) {
             var ctx = document.getElementById("singelBarChart");
             ctx.width = 500;
             ctx.height = 500;
-            var myChart = new Chart(ctx, {
+            var myChart = Chart.Line(ctx, {
                 type: 'line',
                 data: {
                     labels: dataHoraLabel,
                     datasets: [
                         {
-                            label: "My First dataset",
+                            label: nome,
                             data: dadosAleatorios,
                             borderColor: "#fdb416",
                             borderWidth: "2",
