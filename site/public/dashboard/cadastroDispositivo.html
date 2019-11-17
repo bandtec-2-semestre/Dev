@@ -299,23 +299,7 @@
             nomeSistema.focus();
             return false;
         }
-        else if (nomeSistema.value != "") {
-            sistemasCadastrados.map(item => {
-                if (item == nomeSistema.value.toLowerCase()) {
-                    swal({
-                        text: "Esse sistema já está cadastrado por favor o selecione na caixa de seleção!",
-                        type: "warning",
-                        icon: "warning",
-                        confirmButtonClass: "btn-danger",
-                        closeOnConfirm: false,
-                        dangerMode: true,
-                        confirmButtonClass: "btn-danger",
-                        closeOnClickOutside: true,
-                    });
-                    sistema.focus();
-                }
-            })
-        }
+
         else {
             console.log("CHEGOU NO else");
 
@@ -346,7 +330,7 @@
                         title: "Aviso!",
                         type: "warning",
                         dangerMode: true,
-                        text: "Nao foi possível cadastrar o dispositivo!",
+                        text: "Esse nome de dispositivo já foi cadastrado. Por favor verifique na pagina de consulta!",
                         closeOnClickOutside: true,
                     });
                 }
