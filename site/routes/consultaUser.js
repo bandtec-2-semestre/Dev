@@ -4,13 +4,14 @@ const Database = require('../Database');
 const config = require('../config');
 
 router.post('/', (req, res, next) => {
-    var sistema = req.body.nomeSistema;
-carregaComboSistema(res);
+    var idCliente = req.body.idCliente;
+
+    carregaComboSistema(res, idCliente);
 });
 
 //Função que faz a busca do sistema no Banco
-function carregaComboSistema(res) {
-    let querystring = `Select * from Server where FK_client  = 1`; //cliente fixo
+function carregaComboSistema(res, clientID) {
+    let querystring = `Select * from Server where FK_client  = ${clientID}`;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
 
@@ -20,7 +21,7 @@ function carregaComboSistema(res) {
             console.log(results);
             res.send(results.recordset);
         }).catch(error => {
-            reject(error);
+            console.log(error);
         });
     });
 }

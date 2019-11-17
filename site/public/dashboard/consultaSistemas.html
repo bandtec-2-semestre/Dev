@@ -140,6 +140,8 @@
 
                 <div class="form-group col-lg-6">
                     <form id="FormSistema">
+                        <input type="text" name="idCliente" id="idCliente" style="display: none">
+
                         <label>Selecione o Sistema</label>
 
                         <select name="sistema" id="sistema" class="form-control" onchange="carrega()">
@@ -150,8 +152,8 @@
 
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-body">
-                            <table id="tabele" class="table table-striped table-bordered">
+                        <div class="card-body" id="cardConteudo">
+                            <table id="tabele" style="display: none" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Status</th>
@@ -202,11 +204,6 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="assets/js/main.js"></script>
 
-    <!--  Chart js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
-    <script src="assets/js/init/chartjs-init.js"></script>
-
-
 
     <script src="assets/js/lib/data-table/datatables.min.js"></script>
     <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
@@ -229,6 +226,7 @@
 
 
     $(document).ready(function () {
+
         verificarAutenticacao();
         consultarSistema();
     });
@@ -237,8 +235,10 @@
         location.href = 'dispositivo.html';
     }
 
+
     //FUNÇÃO QUE BUSCA OS DADOS E INSERE NA TABELA
     function carregaTabela(nome) {
+
         var idCombobox = $("#FormSistema").serialize();
         console.log(idCombobox);
         $.ajax({
@@ -246,55 +246,60 @@
             type: "POST",
             data: idCombobox
         }).done(function (resposta) {
-            console.log(resposta);
 
 
-            var conteudo = '';
-            for (r = 0; r < resposta.length; r++) {
-                var atual = resposta[r]; conteudo += ` <tr>
-    <td>
-        <span class="status-dispositivo ${atual.status == 'online' ? 'on' : 'off'} mr-3">
-            <span id="dispositivos-off">${atual.status == 'online' ? 'ON' : 'OFF'}</span>
-        </span>
-    </td>
-    <td>${atual.name}</td>
-    <td>${atual.description}</td>
-    <td>${atual.model}</td>
-    <td>${atual.type}</td>
-    </tr>`;
+            if (resposta.length > 0) {
+                var conteudo = '';
+                for (r = 0; r < resposta.length; r++) {
+                    var atual = resposta[r]; conteudo += `<tr>
+                        <td>
+                            <span class="status-dispositivo ${atual.status == 'online' ? 'on' : 'off'} mr-3">
+                                <span id="dispositivos-off">${atual.status == 'online' ? 'ON' : 'OFF'}</span>
+                            </span>
+                        </td>
+                        <td>${atual.name}</td>
+                        <td>${atual.description}</td>
+                        <td>${atual.model}</td>
+                        <td>${atual.type}</td>
+                        </tr>`;
+                }
+                tabele.innerHTML = conteudo;
+                tabele.style.display = "block";
             }
-            tabele.innerHTML = conteudo;
+            else {
+                cardConteudo.innerHTML = "<h2>Você não cadastrou nenhum Dispositivo! </h2>";
+            }
         }
         );
-
-
     }
 
     function carrega() {
-
         carregaTabela(sistema.value);
-
         $('#tabele').DataTable();
-
     }
 
 
     function consultarSistema() {
-
-
+        var cdCliente = { idCliente: sessionStorage.idClient }
+        var corpo = new URLSearchParams(cdCliente);
         fetch("../consultaUser", {
             method: "POST",
-            body: " "
+            body: corpo
         }).then(function (resposta) {
-
             resposta.json().then(function (rer) {
-                console.log(rer[0]);
-                var conteudo = '<option disabled selected>Selecione o Sistema</option>';
-                for (r = 0; r < rer.length; r++) {
-                    var atual = rer[r]; conteudo += `<option value="${atual.idServer}">${atual.name}
-        </option>`;
+
+                if (rer.length > 0) {
+                    console.log(rer[0]);
+                    var conteudo = '<option disabled selected>Selecione o Sistema</option>';
+                    for (r = 0; r < rer.length; r++) {
+                        var atual = rer[r]; conteudo += `<option value="${atual.idServer}">${atual.name}
+            </option>`;
+                    }
+                    sistema.innerHTML = conteudo;
                 }
-                sistema.innerHTML = conteudo;
+                else {
+                    cardConteudo.innerHTML = "<h2>Você não cadastrou nenhum Sistema! </h2>";
+                }
             }
             );
         });
