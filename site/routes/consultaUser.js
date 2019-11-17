@@ -48,4 +48,47 @@ function sistemaDispositivos(res, clientID) {
     });
 }
 
+router.post('/consultaComponentsAtual', (req, res, next) => {
+    var sistema = req.body.codigosistema;
+
+    componentesAtual(res, sistema);
+});
+
+function componentesAtual(res, codSistema) {
+    let querystring = `select top 3 date_time, value, name from ServerComponents inner join ServerLog on idServerComponents = FK_ServerComponents where ServerComponents.FK_Server = ${codSistema} order by date_time desc`;
+    return new Promise((resolve, reject) => {
+        Database.query(querystring).then(results => {
+
+            let existe = results.recordsets[0].length > 0;
+
+            resolve(existe);
+            console.log(results);
+            res.send(results.recordset);
+        }).catch(error => {
+            console.log(error);
+        });
+    });
+}
+
+router.post('/consultaComponentesHistorico', (req, res, next) => {
+    var sistema = req.body.codigosistema;
+    var componente = req.body.componenteNome;
+    var numeroDeDados = 30;
+    let querystring = `select top ${numeroDeDados} date_time, value, name from ServerComponents inner join ServerLog on idServerComponents = FK_ServerComponents where ServerComponents.FK_Server = ${sistema} and name like '${componente}%' order by date_time desc`;
+
+    return new Promise((resolve, reject) => {
+        Database.query(querystring).then(results => {
+
+            let existe = results.recordsets[0].length > 0;
+
+            resolve(existe);
+            console.log(results);
+            res.send(results.recordset);
+        }).catch(error => {
+            console.log(error);
+        });
+    });
+});
+
+
 module.exports = router;
