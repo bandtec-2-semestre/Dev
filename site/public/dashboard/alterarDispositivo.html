@@ -148,7 +148,7 @@
 
                         <div class="row mb-3">
                             <div class="form-group col-lg-6">
-                                <input type="text" name="idCliente" id="idCliente" style="display: none">
+                                <input type="text" name="idDevice" id="idDevice" style="display: none">
 
                                 <label>Selecione o Sistema</label>
 
@@ -191,8 +191,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-info"
-                            onclick="cadastrarDispositivo(event)">Cadastrar</button>
+                        <button type="submit" class="btn btn-info" onclick="alterarDispositivo(event)">Alterar</button>
                     </form>
 
                 </div>
@@ -238,7 +237,8 @@
     function consultarSistema() {
 
         var cdCliente = { idCliente: sessionStorage.idClient }
-        idCliente.value = cdCliente;
+        idDevice.value = cdCliente;
+
         var corpo = new URLSearchParams(cdCliente);
         fetch("../consultaUser", {
             method: "POST",
@@ -254,14 +254,15 @@
                     conteudo += `<option value="${atual.idServer}">${atual.name}</option>`;
                 }
                 sistema.innerHTML = conteudo;
+                consultarDispositivo();
             }
             );
         });
     }
 
-    function cadastrarDispositivo(e) {
+    function alterarDispositivo(e) {
         e.preventDefault();
-        console.log("caiu na function cadastrar");
+
         if (nomeDispositivo.value == "" || tipoDispositivo.value == "" || modeloDispositivo.value == "") {
 
             swal({
@@ -279,12 +280,12 @@
 
         }
         else {
-            console.log("CHEGOU NO else");
 
-            var cdCliente = sessionStorage.idClient;
-            idCliente.value = cdCliente;
+
+            var cdDevice = sessionStorage.codigo_alterar;
+            idDevice.value = cdDevice;
             var dadosDispositivo = $("#formDispositivo").serialize();
-            console.log(dadosDispositivo);
+
 
             $.ajax({
                 url: "../cadastroDispositivo",
@@ -292,23 +293,22 @@
                 data: dadosDispositivo
 
             }).done(function (resposta) {
-                console.log("res OK");
+
                 if (resposta == "ok") {
                     swal({
                         title: "Aviso!",
                         type: "info",
-                        text: "Dispositivo cadastrado!",
+                        text: "Dispositivo alterado!",
                         closeOnClickOutside: true,
                     });
 
-                    window.location = "cadastroDispositivo.html";
                 } else {
                     //alert("Dispositivo NAO cadastrado!");
                     swal({
                         title: "Aviso!",
                         type: "warning",
                         dangerMode: true,
-                        text: "Esse nome de dispositivo já foi cadastrado. Por favor verifique na pagina de consulta!",
+                        text: "Ocorreu um erro e não foi alterado as informações. Tente novamente!",
                         closeOnClickOutside: true,
                     });
                 }
@@ -318,7 +318,37 @@
 
 
 
+    function consultarDispositivo() {
+        var info = { idDevice: sessionStorage.codigo_alterar }
+        var corpo = new URLSearchParams(info);
 
+        fetch("../alterar/consultarDispositivo", {
+            method: "POST",
+            body: corpo
+        }).then(function (resposta) {
+            resposta.json().then(function (rer) {
+
+                if (rer.length > 0) {
+                    console.log(rer);
+
+                    for (r = 0; r < rer.length; r++) {
+                        var atual = rer[r];
+                        // sistema.value = atual.sistema;
+                        sistema.value = atual.idServer;
+                        nomeDispositivo.value = atual.name;
+                        tipoDispositivo.value = atual.type;
+                        modeloDispositivo.value = atual.model;
+                        var des = atual.description.split(' ');
+                        localDispositivo.value = des[0];
+                        salaDispositivo.value = des[1];
+                    }
+
+                }
+
+            }
+            );
+        });
+    }
 
 
 

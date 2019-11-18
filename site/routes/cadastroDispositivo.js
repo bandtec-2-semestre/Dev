@@ -9,12 +9,12 @@ router.post('/', (req, res, next) => {
     var dispositivo = req.body.nomeDispositivo;
     var tipoDispositivo = req.body.tipoDispositivo
     var modeloDispositivo = req.body.modeloDispositivo;
-    var andarDispositivo = req.body.localDispositivo + " " + req.body.salaDispositivo;
+    var descricao = req.body.localDispositivo + " " + req.body.salaDispositivo;
     var nomeSistema = req.body.nomeSistema;
     var idSistema = req.body.sistema;
     var idCliente = req.body.idCliente;
     // console.log(dispositivo, tipoDispositivo, modeloDispositivo, andarDispositivo);
-    cadastrarDevice(dispositivo, andarDispositivo, modeloDispositivo, nomeSistema, res, idCliente, tipoDispositivo, idSistema);
+    cadastrarDevice(dispositivo, descricao, modeloDispositivo, nomeSistema, res, idCliente, tipoDispositivo, idSistema);
 });
 
 function cadastrarDevice(name, description, model, nomeSistema, res, idCliente, tipoDispositivo, idSistema) {
