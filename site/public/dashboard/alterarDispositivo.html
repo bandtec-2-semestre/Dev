@@ -288,13 +288,13 @@
 
 
             $.ajax({
-                url: "../cadastroDispositivo",
+                url: "../cadastroDispositivo/alterar",
                 type: 'post',
                 data: dadosDispositivo
 
             }).done(function (resposta) {
-
-                if (resposta == "ok") {
+                console.log(resposta);
+                if (resposta == "Created") {
                     swal({
                         title: "Aviso!",
                         type: "info",
