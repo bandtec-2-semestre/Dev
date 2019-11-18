@@ -408,6 +408,7 @@
 
             verificarAutenticacao();
 
+
             empresaNome.innerHTML = sessionStorage.empresa;
             nomeSistema.innerHTML = sessionStorage.empresa;
 
@@ -449,7 +450,7 @@
 
 
 
-        consultarComponentes();
+
 
         function consultarComponentes() {
 
@@ -505,8 +506,9 @@
                     }
                     console.log(historico)
                     grafico(historico, dataHoraLista, nomeComponente);
-                }
-                );
+
+                    consultarComponentes();
+                });
             });
 
 

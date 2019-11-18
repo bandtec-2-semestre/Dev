@@ -354,7 +354,7 @@
             resposta.json().then(function (rer) {
 
                 if (rer.length > 0) {
-                    console.log(rer[0]);
+                    console.log(rer);
                     var conteudo = '<option disabled selected>Selecione o Sistema</option>';
                     for (r = 0; r < rer.length; r++) {
                         var atual = rer[r]; conteudo += `<option value="${atual.idServer}">${atual.name}
