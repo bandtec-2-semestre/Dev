@@ -15,6 +15,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var dashPingRouter = require('./routes/dashPing');
+var excluirRouter = require('./routes/excluir');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/users', usersRouter);
 app.use('/consultaUser', consultaUserRouter);
 app.use('/consultarDispositivos', consultarDispositivosRouter);
 app.use('/dashPing', dashPingRouter);
+app.use('/excluir', excluirRouter);
 app.use('/login', loginRouter);
 
 

@@ -34,6 +34,9 @@
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <script src="../js/logout.js"></script>
 
+    <!-- biblioteca Swall - alerts-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../js/logout.js"></script>
 </head>
 
 <body>
@@ -163,7 +166,7 @@
                                             <th>Localização</th>
                                             <th>Modelo</th>
                                             <th>Tipo</th>
-
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody id="tabelaDados">
@@ -238,9 +241,59 @@
         location.href = 'dispositivo.html';
     }
 
+    function excluir(id) {
+        swal({
+            title: "Você tem certeza que deseja excluir estes dados?",
+            text: "Essa ação não poderá ser revertida!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var info = { idDispositivo: id }
+                    var corpo = new URLSearchParams(info);
+
+                    fetch("../excluir", {
+                        method: "POST",
+                        body: corpo
+                    }).then(function (resposta) {
+
+                        if (resposta.ok) {
+
+                            swal({
+                                title: "Excluído com sucesso!",
+                                text: "   ",
+                                icon: "success"
+                            });
+
+                            carregaTabela();
+                            // window.location.reload();
+
+                        } else {
+
+                            swal({
+                                title: "Erro ao excluir!",
+                                text: "   ",
+                                icon: "error"
+                            });
+
+
+                        }
+                    });
+                } else {
+                    swal("Seus dados não foram excluidos.");
+                }
+            });
+    }
+
+    function alterar(id) {
+        sessionStorage.codigo_alterar = id;
+        location.href = 'alterarDispositivo.html';
+    }
 
     //FUNÇÃO QUE BUSCA OS DADOS E INSERE NA TABELA
-    function carregaTabela(nome) {
+    function carregaTabela() {
 
         var idCombobox = $("#FormSistema").serialize();
         console.log(idCombobox);
@@ -264,6 +317,10 @@
                         <td>${atual.description}</td>
                         <td>${atual.model}</td>
                         <td>${atual.type}</td>
+                        <td>
+                                <button class="btn btn-warning mb-2" onclick="alterar(${atual.idDevice})">Alterar</button>
+                                <button class="btn btn-danger mb-2" onclick="excluir(${atual.idDevice})">Excluir</button>
+                            </td>
                         </tr>`;
                 }
                 tabelaDados.innerHTML = conteudo;

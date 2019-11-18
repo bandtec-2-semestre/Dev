@@ -13,7 +13,7 @@ router.post('/', (req, res, next) => {
 //FUNÇÃO PRA CARREGAR OS DADOS NA TBELA
 function carregaTabela(selecionado, res) {
 
-    let querystring = `Select Device.name, Device.description, model, DeviceStatus.description as 'status', DeviceType.name as 'type' from Device inner join DeviceStatus on fk_status = idStatus inner join DeviceType on fk_type = idType where fk_server = '${selecionado}'
+    let querystring = `Select Device.idDevice, Device.name, Device.description, model, DeviceStatus.description as 'status', DeviceType.name as 'type' from Device inner join DeviceStatus on fk_status = idStatus inner join DeviceType on fk_type = idType where fk_server = '${selecionado}'
                         `;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
