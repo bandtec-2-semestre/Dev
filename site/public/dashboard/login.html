@@ -99,6 +99,7 @@
                 if (resposta.length > 0) {
                     sessionStorage.idClient = resposta[0].idClient;
                     sessionStorage.name = resposta[0].name;
+                    sessionStorage.empresa = resposta[0].compName;
                     console.log(resposta);
                     var resu = verificarAutenticacao();
 
@@ -122,6 +123,7 @@
         function verificarAutenticacao() {
             var nome = sessionStorage.name;
             var id = sessionStorage.idClient;
+            var empresa = sessionStorage.compName;
 
             if (nome != undefined && id != undefined) {
                 irDashboard();

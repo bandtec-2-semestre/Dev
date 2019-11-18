@@ -1,6 +1,7 @@
 function logoff() {
     sessionStorage.removeItem('idClient');
     sessionStorage.removeItem('name');
+    sessionStorage.removeItem('empresa');
 
 
     window.location.href = 'login.html';
