@@ -91,4 +91,26 @@ router.post('/consultaComponentesHistorico', (req, res, next) => {
 });
 
 
+router.post('/consultaMaiorUtilizacao', (req, res, next) => {
+    var sistema = req.body.codigosistema;
+    let querystring = `select value, name from ServerLog inner join ServerComponents on idServerComponents = FK_ServerComponents where ServerLog.FK_Server = ${sistema} and value > 80`;
+
+    return new Promise((resolve, reject) => {
+        Database.query(querystring).then(results => {
+
+            let existe = results.recordsets[0].length > 0;
+
+            resolve(existe);
+            console.log(results);
+            res.send(results.recordset);
+        }).catch(error => {
+            console.log(error);
+        });
+    });
+});
+
+
+
+
+
 module.exports = router;

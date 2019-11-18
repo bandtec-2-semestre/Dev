@@ -154,7 +154,7 @@
 
                                 <div class="row mb-5">
                                     <div class="col-lg-12">
-                                        <select name="sistemasescolha" id="sistemasescolha">
+                                        <select name="sistemasescolha" id="sistemasescolha" onchange="consultar()">
 
                                         </select>
                                     </div>
@@ -206,7 +206,7 @@
 
     <!--  Chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
-    <script src="assets/js/init/chartjs-init.js"></script>
+    <!-- <script src="assets/js/init/chartjs-init.js"></script> -->
 
 
     <script>
@@ -224,11 +224,109 @@
             empresa.innerHTML = `${empresaNome} - <span class="subtitulo" > Representante ${representanteNome}</span >`;
             var hora = new Date();
             dataHora.innerHTML = `Atualizado em ${hora.getHours()}:${hora.getMinutes()}`;
+
+            consultarSistema();
+
         });
 
-        consultarSistema();
+
+        function numsAleatorios(x) {
+            for (i = 0; i < 10; i++) {
+                x.push(Math.floor(Math.random() * (100 - 80)) + 80);
+            }
+        }
+
+        function labelsAleatorios(x) {
+            var dados = ['CPU', 'RAM', 'HD'];
+            for (i = 0; i < 10; i++) {
+                x.push(dados[Math.floor(Math.random() * 3)] + ' ' + Math.floor(Math.random() * 3) + 1);
+            }
+        }
+
+        function plotarGrafico(nomesistema) {
+            var ctx = document.getElementById("singelBarChart");
+            ctx.width = 500;
+            ctx.height = 500;
+
+            if (historico.length == 0) {
+                numsAleatorios(historico);
+            }
+            if (labelsDados.length == 0) {
+                labelsAleatorios(labelsDados);
+            }
+
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labelsDados,
+                    datasets: [
+                        {
+                            label: nomesistema,
+                            data: historico,
+                            borderColor: "#fdb416",
+                            borderWidth: "2",
+                            backgroundColor: "rgba(253, 180, 22, 0.27)",
+
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+
+        function consultar() {
+            var sisEscolhido = sistemasescolha.options[sistemasescolha.selectedIndex].text;
+            consultarHistorico(sistemasescolha.value, sisEscolhido);
+        }
+
+        var historico = [];
+        var labelsDados = [];
+        function consultarHistorico(idsistema, nomesistema) {
+            historico = [];
+            labelsDados = [];
+            console.log(idsistema);
+            console.log(nomesistema);
+            console.log('asdfsadf');
+
+            var info = {
+                codigosistema: idsistema,
+            };
+
+            var corpo = new URLSearchParams(info);
+
+            fetch("../consultaUser/consultaMaiorUtilizacao", {
+                method: "POST",
+                body: corpo
+            }).then(function (resposta) {
+
+
+                resposta.json().then(function (rer) {
+                    for (r = 0; r < rer.length; r++) {
+                        var atual = rer[r];
+                        historico.push(atual.value);
+
+                        labelsDados.push(atual.name);
+                    }
+
+                    plotarGrafico(nomesistema);
+                }
+                );
+            });
+
+
+        }
 
         var sistemas = [];
+        var sistemaPrimeiroNome = '';
+
         function consultarSistema() {
 
             var cdCliente = { idCliente: sessionStorage.idClient }
@@ -242,7 +340,7 @@
                 resposta.json().then(function (rer) {
 
                     sistemas = rer;
-
+                    sistemaPrimeiroNome = rer[0].name;
                     var conteudoComboBox = '<option disabled selected>Escolha um sistema</option>';
                     for (r = 0; r < rer.length; r++) {
                         var atual = rer[r];
@@ -253,13 +351,13 @@
                     sistemasescolha.style.width = '100%';
 
                     sistemasDis();
+
                 }
                 );
             });
 
 
         }
-
 
 
         function sistemasDis() {
@@ -330,6 +428,8 @@
                             console.log($(this).children().find('.infoSistema'));
                         });
                     });
+
+                    consultarHistorico(sistemas[0].idServer, sistemaPrimeiroNome);
                 }
                 );
             });
