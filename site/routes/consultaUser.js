@@ -110,7 +110,23 @@ router.post('/consultaMaiorUtilizacao', (req, res, next) => {
 });
 
 
+router.post('/alertas', (req, res, next) => {
+    var idCliente = req.body.idCliente;
+    var valorAlerta = 90;
+    let querystring = `select Server.name as 'serverName', value, ServerComponents.name as 'component', date_time as 'date' from ServerLog inner join ServerComponents on idServerComponents = FK_ServerComponents inner join Server on idServer = ServerLog.FK_Server where value > ${valorAlerta} and FK_client = ${idCliente}`;
+    return new Promise((resolve, reject) => {
+        Database.query(querystring).then(results => {
 
+            let existe = results.recordsets[0].length > 0;
 
+            resolve(existe);
+            console.log(results);
+            res.send(results.recordset);
+        }).catch(error => {
+            console.log(error);
+        });
+    });
+
+});
 
 module.exports = router;
