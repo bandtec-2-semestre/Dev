@@ -8,19 +8,21 @@ import org.jfree.chart.ChartPanel;
 import oshi.SystemInfo;
 public class Dashboard extends javax.swing.JFrame {
     
+    Integer cpu, memory, disk, sistemaId, cpuId, memoryId,diskId;
     Timer timer = new Timer();
     Boolean isVisible[] = {false, false, false};
+    
     Graph cpuGraph = new Graph("CPU");
     Graph memoryGraph = new Graph("Memory");
     Graph diskGraph = new Graph("Disk");
     ChartPanel cg = cpuGraph.getGraph(System.currentTimeMillis(), 0);
     ChartPanel mg = memoryGraph.getGraph(System.currentTimeMillis(), 0);
     ChartPanel dg = diskGraph.getGraph(System.currentTimeMillis(), 0);
+    
     SystemInfo si = new SystemInfo();
-    Integer cpu, memory, disk, sistemaId = 1, cpuId = 11, memoryId = 6,
-            diskId = 1;
     Components comp = new Components(sistemaId);
     Banco banco = new Banco();
+    
     SlackMessage mensagem = new SlackMessage(
             "https://hooks.slack.com/services/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"
     );
@@ -33,8 +35,21 @@ public class Dashboard extends javax.swing.JFrame {
         
     public Dashboard(String nomeSistema, String idSistema) {
         initComponents();
+  
+        lbSistema.setText(nomeSistema);
+        sistemaId = Integer.valueOf(idSistema);
+        
+        Boolean result = banco.consultarComponenteSistema(idSistema);
+        
+        if(result){
+            cpuId = Integer.valueOf(banco.getIdCpu());
+            memoryId = Integer.valueOf(banco.getIdRam());
+            diskId = Integer.valueOf(banco.getIdHD());
+        } else {
+//            banco.insertComponent(nomeSistema, idSistema, idSistema);
+        }
+        
         insert();
-        lbSistema.setText(nomeSistema + " " + idSistema);
     }
     
     public static void main(String args[]) {
@@ -356,7 +371,7 @@ public class Dashboard extends javax.swing.JFrame {
         
         addGraph();
         
-        insertDB();
+        insertLogs();
         
         timer.schedule(new task(), 1000);
     }
@@ -392,8 +407,10 @@ public class Dashboard extends javax.swing.JFrame {
         panDisk.add(dg);
     }
     
-    private void insertDB(){
-        banco.insertComp(sistemaId, disk, memory, cpu, diskId, memoryId, cpuId);
+    private void insertLogs(){
+        banco.insertComponentLogs(sistemaId, disk, diskId);
+        banco.insertComponentLogs(sistemaId, memory, memoryId);
+        banco.insertComponentLogs(sistemaId, cpu, cpuId);
     }
     
 

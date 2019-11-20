@@ -13,6 +13,10 @@ public class Banco {
     private List clientSystemsId = new ArrayList();
     private CharSequence idCliente;
     
+    private String idCpu;
+    private String idHD;
+    private String idRam;
+    
     public Banco(){
         dadosConexao = new DadosConexao();
 
@@ -62,33 +66,75 @@ public class Banco {
         });
     }
  
-    public void insertComp(
-            Integer sistemaId, Integer disk, Integer memory, Integer cpu,
-            Integer diskId, Integer memoryId, Integer cpuId){
-        jdbcTemplate.update(
-                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
-                        + "VALUES(?, ?, ?, ?)",
-                disk, LocalDateTime.now(), sistemaId, diskId
+    public Boolean consultarComponenteSistema(String idServer){
+        List result;
+        
+        result = jdbcTemplate.queryForList(
+                "SELECT * FROM ServerComponents WHERE FK_Server = ?", idServer
         );
         
-        jdbcTemplate.update(
-                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
-                        + "VALUES(?, ?, ?, ?)",
-                memory, LocalDateTime.now(), sistemaId, memoryId
-        );
+        if(result.size() >= 1){      
+        result.forEach(componentes -> {
+            System.out.println(componentes);
+            
+            String sis = componentes.toString();
+            String id = sis.substring(sis.indexOf("=")+1, sis.indexOf(","));
+            
+            if(sis.contains("HD")){
+                idHD = id;
+//                System.out.println(id + "hd");
+            } 
+            else if(sis.contains("CPU")){
+                idCpu = id;
+//                System.out.println(id + "CPU");;
+            }
+            else {
+                idRam = id;
+//                System.out.println(id + "ram");;
+            }
+        });
         
-        jdbcTemplate.update(
-                "INSERT INTO ServerLog (value, date_time, FK_Server, FK_ServerComponents)"
-                        + "VALUES(?, ?, ?, ?)",
-                cpu, LocalDateTime.now(), sistemaId, cpuId
-        );
+            return true;
+        } else {
+            return false;
+        }
     }
     
     
     
+    public String getIdCpu() {
+        return idCpu;
+    }
+
+    public String getIdHD() {
+        return idHD;
+    }
+
+    public String getIdRam() {
+        return idRam;
+    }
+    
+    public void insertComponent(String nomeComponente, String size, String idSistema){
+        jdbcTemplate.update(
+                "INSERT INTO ServerComponents (name, size, FK_Server) "
+                        + "VALUES(?, ?, ?)",
+                nomeComponente, size, idSistema);
+    }
     
     
-    // testando a classe
+    public void insertComponentLogs(Integer sistemaId, 
+            Integer component, Integer componenteId){
+        
+        jdbcTemplate.update(
+                "INSERT INTO ServerLog "
+                        + "(value, date_time, FK_Server, FK_ServerComponents)"
+                        + "VALUES(?, ?, ?, ?)",
+                component, LocalDateTime.now(), sistemaId, componenteId);
+    }
+    
+
+// =============== testando a classe
+    
 //    public static void main(String[] args) {
 //        Banco bd = new Banco();
 //        String f = bd.validateLogin("fernanda.esteves@bandtec.com", "12345678");
@@ -96,9 +142,10 @@ public class Banco {
 //        
 //        System.out.println(bd.getClientSystems());
 //        System.out.println(bd.getClientSystemsId());
+//        bd.consultarComponenteSistema("7");
 //    }
-//
-//    
+
+    
     
     
     
