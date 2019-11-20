@@ -30,6 +30,13 @@ public class Dashboard extends javax.swing.JFrame {
         insert();
     }
     
+        
+    public Dashboard(String nomeSistema, String idSistema) {
+        initComponents();
+        insert();
+        lbSistema.setText(nomeSistema + " " + idSistema);
+    }
+    
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
