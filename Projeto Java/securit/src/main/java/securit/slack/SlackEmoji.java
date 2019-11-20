@@ -1,5 +1,5 @@
 
-package com.mycompany.securit;
+package securit.slack;
 
 
 public enum SlackEmoji {

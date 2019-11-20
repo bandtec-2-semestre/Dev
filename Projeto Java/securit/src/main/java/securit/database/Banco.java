@@ -1,4 +1,4 @@
-package com.mycompany.securit;
+package securit.database;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -138,10 +138,14 @@ public class Banco {
 //    public static void main(String[] args) {
 //        Banco bd = new Banco();
 //        String f = bd.validateLogin("fernanda.esteves@bandtec.com", "12345678");
+//        String f = bd.validateLogin("rayssa.hcl@gmail.com", "12345678");
+//        
 //        System.out.println(f);
 //        
-//        System.out.println(bd.getClientSystems());
-//        System.out.println(bd.getClientSystemsId());
+//        System.out.println(bd.getClientSystems().size() > 0);    
+//        
+//        
+//        System.out.println(bd.getClientSystemsId().size() > 0);
 //        bd.consultarComponenteSistema("7");
 //    }
 

@@ -1,4 +1,4 @@
-package com.mycompany.securit;
+package securit.oshi;
 
 import java.time.Instant;
 import java.util.ArrayList;

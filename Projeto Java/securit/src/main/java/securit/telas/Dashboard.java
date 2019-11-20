@@ -1,11 +1,16 @@
-package com.mycompany.securit;
+package securit.telas;
 
+import securit.oshi.Components;
+import securit.graficos.Graph;
+import securit.slack.SlackMessage;
+import securit.database.Banco;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.jfree.chart.ChartPanel;
 import oshi.SystemInfo;
+
 public class Dashboard extends javax.swing.JFrame {
     
     Integer cpu, memory, disk, sistemaId, cpuId, memoryId,diskId;
@@ -15,17 +20,14 @@ public class Dashboard extends javax.swing.JFrame {
     Graph cpuGraph = new Graph("CPU");
     Graph memoryGraph = new Graph("Memory");
     Graph diskGraph = new Graph("Disk");
+    
     ChartPanel cg = cpuGraph.getGraph(System.currentTimeMillis(), 0);
     ChartPanel mg = memoryGraph.getGraph(System.currentTimeMillis(), 0);
     ChartPanel dg = diskGraph.getGraph(System.currentTimeMillis(), 0);
     
-    SystemInfo si = new SystemInfo();
-    Components comp = new Components(sistemaId);
-    Banco banco = new Banco();
     
-    SlackMessage mensagem = new SlackMessage(
-            "https://hooks.slack.com/services/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"
-    );
+    Components comp;
+    Banco banco = new Banco();
     
     public Dashboard() {
         initComponents();
@@ -41,15 +43,29 @@ public class Dashboard extends javax.swing.JFrame {
         
         Boolean result = banco.consultarComponenteSistema(idSistema);
         
+        comp = new Components(nomeSistema);
         if(result){
-            cpuId = Integer.valueOf(banco.getIdCpu());
-            memoryId = Integer.valueOf(banco.getIdRam());
-            diskId = Integer.valueOf(banco.getIdHD());
+            setIdComponentes();
         } else {
-//            banco.insertComponent(nomeSistema, idSistema, idSistema);
+            banco.insertComponent("HD " + comp.getDiskModel(), 
+                    comp.getHardDiskSize(), idSistema);
+            
+            banco.insertComponent("RAM" , 
+                    comp.getTotalMemory(), idSistema);
+            
+            banco.insertComponent("CPU " + comp.getProcessorInfo(), 
+                    comp.getProcessorMaxFreq(), idSistema);
+            
+            banco.consultarComponenteSistema(idSistema);
+            setIdComponentes();
         }
-        
         insert();
+    }
+    
+    public void setIdComponentes(){
+        cpuId = Integer.valueOf(banco.getIdCpu());
+        memoryId = Integer.valueOf(banco.getIdRam());
+        diskId = Integer.valueOf(banco.getIdHD());
     }
     
     public static void main(String args[]) {

@@ -1,4 +1,4 @@
-package com.mycompany.securit;
+package securit.graficos;
 
 import org.jfree.chart.ChartColor;
 import org.jfree.chart.ChartFactory;

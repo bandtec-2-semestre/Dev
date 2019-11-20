@@ -1,4 +1,4 @@
-package com.mycompany.securit;
+package securit.database;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 

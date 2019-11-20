@@ -1,4 +1,4 @@
-package com.mycompany.securit;
+package securit.slack;
 
 import com.github.seratch.jslack.*;
 import com.github.seratch.jslack.api.model.block.*;

@@ -1,5 +1,6 @@
-package com.mycompany.securit;
+package securit.telas;
 
+import securit.database.Banco;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ComboBoxModel;
@@ -170,10 +171,18 @@ public class Login extends javax.swing.JFrame {
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
         String response = banco.validateLogin(txtLogin.getText(), txtSenha.getText());
         if(response.equals("Logado")){
-            
-            cbSistemas.setModel(new DefaultComboBoxModel(banco.getClientSystems().toArray()));
-            lbSistema.setVisible(true);
-            cbSistemas.setVisible(true);
+            if(banco.getClientSystems().size() > 0){
+                List lista = banco.getClientSystems();
+                
+                cbSistemas.setModel(new DefaultComboBoxModel(lista.toArray()));
+                lbSistema.setVisible(true);
+                cbSistemas.setVisible(true);
+            }else {
+                JOptionPane.showMessageDialog(null, 
+                        "Não foi encontrado nenhum sistema cadastrado. "
+                                + "Por favor entre no seu dashboard e "
+                                + "faça o cadastro do sistema e seus dispositivos.");
+            }
             
         } else {
             JOptionPane.showMessageDialog(null, response);
