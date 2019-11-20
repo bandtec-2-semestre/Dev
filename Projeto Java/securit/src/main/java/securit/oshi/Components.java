@@ -53,7 +53,6 @@ public class Components {
     public String getUsedCpu() {
         long[] prevTicks =  this.hal.getProcessor().getSystemCpuLoadTicks();
         return String.valueOf(this.hal.getProcessor().getSystemCpuLoadBetweenTicks(prevTicks) * 100);
-    
     }
     
     public String getProcessQtd() {
@@ -83,17 +82,28 @@ public class Components {
             
             if(atual.getReads() > 0){
                 long vRead = atual.getReadBytes() / atual.getReads();
-                long vWrite = atual.getWriteBytes() / atual.getWrites();
-                
+
                 Integer readVelocity = Integer.valueOf(
                         FormatUtil.formatBytesDecimal(vRead)
                                 .replace(" KB", "").split(",")[0]
                 );
-                Integer writeVelocity = Integer.valueOf(
-                        FormatUtil.formatBytesDecimal(vWrite)
-                                .replace(" KB", "").split(",")[0]
-                ); 
-                disk = writeVelocity;
+
+                disk = readVelocity;
+            }
+        }   
+        
+        return disk;
+    }
+    
+    public String getDeskWriteSpeed(){
+        String disk = "";
+        for (HWDiskStore atual : diskStore) {
+            
+            if(atual.getReads() > 0){
+               
+                long vWrite = atual.getWriteBytes() / atual.getWrites();
+
+                disk = FormatUtil.formatBytesDecimal(vWrite);                              ;
             }
         }   
         

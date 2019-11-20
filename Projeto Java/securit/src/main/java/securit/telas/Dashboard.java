@@ -90,6 +90,8 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lbSistema = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -101,7 +103,19 @@ public class Dashboard extends javax.swing.JFrame {
         panMemory = new javax.swing.JPanel();
         panDisk = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        lbMemTotal = new javax.swing.JLabel();
         lbCpuDetalhe = new javax.swing.JLabel();
+        lbTotal = new javax.swing.JLabel();
+        lbDisponivel = new javax.swing.JLabel();
+        lbMemDisponivel = new javax.swing.JLabel();
+        lbTotal1 = new javax.swing.JLabel();
+        lbVleitura = new javax.swing.JLabel();
+        lbDisponivel1 = new javax.swing.JLabel();
+        lbDiscoTotal = new javax.swing.JLabel();
+        lbTotal2 = new javax.swing.JLabel();
+        lbQtdProcessos = new javax.swing.JLabel();
+        lbUsada = new javax.swing.JLabel();
+        lbCpuUsada = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
@@ -146,35 +160,46 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setText("GERAR LOGS");
+
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton2.setText("PROCESSOS");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(52, 52, 52)
-                    .addComponent(lbSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(956, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addContainerGap(149, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(120, Short.MAX_VALUE)
-                    .addComponent(lbSistema)
-                    .addGap(41, 41, 41)))
+                .addGap(18, 18, 18)
+                .addComponent(lbSistema)
+                .addGap(17, 17, 17))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -264,7 +289,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 189, 0));
+        jLabel7.setForeground(new java.awt.Color(177, 131, 0));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText("Desempenho atual");
         jLabel7.setToolTipText("");
@@ -275,14 +300,159 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        lbCpuDetalhe.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        lbMemTotal.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lbMemTotal.setForeground(new java.awt.Color(62, 62, 62));
+        lbMemTotal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbMemTotal.setText("666");
+        lbMemTotal.setToolTipText("");
+        lbMemTotal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbMemTotal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbMemTotalMouseClicked(evt);
+            }
+        });
+
+        lbCpuDetalhe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lbCpuDetalhe.setForeground(java.awt.Color.gray);
         lbCpuDetalhe.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbCpuDetalhe.setText("...");
         lbCpuDetalhe.setToolTipText("");
         lbCpuDetalhe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbCpuDetalhe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbCpuDetalheMouseClicked(evt);
+            }
+        });
+
+        lbTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbTotal.setForeground(java.awt.Color.gray);
+        lbTotal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbTotal.setText("TOTAL");
+        lbTotal.setToolTipText("");
+        lbTotal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbTotal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbTotalMouseClicked(evt);
+            }
+        });
+
+        lbDisponivel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbDisponivel.setForeground(java.awt.Color.gray);
+        lbDisponivel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbDisponivel.setText("DISPONÍVEL");
+        lbDisponivel.setToolTipText("");
+        lbDisponivel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbDisponivel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbDisponivelMouseClicked(evt);
+            }
+        });
+
+        lbMemDisponivel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lbMemDisponivel.setForeground(new java.awt.Color(62, 62, 62));
+        lbMemDisponivel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbMemDisponivel.setText("666");
+        lbMemDisponivel.setToolTipText("");
+        lbMemDisponivel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbMemDisponivel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbMemDisponivelMouseClicked(evt);
+            }
+        });
+
+        lbTotal1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbTotal1.setForeground(java.awt.Color.gray);
+        lbTotal1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbTotal1.setText("VELOCIDADE DE LEITURA");
+        lbTotal1.setToolTipText("");
+        lbTotal1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbTotal1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbTotal1MouseClicked(evt);
+            }
+        });
+
+        lbVleitura.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lbVleitura.setForeground(new java.awt.Color(62, 62, 62));
+        lbVleitura.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbVleitura.setText("666");
+        lbVleitura.setToolTipText("");
+        lbVleitura.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbVleitura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbVleituraMouseClicked(evt);
+            }
+        });
+
+        lbDisponivel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbDisponivel1.setForeground(java.awt.Color.gray);
+        lbDisponivel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbDisponivel1.setText("ESPAÇO TOTAL");
+        lbDisponivel1.setToolTipText("");
+        lbDisponivel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbDisponivel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbDisponivel1MouseClicked(evt);
+            }
+        });
+
+        lbDiscoTotal.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lbDiscoTotal.setForeground(new java.awt.Color(62, 62, 62));
+        lbDiscoTotal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbDiscoTotal.setText("666");
+        lbDiscoTotal.setToolTipText("");
+        lbDiscoTotal.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbDiscoTotal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbDiscoTotalMouseClicked(evt);
+            }
+        });
+
+        lbTotal2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbTotal2.setForeground(java.awt.Color.gray);
+        lbTotal2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbTotal2.setText("QTD. PROCESSOS");
+        lbTotal2.setToolTipText("");
+        lbTotal2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbTotal2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbTotal2MouseClicked(evt);
+            }
+        });
+
+        lbQtdProcessos.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lbQtdProcessos.setForeground(new java.awt.Color(62, 62, 62));
+        lbQtdProcessos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbQtdProcessos.setText("666");
+        lbQtdProcessos.setToolTipText("");
+        lbQtdProcessos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbQtdProcessos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbQtdProcessosMouseClicked(evt);
+            }
+        });
+
+        lbUsada.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbUsada.setForeground(java.awt.Color.gray);
+        lbUsada.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbUsada.setText("USADA");
+        lbUsada.setToolTipText("");
+        lbUsada.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbUsada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbUsadaMouseClicked(evt);
+            }
+        });
+
+        lbCpuUsada.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lbCpuUsada.setForeground(new java.awt.Color(62, 62, 62));
+        lbCpuUsada.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lbCpuUsada.setText("666");
+        lbCpuUsada.setToolTipText("");
+        lbCpuUsada.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lbCpuUsada.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbCpuUsadaMouseClicked(evt);
             }
         });
 
@@ -293,50 +463,72 @@ public class Dashboard extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(39, 39, 39)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(950, 950, 950))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(panCpu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panCpu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbCpuDetalhe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lbCpuDetalhe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbQtdProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbCpuUsada, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbUsada, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(panMemory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMemory, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(91, 91, 91)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbMemTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbMemDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panDisk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDisk, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(60, 60, 60))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbVleitura, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lbTotal1))
+                                    .addGap(29, 29, 29)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbDiscoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lbDisponivel1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(panDisk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(57, 57, 57))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel7)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(jLabel4))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel7)
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lbCpuDetalhe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMemory, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,8 +537,38 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(panMemory, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(panDisk, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panCpu, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(131, Short.MAX_VALUE))
+                            .addComponent(panCpu, 239, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lbTotal2)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(lbQtdProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lbUsada)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(lbCpuUsada, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lbTotal)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(lbMemTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lbDisponivel)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(lbMemDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lbTotal1)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(lbVleitura, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbDisponivel1)
+                                .addGap(12, 12, 12)
+                                .addComponent(lbDiscoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(lbCpuDetalhe, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(23, Short.MAX_VALUE))))
         );
 
         pack();
@@ -372,9 +594,57 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lbSistemaMouseClicked
 
+    private void lbMemTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbMemTotalMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbMemTotalMouseClicked
+
     private void lbCpuDetalheMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCpuDetalheMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_lbCpuDetalheMouseClicked
+
+    private void lbTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTotalMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbTotalMouseClicked
+
+    private void lbDisponivelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbDisponivelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbDisponivelMouseClicked
+
+    private void lbMemDisponivelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbMemDisponivelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbMemDisponivelMouseClicked
+
+    private void lbTotal1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTotal1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbTotal1MouseClicked
+
+    private void lbVleituraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbVleituraMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbVleituraMouseClicked
+
+    private void lbDisponivel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbDisponivel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbDisponivel1MouseClicked
+
+    private void lbDiscoTotalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbDiscoTotalMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbDiscoTotalMouseClicked
+
+    private void lbTotal2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTotal2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbTotal2MouseClicked
+
+    private void lbQtdProcessosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbQtdProcessosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbQtdProcessosMouseClicked
+
+    private void lbUsadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbUsadaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbUsadaMouseClicked
+
+    private void lbCpuUsadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbCpuUsadaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbCpuUsadaMouseClicked
 
     private void insert(){
         getData();
@@ -399,10 +669,20 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
     private void setText(){
-       lbCpuDetalhe.setText(comp.getProcessorInfo());
        lblCPU.setText(cpu.toString()+"%");
        lblMemory.setText(memory.toString()+"%");
        lblDisk.setText(disk.toString()+"%");
+       
+       
+       lbCpuDetalhe.setText(comp.getProcessorInfo());
+       lbQtdProcessos.setText(comp.getProcessQtd());
+       lbCpuUsada.setText(comp.getUsedCpu());
+       
+       lbDiscoTotal.setText(comp.getHardDiskSize());
+       lbVleitura.setText(comp.getDeskWriteSpeed());
+       
+       lbMemTotal.setText(comp.getTotalMemory());
+       lbMemDisponivel.setText(comp.getUsedMemory());
     }
     
     private void setColor(){
@@ -431,6 +711,8 @@ public class Dashboard extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -440,7 +722,19 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbCpuDetalhe;
+    private javax.swing.JLabel lbCpuUsada;
+    private javax.swing.JLabel lbDiscoTotal;
+    private javax.swing.JLabel lbDisponivel;
+    private javax.swing.JLabel lbDisponivel1;
+    private javax.swing.JLabel lbMemDisponivel;
+    private javax.swing.JLabel lbMemTotal;
+    private javax.swing.JLabel lbQtdProcessos;
     private javax.swing.JLabel lbSistema;
+    private javax.swing.JLabel lbTotal;
+    private javax.swing.JLabel lbTotal1;
+    private javax.swing.JLabel lbTotal2;
+    private javax.swing.JLabel lbUsada;
+    private javax.swing.JLabel lbVleitura;
     private javax.swing.JLabel lblCPU;
     private javax.swing.JLabel lblDisk;
     private javax.swing.JLabel lblMemory;
