@@ -5,6 +5,14 @@
  */
 package securit.telas;
 
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import securit.oshi.Components;
+
 /**
  *
  * @author fernandae
@@ -14,8 +22,45 @@ public class Processos extends javax.swing.JFrame {
     /**
      * Creates new form Processos
      */
+    
+    Timer timer = new Timer();
+    Components componente = new Components(" ");
+    
     public Processos() {
         initComponents();
+        fillTable();
+    }
+    
+    public void fillTable() {
+        DefaultTableModel tabela = (DefaultTableModel) tbTabela.getModel();
+        tabela.setNumRows(0);
+       
+        
+        componente.getProcess();
+        
+        List pids = componente.getProcessPids();
+        List nomes = componente.getProcessNomes();
+        List prioridades = componente.getProcessPrioridades();
+        List cpus = componente.getProcessCpu();
+        List memory = componente.getProcessMemory();
+
+        for (int i = 0; i < pids.size(); i++) {
+            tabela.addRow(new Object[]{
+                pids.get(i),
+                nomes.get(i),
+                prioridades.get(i),
+                cpus.get(i),
+                memory.get(i)
+            });
+        }
+        
+        timer.schedule(new task(), 2000);
+    }
+    
+    class task extends TimerTask{
+        public void run(){
+            fillTable();
+        }
     }
 
     /**
@@ -28,7 +73,7 @@ public class Processos extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbTabela = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -36,18 +81,18 @@ public class Processos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbTabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "PID                       ", "Nome", " Prioridade", "CPU %", "Memória %"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbTabela);
 
         jPanel1.setBackground(java.awt.Color.orange);
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -188,7 +233,7 @@ public class Processos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbSistema;
+    private javax.swing.JTable tbTabela;
     // End of variables declaration//GEN-END:variables
 }

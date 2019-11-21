@@ -3,9 +3,14 @@ package securit.oshi;
 import securit.slack.SlackEmoji;
 import securit.slack.SlackMessage;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import oshi.SystemInfo;
+import oshi.hardware.GlobalMemory;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.hardware.HWDiskStore;
+import oshi.software.os.OSProcess;
 import oshi.software.os.OperatingSystem;
 import oshi.util.FormatUtil;
 
@@ -20,6 +25,12 @@ public class Components {
     private final String hooksEnd;
     private final SlackMessage mensagem;
     private String sistema;
+    
+    private List processPids = new ArrayList();
+    private List processNomes = new ArrayList();
+    private List processPrioridades = new ArrayList();
+    private List processCpu = new ArrayList();
+    private List processMemory = new ArrayList();
     
     
     public Components(String sistema){
@@ -95,7 +106,7 @@ public class Components {
         return disk;
     }
     
-    public String getDeskWriteSpeed(){
+    public String getDiskWriteSpeed(){
         String disk = "";
         for (HWDiskStore atual : diskStore) {
             
@@ -167,15 +178,61 @@ public class Components {
         }
     }
     
-    
-    public static void main(String[] args) {
-        Components c = new Components("Catraca");
-        System.out.println(c.getProcessorMaxFreq());
-        System.out.println(c.getTotalMemory());
-        System.out.println(c.getHardDiskSize());
+    public void getProcess() {
         
-        System.out.println("CPU " + c.getProcessorInfo() +  " - " + 
-                    c.getProcessorMaxFreq() + " - " +  "27");
+        Integer quantidadeDeProcessos = 20;
+        
+        List<OSProcess> procs = Arrays.asList(
+                os.getProcesses(quantidadeDeProcessos, OperatingSystem.ProcessSort.CPU)
+        );
+        
+        processPids.clear();
+        processNomes.clear();
+        processPrioridades.clear();
+        processCpu.clear();
+        processMemory.clear();
+            
+        for (OSProcess processoAtual : procs) {
+        
+            int pid = processoAtual.getProcessID();
+            String nmProcesso = processoAtual.getName();
+            int prioridade = processoAtual.getPriority();
+
+            //cpu
+            Double cpuPercent = 100d * (processoAtual.getKernelTime() + processoAtual.getUserTime()) / processoAtual.getUpTime();
+            String percentCpu = String.format("%.2f", cpuPercent);
+
+            //memoria
+            Double memoryPercent = 100d * processoAtual.getResidentSetSize() / hal.getMemory().getTotal();
+            String percentMemory = String.format("%4.1f", memoryPercent);
+          
+            
+            processPids.add(pid);
+            processNomes.add(nmProcesso);
+            processPrioridades.add(prioridade);
+            processCpu.add(percentCpu);
+            processMemory.add(percentMemory);
+        }
+    }
+
+    public List getProcessPids() {
+        return processPids;
+    }
+
+    public List getProcessNomes() {
+        return processNomes;
+    }
+
+    public List getProcessPrioridades() {
+        return processPrioridades;
+    }
+
+    public List getProcessCpu() {
+        return processCpu;
+    }
+
+    public List getProcessMemory() {
+        return processMemory;
     }
     
 }

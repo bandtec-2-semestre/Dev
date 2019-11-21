@@ -13,6 +13,7 @@ import oshi.SystemInfo;
 
 public class Dashboard extends javax.swing.JFrame {
     
+    Processos telaProcessos;
     Integer cpu, memory, disk, sistemaId, cpuId, memoryId,diskId;
     Timer timer = new Timer();
     Boolean isVisible[] = {false, false, false};
@@ -41,9 +42,9 @@ public class Dashboard extends javax.swing.JFrame {
         lbSistema.setText(nomeSistema);
         sistemaId = Integer.valueOf(idSistema);
         
+        comp = new Components(nomeSistema);
         Boolean result = banco.consultarComponenteSistema(idSistema);
         
-        comp = new Components(nomeSistema);
         if(result){
             setIdComponentes();
         } else {
@@ -90,8 +91,8 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lbSistema = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnLogs = new javax.swing.JButton();
+        btnProcessos = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -160,11 +161,16 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setText("GERAR LOGS");
+        btnLogs.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnLogs.setText("GERAR LOGS");
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton2.setText("PROCESSOS");
+        btnProcessos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnProcessos.setText("PROCESSOS");
+        btnProcessos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcessosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -179,9 +185,9 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(29, 29, 29)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -197,8 +203,8 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLogs, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -646,6 +652,11 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lbCpuUsadaMouseClicked
 
+    private void btnProcessosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessosActionPerformed
+        telaProcessos = new Processos();
+        telaProcessos.setVisible(true);
+    }//GEN-LAST:event_btnProcessosActionPerformed
+
     private void insert(){
         getData();
         
@@ -679,7 +690,7 @@ public class Dashboard extends javax.swing.JFrame {
        lbCpuUsada.setText(comp.getUsedCpu());
        
        lbDiscoTotal.setText(comp.getHardDiskSize());
-       lbVleitura.setText(comp.getDeskWriteSpeed());
+       lbVleitura.setText(comp.getDiskWriteSpeed());
        
        lbMemTotal.setText(comp.getTotalMemory());
        lbMemDisponivel.setText(comp.getUsedMemory());
@@ -711,8 +722,8 @@ public class Dashboard extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnLogs;
+    private javax.swing.JButton btnProcessos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

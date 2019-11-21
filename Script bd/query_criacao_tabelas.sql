@@ -36,8 +36,8 @@ fk_status int foreign key references DeviceStatus(idStatus)
 
 create table ServerComponents (
 idServerComponents int primary key identity(1,1),
-name varchar(30),
-size int,
+name varchar(150),
+size varchar(50),
 FK_Server int foreign key references Server(idServer)
 );
 

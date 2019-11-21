@@ -23,21 +23,21 @@ insert into [dbo].[Server](name,FK_client) values
 ('server5',5);
 
 insert into [dbo].[ServerComponents](name,size,FK_Server) values 
-('HD1',100,1),
-('HD2',100,2),
-('HD3',100,3),
-('HD4',100,4),
-('HD5',100,5),
-('RAM1',100,1),
-('RAM2',100,2),
-('RAM3',100,3),
-('RAM4',100,4),
-('RAM5',100,5),
-('RAM1',100,1),
-('CPU2',100,2),
-('CPU3',100,3),
-('CPU4',100,4),
-('CPU5',100,5);
+('HD1','100',1),
+('HD2','100',2),
+('HD3','100',3),
+('HD4','100',4),
+('HD5','100',5),
+('RAM1','100',1),
+('RAM2','100',2),
+('RAM3','100',3),
+('RAM4','100',4),
+('RAM5','100',5),
+('RAM1','100',1),
+('CPU2','100',2),
+('CPU3','100',3),
+('CPU4','100',4),
+('CPU5','100',5);
 
 insert into [dbo].[Device](name,description,model,fk_type,fk_server,fk_status) values
 ('camera1','desc1','modelo1',1,1,1),
