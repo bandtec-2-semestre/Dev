@@ -60,12 +60,7 @@ public class Components {
       public String getProcessorMaxFreq() {
         return FormatUtil.formatHertz(this.hal.getProcessor().getMaxFreq());
     }   
-    
-    public String getUsedCpu() {
-        long[] prevTicks =  this.hal.getProcessor().getSystemCpuLoadTicks();
-        return String.valueOf(this.hal.getProcessor().getSystemCpuLoadBetweenTicks(prevTicks) * 100);
-    }
-    
+
     public String getProcessQtd() {
         return String.valueOf(this.os.getProcessCount());
     } 

@@ -60,8 +60,8 @@ public class Sistema {
         logger.info("Checking Memory...");
         getMemory(hal.getMemory());
 
-        //logger.info("Checking CPU...");
-        //printCpu(hal.getProcessor()); 
+        logger.info("Checking CPU...");
+        getCPU(hal.getProcessor()); 
 
         logger.info("Checking Processes...");
         printProcesses(os, hal.getMemory());
@@ -122,7 +122,7 @@ public class Sistema {
     }
 
     private static void printProcessor(CentralProcessor processor) {
-        oshi.add(processor.toString());
+        oshi.add(processor.toString() + "aaaaaaaa");
     }
     
     public static Integer getDisk(HWDiskStore diskStore){

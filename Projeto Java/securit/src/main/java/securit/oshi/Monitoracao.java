@@ -65,6 +65,9 @@ public class Monitoracao {
         return uptime;
     }
    
+    
+    
+    
     public String getProcessorInfo() {
         cpu = hardware.getProcessor().toString();
         return cpu;
@@ -73,8 +76,9 @@ public class Monitoracao {
     public static void main(String[] args) {
         Monitoracao m = new Monitoracao();
         
-        System.out.println(m.getTotalMemory());
-        System.out.println(m.getHardDisk());
+//        System.out.println(m.getTotalMemory());
+//        System.out.println(m.getHardDisk());
+//        System.out.println(m.getProcessorMaxFreq());
         System.out.println(m.getProcessorMaxFreq());
         
     }
