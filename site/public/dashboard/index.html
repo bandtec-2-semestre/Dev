@@ -127,6 +127,15 @@
                     </div>
                 </div>
 
+                <div class="card" id="vazio" style="display: none">
+                    <div class="card-body">
+                        <h4 class="title-bold">
+                            Por favor cadastre um sistema para ser
+                            gerenciado.
+                        </h4>
+                    </div>
+                </div>
+
 
                 <div class="row">
                     <div class="col-lg-6">
@@ -370,25 +379,26 @@
                 body: corpo
             }).then(function (resposta) {
 
-                resposta.json().then(function (rer) {
+                if (resposta.ok) {
+                    resposta.json().then(function (rer) {
 
-                    var conteudoCards = '';
+                        var conteudoCards = '';
 
-                    for (r = 0; r < sistemas.length; r++) {
-                        var atual = sistemas[r];
-                        var dispositivoTotal = 0;
+                        for (r = 0; r < sistemas.length; r++) {
+                            var atual = sistemas[r];
+                            var dispositivoTotal = 0;
 
-                        for (i = 0; i < rer.length; i++) {
-                            if (rer[i].idServer == atual.idServer) {
-                                dispositivoTotal = rer[i].totalDevices;
-                                break;
-                                console.log(rer[i].totalDevices);
-                                console.log(rer[i].idServer);
-                                console.log(atual.idServer);
+                            for (i = 0; i < rer.length; i++) {
+                                if (rer[i].idServer == atual.idServer) {
+                                    dispositivoTotal = rer[i].totalDevices;
+                                    break;
+                                    console.log(rer[i].totalDevices);
+                                    console.log(rer[i].idServer);
+                                    console.log(atual.idServer);
+                                }
                             }
-                        }
 
-                        conteudoCards += `
+                            conteudoCards += `
                                 <a class="detalhesOff">
                                     <div class="card borda-esq mb-3">
                                         <div class="card-body linha">
@@ -418,20 +428,23 @@
                                     </div>
                                 </a>
                                 `;
-                    }
-                    cardSistemas.innerHTML = conteudoCards;
+                        }
+                        cardSistemas.innerHTML = conteudoCards;
 
-                    $('.detalhesOff').each(function () {
+                        $('.detalhesOff').each(function () {
 
-                        $(this).on('click', function (event) {
-                            $(this).children().find('.infoSistema').toggle();
-                            console.log($(this).children().find('.infoSistema'));
+                            $(this).on('click', function (event) {
+                                $(this).children().find('.infoSistema').toggle();
+                                console.log($(this).children().find('.infoSistema'));
+                            });
                         });
-                    });
 
-                    consultarHistorico(sistemas[0].idServer, sistemaPrimeiroNome);
+                        consultarHistorico(sistemas[0].idServer, sistemaPrimeiroNome);
+                    });
+                } else {
+                    vazio.style.display = "block";
+
                 }
-                );
             });
         }
 

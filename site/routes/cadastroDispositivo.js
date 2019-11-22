@@ -9,12 +9,12 @@ router.post('/', (req, res, next) => {
     var dispositivo = req.body.nomeDispositivo;
     var tipoDispositivo = req.body.tipoDispositivo
     var modeloDispositivo = req.body.modeloDispositivo;
-    var andarDispositivo = req.body.localDispositivo + " " + req.body.salaDispositivo;
+    var descricao = req.body.localDispositivo + " " + req.body.salaDispositivo;
     var nomeSistema = req.body.nomeSistema;
     var idSistema = req.body.sistema;
     var idCliente = req.body.idCliente;
     // console.log(dispositivo, tipoDispositivo, modeloDispositivo, andarDispositivo);
-    cadastrarDevice(dispositivo, andarDispositivo, modeloDispositivo, nomeSistema, res, idCliente, tipoDispositivo, idSistema);
+    cadastrarDevice(dispositivo, descricao, modeloDispositivo, nomeSistema, res, idCliente, tipoDispositivo, idSistema);
 });
 
 function cadastrarDevice(name, description, model, nomeSistema, res, idCliente, tipoDispositivo, idSistema) {
@@ -97,7 +97,7 @@ function adicionarTipo(name) {
                 });
 
             } else {
-                console.log("Tipo cadastrado!");
+                console.log("Tipo encontrado!");
                 resolve(results.recordset[0].idType);
             }
         }).catch(error => {
@@ -145,5 +145,36 @@ function verificarIdDevice(name) {
         });
     });
 }
+
+
+router.post('/alterar', (req, res, next) => {
+    var idDevice = req.body.idDevice;
+    var modelo = req.body.modeloDispositivo;
+    var descricao = req.body.localDispositivo + " " + req.body.salaDispositivo;
+    var nome = req.body.nomeDispositivo;
+
+    var tipoDispositivo = req.body.tipoDispositivo
+
+    var idSistema = req.body.sistema;
+    let type = "";
+
+    adicionarTipo(tipoDispositivo)
+        .then(r => {
+            type = r;
+        }).finally(() => {
+            if (type != "") {
+
+                let querystring = `update Device set name='${nome}', description='${descricao}', model='${modelo}', fk_server=${idSistema}, fk_type=${type} where idDevice = ${idDevice};`;
+                return new Promise((resolve, reject) => {
+                    Database.query(querystring).then(results => {
+                        res.sendStatus(201);
+                    }).catch(error => {
+                        res.status(500).send(error);
+                    });
+                });
+            }
+
+        });
+});
 
 module.exports = router;

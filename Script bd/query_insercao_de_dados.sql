@@ -1,26 +1,49 @@
+
+select * from Device;
+select * from DeviceStatus;
+select * from Server;
+select * from DeviceType;
+select * from ServerComponents;
+select * from ServerLog;
+
+select * from Client;
+
+
 insert into client(name,compname,cnpj,email,phone,pswd) values
-('pessoa1','companhia1',38475647389765,'amil1@gmail.com,',988756409,'1234'),
-('pessoa2','companhia2',38475647384657,'amil2@gmail.com,',988756408,'1234'),
-('pessoa3','companhia3',38475647389766,'amil3@gmail.com,',988756407,'admin'),
-('pessoa4','companhia4',38475647389767,'amil4@gmail.com,',988756406,'admin'),
-('pessoa5','companhia5',38475647389768,'amil5@gmail.com,',988756405,'1234');
+('Carlos Ribeiro','InfoMaster','46.821.547/0001-59','carlos.ribeiro@infomaster.com.br', '11 9870-0987','adm12345678'),
+('Maria Cristina','Microsoft','14.256.673/0001-11','maria.cristina@microsoft.com', '11 9870-0987','12345678'),
+('Diego Fernandes','RocketSeat','64.677.217/0001-13','diegofernandes@rocketseat.com','11 9870-0987','12345678'),
+('Juliana Moraes','Marketing 4DX','55.084.269/0001-95','juliana.moraes@marketing.com','11 9870-0987','12345678'),
+('Geonanna Martins','SevenTeam','10.041.486/0001-60','geovanna.martins@seventeam.com','11 9870-0987','12345678'),
+('Raissa Arantes', 'securit', '47.564.716/0001-85', 'lukasmmds@gmail.com',	'11 9870-0987', '123456789'),
+('Oscar Althausen',	'Securit',	'24.738.456/0001-11',	'oscar.altahusen@bandtec.com.br',	'11 9870-0987',	'12345678'),
+('Rubens Carvalho',	'RichTech',	'36.889.344/0001-40',	'raissa.domingos@outlook.com',	'11 9870-0987',	'123456789'),
+('Fernanda', 'TechHumi', '22.901.550/0001-14',	'fernanda.esteves@bandtec.com',	'11 9870-0987',	'12345678');
 
 insert into [dbo].[DeviceStatus](description) values
 ('online'),
 ('offline');
 
 insert into [dbo].[DeviceType](name) values 
-('camera'),
-('catraca'),
-('internet'),
-('alarme');
+('Câmera'),
+('Catraca'),
+('Internet'),
+('Alarme'),
+('Biometria'),
+('Portão'),
+('Notebook'),
+('Leitor Facial');
 
 insert into [dbo].[Server](name,FK_client) values 
-('server1',1),
-('server2',2),
-('server3',3),
-('server4',4),
-('server5',5);
+('Câmeras',1),
+('Catracas',2),
+('Internet',3),
+('Alarme',4),
+('Biometrias',5),
+('Alarmes',6),
+('Notebooks',7),
+('Leitores Faciais',8),
+('Portões',9);
 
 insert into [dbo].[ServerComponents](name,size,FK_Server) values 
 ('HD1',100,1),

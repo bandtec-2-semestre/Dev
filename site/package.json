@@ -13,5 +13,8 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "mssql": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }
