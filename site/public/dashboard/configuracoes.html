@@ -144,32 +144,42 @@
 
                             <div class="input-email mb-4">
                                 <label for="email">Nome da Companhia</label>
-                                <input type="email" name="email" placeholder="Nome da Empresa" class="form-control">
+                                <input type="text" id="nomeEmpresa" name="nomeEmpresa" placeholder="Nome da Empresa"
+                                    class="form-control">
                             </div>
 
                             <div class="input-email mb-4">
                                 <label for="representante">Representante</label>
-                                <input class="form-control" type="email" name="email"
+                                <input class="form-control" type="text" id="representante" name="representante"
                                     placeholder="Representante da Empresa" class="form-control">
                             </div>
 
                             <div class="input-email mb-4">
                                 <label for="cnpj">CNPJ</label>
-                                <input type="email" name="cnpj" placeholder=" Informe o CNPJ" class="form-control">
+                                <input type="text" id="cnpj" name="cnpj" placeholder=" Informe o CNPJ"
+                                    class="form-control">
+                            </div>
+
+                            <div class="input-email mb-4">
+                                <label for="email">Telefone</label>
+                                <input type="tel" id="telefone" name="telefone" placeholder="(11)12345-678"
+                                    class="form-control">
                             </div>
 
                             <div class="input-email mb-4">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" placeholder="Email" class="form-control">
+                                <input type="email" id="email" name="email" placeholder="Email" class="form-control">
                             </div>
 
                             <div class="input-password mb-4">
                                 <label for="password">Senha</label>
-                                <input type="password" name="password" placeholder="Informe a senha"
+                                <input type="password" id="password" name="password" placeholder="Informe a senha"
                                     class="form-control">
                             </div>
 
-                            <input type="submit" value="Salvar" class="btn btn-warning mt-3">
+                            <button type="submit" class="btn btn-info" onclick="carregarInputs()">Salvar
+                                Alterações</button>
+
                         </form>
                     </div>
                 </div>
@@ -212,5 +222,22 @@
         src="https://static.zdassets.com/ekr/snippet.js?key=2f1c47af-6ca3-4ce8-9188-958944ef0eb5"> </script>
     <!-- End of securithelp Zendesk Widget script -->
 </body>
+
+
+<script>
+    var sistemasCadastrados = [];
+
+    function carregarInputs() {
+
+        var cdCliente = { idCliente: sessionStorage.idClient }
+        idCliente.value = cdCliente;
+
+        update
+        console.log("carroegou input?");
+
+    }
+
+//INÍCIO DAS VALIDAÇÕES PARA ALTERAÇÃO DOS DADOS
+</script>
 
 </html>
