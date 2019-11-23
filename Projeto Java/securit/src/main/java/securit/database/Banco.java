@@ -23,19 +23,23 @@ public class Banco {
         jdbcTemplate = new JdbcTemplate(dadosConexao.getDataSource());
     }
     
-    public String validateLogin(String login, String senha){
-        client = jdbcTemplate.queryForList(
-                "SELECT idClient FROM Client WHERE email = ? and pswd = ?", login, senha
-        );
-        
-       
-         if(client.size() >= 1){
-                idCliente = client.get(0).toString().substring(10).replace("}", "");
-                consultarSistemas();
-                return "Logado";
-            
-        } else {
-            return "Login Inválido";
+    public String validateLogin(String login, String senha) throws Exception{
+        try{
+            client = jdbcTemplate.queryForList(
+                    "SELECT idClient FROM Client WHERE email = ? and pswd = ?", login, senha
+            );
+
+
+             if(client.size() >= 1){
+                    idCliente = client.get(0).toString().substring(10).replace("}", "");
+                    consultarSistemas();
+                    return "Logado";
+
+            } else {
+                return "Login Inválido";
+            }
+        } catch (Exception ex){
+            throw new Exception("Não foi possível fazer a validação dos dados de login: " + ex.getMessage());
         }
     }
     
@@ -66,37 +70,37 @@ public class Banco {
         });
     }
  
-    public Boolean consultarComponenteSistema(String idServer){
+    public Boolean consultarComponenteSistema(String idServer) throws Exception{
         List result;
-        
-        result = jdbcTemplate.queryForList(
-                "SELECT * FROM ServerComponents WHERE FK_Server = ?", idServer
-        );
-        
-        if(result.size() >= 1){      
-        result.forEach(componentes -> {
-            System.out.println(componentes);
-            
-            String sis = componentes.toString();
-            String id = sis.substring(sis.indexOf("=")+1, sis.indexOf(","));
-            
-            if(sis.contains("HD")){
-                idHD = id;
-//                System.out.println(id + "hd");
-            } 
-            else if(sis.contains("CPU")){
-                idCpu = id;
-//                System.out.println(id + "CPU");;
+        try {
+            result = jdbcTemplate.queryForList(
+                    "SELECT * FROM ServerComponents WHERE FK_Server = ?", idServer
+            );
+
+            if(result.size() >= 1){      
+            result.forEach(componentes -> {
+                System.out.println(componentes);
+
+                String sis = componentes.toString();
+                String id = sis.substring(sis.indexOf("=")+1, sis.indexOf(","));
+
+                if(sis.contains("HD")){
+                    idHD = id;
+                } 
+                else if(sis.contains("CPU")){
+                    idCpu = id;
+                }
+                else {
+                    idRam = id;
+                }
+            });
+
+                return true;
+            } else {
+                return false;
             }
-            else {
-                idRam = id;
-//                System.out.println(id + "ram");;
-            }
-        });
-        
-            return true;
-        } else {
-            return false;
+        } catch (Exception ex){
+            throw new Exception("Não foi possível fazer a consulta no banco de dados: " + ex.getMessage());
         }
     }
     
@@ -114,22 +118,32 @@ public class Banco {
         return idRam;
     }
     
-    public void insertComponent(String nomeComponente, String size, String idSistema){
-        jdbcTemplate.update(
-                "INSERT INTO ServerComponents (name, size, FK_Server) "
-                        + "VALUES(?, ?, ?)",
-                nomeComponente, size, idSistema);
+    public void insertComponent(String nomeComponente, String size, String idSistema) throws Exception{
+        try{
+            jdbcTemplate.update(
+                    "INSERT INTO ServerComponents (name, size, FK_Server) "
+                            + "VALUES(?, ?, ?)",
+                    nomeComponente, size, idSistema);
+        }
+        catch(Exception ex) {
+           throw new Exception("não foi possível inserir dados no banco de dados: " + ex.getMessage()); 
+        }
     }
     
     
     public void insertComponentLogs(Integer sistemaId, 
-            Integer component, Integer componenteId){
+        Integer component, Integer componenteId) throws Exception{
         
-        jdbcTemplate.update(
+        try{
+            jdbcTemplate.update(
                 "INSERT INTO ServerLog "
                         + "(value, date_time, FK_Server, FK_ServerComponents)"
                         + "VALUES(?, ?, ?, ?)",
                 component, LocalDateTime.now(), sistemaId, componenteId);
+        }
+        catch(Exception ex) {
+           throw new Exception("não foi possível inserir dados no banco de dados: " + ex.getMessage()); 
+        }    
     }
     
 

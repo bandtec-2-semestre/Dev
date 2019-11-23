@@ -82,23 +82,28 @@ public class Components {
         return FormatUtil.formatBytes(this.hal.getMemory().getAvailable()).replace("i", "");
     }
      
-    public Integer getDisk(){
-        Integer disk = 0;
-        for (HWDiskStore atual : diskStore) {
-            
-            if(atual.getReads() > 0){
-                long vRead = atual.getReadBytes() / atual.getReads();
+    public Integer getDisk() throws Exception{
+       try {
+            Integer disk = 0;
+            for (HWDiskStore atual : diskStore) {
 
-                Integer readVelocity = Integer.valueOf(
-                        FormatUtil.formatBytesDecimal(vRead)
-                                .replace(" KB", "").split(",")[0]
-                );
+                if(atual.getReads() > 0){
+                    long vRead = atual.getReadBytes() / atual.getReads();
 
-                disk = readVelocity;
-            }
-        }   
-        
-        return disk;
+                    Integer readVelocity = Integer.valueOf(
+                            FormatUtil.formatBytesDecimal(vRead)
+                                    .replace(" KB", "").split(",")[0]
+                    );
+
+                    disk = readVelocity;
+                }
+            }   
+
+            return disk;
+        }
+        catch(Exception ex) {
+           throw new Exception("não foi possível obter dados do hd: " + ex.getMessage()); 
+        }
     }
     
     public String getDiskWriteSpeed(){
@@ -173,40 +178,49 @@ public class Components {
         }
     }
     
-    public void getProcess() {
+    public void getProcess() throws Exception {
         
         Integer quantidadeDeProcessos = 20;
         
-        List<OSProcess> procs = Arrays.asList(
-                os.getProcesses(quantidadeDeProcessos, OperatingSystem.ProcessSort.CPU)
-        );
-        
-        processPids.clear();
-        processNomes.clear();
-        processPrioridades.clear();
-        processCpu.clear();
-        processMemory.clear();
-            
-        for (OSProcess processoAtual : procs) {
-        
-            int pid = processoAtual.getProcessID();
-            String nmProcesso = processoAtual.getName();
-            int prioridade = processoAtual.getPriority();
+          try{
+            List<OSProcess> procs = Arrays.asList(
+                    os.getProcesses(quantidadeDeProcessos, OperatingSystem.ProcessSort.CPU)
+            );
 
-            //cpu
-            Double cpuPercent = 100d * (processoAtual.getKernelTime() + processoAtual.getUserTime()) / processoAtual.getUpTime();
-            String percentCpu = String.format("%.2f", cpuPercent);
+            processPids.clear();
+            processNomes.clear();
+            processPrioridades.clear();
+            processCpu.clear();
+            processMemory.clear();
 
-            //memoria
-            Double memoryPercent = 100d * processoAtual.getResidentSetSize() / hal.getMemory().getTotal();
-            String percentMemory = String.format("%4.1f", memoryPercent);
-          
-            
-            processPids.add(pid);
-            processNomes.add(nmProcesso);
-            processPrioridades.add(prioridade);
-            processCpu.add(percentCpu);
-            processMemory.add(percentMemory);
+            for (OSProcess processoAtual : procs) {
+
+                int pid = processoAtual.getProcessID();
+                String nmProcesso = processoAtual.getName();
+                int prioridade = processoAtual.getPriority();
+
+                //cpu
+                Double cpuPercent = 100d * (processoAtual.getKernelTime() 
+                        + processoAtual.getUserTime()) / processoAtual.getUpTime();
+                
+                String percentCpu = String.format("%.2f", cpuPercent);
+
+                //memoria
+                Double memoryPercent = 100d * processoAtual.getResidentSetSize() 
+                        / hal.getMemory().getTotal();
+                
+                String percentMemory = String.format("%4.1f", memoryPercent);
+
+
+                processPids.add(pid);
+                processNomes.add(nmProcesso);
+                processPrioridades.add(prioridade);
+                processCpu.add(percentCpu);
+                processMemory.add(percentMemory);
+            }
+        }
+        catch(Exception ex){
+             throw new Exception("Processos não foram obtidos: " + ex.getMessage());
         }
     }
 

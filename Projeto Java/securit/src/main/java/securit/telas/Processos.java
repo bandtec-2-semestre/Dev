@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import securit.oshi.Components;
-
+import securit.logs.Log;
 /**
  *
  * @author fernandae
@@ -28,6 +28,11 @@ public class Processos extends javax.swing.JFrame {
     
     public Processos() {
         initComponents();
+        
+        // centralizar tela
+        setLocationRelativeTo( null );
+        
+        // preenche a tela com os processos
         fillTable();
     }
     
@@ -36,7 +41,11 @@ public class Processos extends javax.swing.JFrame {
         tabela.setNumRows(0);
        
         
-        componente.getProcess();
+        try {
+            componente.getProcess();
+        } catch (Exception ex) {
+            Log.fileLogs("pegar dados dos processos da máquina", ex.getMessage());
+        }
         
         List pids = componente.getProcessPids();
         List nomes = componente.getProcessNomes();
@@ -54,7 +63,7 @@ public class Processos extends javax.swing.JFrame {
             });
         }
         
-        timer.schedule(new task(), 2000);
+        timer.schedule(new task(), 5000);
     }
     
     class task extends TimerTask{
@@ -79,7 +88,7 @@ public class Processos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         lbSistema = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tbTabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

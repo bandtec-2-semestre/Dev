@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import securit.logs.Log;
 
 public class Login extends javax.swing.JFrame {
 
@@ -19,6 +20,10 @@ public class Login extends javax.swing.JFrame {
     
     public Login() {
         initComponents();
+        
+        // centralizar tela
+        setLocationRelativeTo( null );
+        
         cbSistemas.setVisible(false);
         lbSistema.setVisible(false);
     }
@@ -35,13 +40,13 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
         btnEntrar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         cbSistemas = new javax.swing.JComboBox<>();
         lbSistema = new javax.swing.JLabel();
+        jpSenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,8 +59,6 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("Senha");
 
         txtLogin.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-
-        txtSenha.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
 
         btnEntrar.setBackground(java.awt.Color.orange);
         btnEntrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -140,11 +143,11 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30))
-                    .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEntrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbSistemas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbSistema, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbSistema, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpSenha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
@@ -157,8 +160,8 @@ public class Login extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jpSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
                 .addComponent(btnEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(lbSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,23 +175,39 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        String response = banco.validateLogin(txtLogin.getText(), txtSenha.getText());
-        if(response.equals("Logado")){
-            if(banco.getClientSystems().size() > 0){
-                List lista = banco.getClientSystems();
-                
-                cbSistemas.setModel(new DefaultComboBoxModel(lista.toArray()));
-                lbSistema.setVisible(true);
-                cbSistemas.setVisible(true);
-            }else {
-                JOptionPane.showMessageDialog(null, 
-                        "Não foi encontrado nenhum sistema cadastrado. "
-                                + "Por favor entre no seu dashboard e "
-                                + "faça o cadastro do sistema e seus dispositivos.");
+       String response = "";
+        
+        try{
+            response = banco.validateLogin(
+                    txtLogin.getText(), 
+                    String.valueOf(jpSenha.getPassword())
+            );
+       
+        
+            if(response.equals("Logado")){
+                // se usuario logado pega nomes dos sistemas
+                if(banco.getClientSystems().size() > 0){
+                    List lista = banco.getClientSystems();
+
+                    cbSistemas.setModel(new DefaultComboBoxModel(lista.toArray()));
+                    lbSistema.setVisible(true);
+                    cbSistemas.setVisible(true);
+                }else {
+                    // mensagem de erro
+                    JOptionPane.showMessageDialog(null, 
+                            "Não foi encontrado nenhum sistema cadastrado. "
+                                    + "Por favor entre no seu dashboard e "
+                                    + "faça o cadastro do sistema e seus dispositivos.");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, response);
             }
-            
-        } else {
-            JOptionPane.showMessageDialog(null, response);
+         }
+        catch(Exception ex) {
+            Log.fileLogs("consultar no banco de dados no Login", ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro, por favor tente novamente."
+                    + " Também verifique os logs do seus sistema na pasta C:\\Securit");
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
@@ -205,11 +224,8 @@ public class Login extends javax.swing.JFrame {
         
         String idSistema = banco.getClientSystemsId().get(cbSistemas.getSelectedIndex()).toString();
         this.dispose();
-        try {
-            dash = new Dashboard(cbSistemas.getSelectedItem().toString(), idSistema);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        dash = new Dashboard(cbSistemas.getSelectedItem().toString(), idSistema);
         dash.setVisible(true);
     }//GEN-LAST:event_cbSistemasActionPerformed
 
@@ -256,8 +272,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPasswordField jpSenha;
     private javax.swing.JLabel lbSistema;
     private javax.swing.JTextField txtLogin;
-    private javax.swing.JTextField txtSenha;
     // End of variables declaration//GEN-END:variables
 }
