@@ -3,11 +3,14 @@ package securit.telas;
 import securit.database.Banco;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Login extends javax.swing.JFrame {
 
@@ -202,7 +205,11 @@ public class Login extends javax.swing.JFrame {
         
         String idSistema = banco.getClientSystemsId().get(cbSistemas.getSelectedIndex()).toString();
         this.dispose();
-        dash = new Dashboard(cbSistemas.getSelectedItem().toString(), idSistema);
+        try {
+            dash = new Dashboard(cbSistemas.getSelectedItem().toString(), idSistema);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
         dash.setVisible(true);
     }//GEN-LAST:event_cbSistemasActionPerformed
 
