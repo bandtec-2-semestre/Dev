@@ -10,19 +10,17 @@ router.post('/', (req, res, next) => {
     representante = reeq.body.representante;
     cnpj = req.body.cnpj;
     email = req.body.email;
-    // telefone = req.body.phone;
+    telefone = req.body.telefone;
     senha = req.body.password;
 
-    console.log(idUsuario, representante, empresa, cnpj, email, senha);
+    console.log(idUsuario, representante, empresa, cnpj, email, telefone, senha);
 
-    updateEmpresa(representante, empresa, cnpj, email, senha, res);
+    updateEmpresa(representante, empresa, cnpj, email, telefone, senha, res);
 });
 
 
 function updateEmpresa(idClient, representante, empresa, cnpj, email, pswd, req, res) {
 
-    var cdCliente = { idCliente: sessionStorage.idClient }
-    idCliente.value = cdCliente;
 
     console.log("Chegou pra buscar Empresa");
     let stringSqlClient = `SELECT * FROM Client WHERE idClient = '${cdClient}'`;

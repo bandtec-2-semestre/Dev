@@ -23,7 +23,23 @@ router.post('/consultarDispositivo', (req, res, next) => {
     });
 });
 
+router.post('/consultarCliente', (req, res, next) => {
+    var idClient = req.body.idClient;
 
+    let querystring = `SELECT Client.idClient, Client.name, Client.compName, email, phone, pswd FROM where idClient = ${idClient};`;
+    return new Promise((resolve, reject) => {
+        Database.query(querystring).then(results => {
+
+            let existe = results.recordsets[0].length > 0;
+
+            resolve(existe);
+            console.log(results);
+            res.send(results.recordset);
+        }).catch(error => {
+            reject(error);
+        });
+    });
+});
 
 
 module.exports = router;

@@ -18,6 +18,7 @@ router.post('/', (req, res, next) => {
     cadastro(representante, empresa, cnpj, email, senha, res);
 });
 
+//FUNÇÃO PRA CADASTRAR EMPRESA 
 function cadastro(name, compName, cnpj, email, pswd, res) {
 
     verificar(cnpj, email).then(resultado => {
@@ -40,8 +41,7 @@ function cadastro(name, compName, cnpj, email, pswd, res) {
 }
 
 
-//Função que verifica se o e-mail já esta cadastrado no Banco de Dados
-
+//FUNCAO PRA VERIFICAR SE CNPJ OU EMAIL JA ESTÁ CADSTRADO
 function verificar(cnpj, email) {
 
     // A seguinte string  'stringSql' verifica se existe algum email ou cnpj que seja igual ao que o usuário está tentanto criar
@@ -58,5 +58,7 @@ function verificar(cnpj, email) {
         });
     });
 }
+
+
 
 module.exports = router;

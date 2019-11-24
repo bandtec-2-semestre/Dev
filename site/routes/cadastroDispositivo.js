@@ -177,4 +177,28 @@ router.post('/alterar', (req, res, next) => {
         });
 });
 
+
+router.post('/alterarCli', (req, res, next) => {
+
+    var idClient = req.body.idClient;
+    empresa = req.body.nomeEmpresa;
+    representante = req.body.representante;
+    cnpj = req.body.cnpj;
+    email = req.body.email;
+    telefone = req.body.telefone;
+    senha = req.body.password;
+
+
+
+    let querystring = `UPDATE Client SET  name = '${representante}', compName = '${empresa}', cnpj = '${cnpj}', phone = '${telefone}', email = '${email}', pswd = '${pswd}' where idClient = '${idCliente}'`;
+    return new Promise((resolve, reject) => {
+        Database.query(querystring).then(results => {
+            res.sendStatus(201);
+        }).catch(error => {
+            res.status(500).send(error);
+        });
+    });
+
+});
+
 module.exports = router;

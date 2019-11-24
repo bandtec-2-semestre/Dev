@@ -177,6 +177,8 @@
         }).done(function (resposta) {
             console.log("res OK");
             if (resposta == "ok") {
+
+                //sessionStorage.sistema = resposta[0].server;
                 window.location = "login.html";
             } else {
                 swal({
