@@ -37,17 +37,7 @@ router.post('/consultarCliente', (req, res, next) => {
 
 function updateEmpresa(idClient, representante, empresa, cnpj, email, pswd, req, res) {
 
-    var idClient = req.body.idClient;
-    var empresa = req.body.nomeEmpresa;
-    var representante = req.body.representante;
-    var cnpj = req.body.cnpj;
-    var email = req.body.email;
-    var telefone = req.body.telefone;
-    var senha = req.body.password;
-
-    consele.log(empresa, + "==" + representante, + "==" + cnpj, + "==" + email, + "==" + telefone, + "==" + senha);
-
-    let querystring = `UPDATE Client SET  name = '${representante}', compName = '${empresa}', cnpj = '${cnpj}', phone = '${telefone}', email = '${email}', pswd = '${senha}' where idClient = '${idCliente}'`;
+    let querystring = `UPDATE Client SET  name = '${representante}', compName = '${empresa}', cnpj = '${cnpj}', phone = '${telefone}', email = '${email}', pswd = '${pswd}' where idClient = '${idCliente}'`;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
             res.sendStatus(201);

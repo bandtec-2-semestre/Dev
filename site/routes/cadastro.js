@@ -11,15 +11,16 @@ router.post('/', (req, res, next) => {
     var empresa = req.body.nomeEmpresa;
     var cnpj = req.body.cnpj
     var email = req.body.email;
+    var telefone = req.body.telEmpresa;
     var senha = req.body.senha;
 
-    console.log(representante, empresa, cnpj, email, senha);
+    console.log(representante, empresa, cnpj, email, telefone, senha);
 
-    cadastro(representante, empresa, cnpj, email, senha, res);
+    cadastro(representante, empresa, cnpj, email, telefone, senha, res);
 });
 
 //FUNÇÃO PRA CADASTRAR EMPRESA 
-function cadastro(name, compName, cnpj, email, pswd, res) {
+function cadastro(representante, empresa, cnpj, email, telefone, senha, res) {
 
     verificar(cnpj, email).then(resultado => {
 
@@ -27,12 +28,14 @@ function cadastro(name, compName, cnpj, email, pswd, res) {
         console.log(`criar: ${criar}`);
 
         if (criar) {
-            var stringSql = `insert into Client (name, compName, cnpj, email, pswd) values ('${name}', '${compName}', '${cnpj}', '${email}', '${pswd}')`;
+            var stringSql = `insert into Client (name, compName, cnpj, email,phone, pswd) values ('${representante}', '${empresa}', '${cnpj}', '${email}','${telefone}', '${senha}')`;
 
 
             Database.query(stringSql).then(resultado => {
                 res.status(200).send("ok");
                 console.log("Empresa Cadastrada!");
+            }).catch(error => {
+                reject(error);
             });
         } else {
             res.status(200).send("Não Ok")
