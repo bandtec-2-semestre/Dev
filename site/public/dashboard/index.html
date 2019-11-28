@@ -255,6 +255,7 @@
         }
 
         function plotarGrafico(nomesistema) {
+            console.log("plotarGrafico");
             var ctx = document.getElementById("singelBarChart");
             ctx.width = 500;
             ctx.height = 500;
@@ -267,7 +268,7 @@
             }
 
             var myChart = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: labelsDados,
                     datasets: [
@@ -282,6 +283,7 @@
                     ]
                 },
                 options: {
+                    animation: false,
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -291,6 +293,7 @@
                     }
                 }
             });
+
         }
 
         function consultar() {
@@ -304,8 +307,6 @@
             historico = [];
             labelsDados = [];
             console.log(idsistema);
-            console.log(nomesistema);
-            console.log('asdfsadf');
 
             var info = {
                 codigosistema: idsistema,
@@ -332,6 +333,7 @@
                 );
             });
 
+            setInterval(() => { consultarHistorico(idsistema, nomesistema) }, 10000);
 
         }
 

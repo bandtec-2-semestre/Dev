@@ -129,4 +129,24 @@ router.post('/alertas', (req, res, next) => {
 
 });
 
+router.post('/informacaoComponentes', (req, res, next) => {
+
+    var sistema = req.body.codigosistema;
+
+    let querystring = `SELECT * FROM ServerComponents where FK_Server = ${sistema}`;
+    return new Promise((resolve, reject) => {
+        Database.query(querystring).then(results => {
+
+            let existe = results.recordsets[0].length > 0;
+
+            resolve(existe);
+            console.log(results);
+            res.send(results.recordset);
+        }).catch(error => {
+            console.log(error);
+        });
+    });
+
+});
+
 module.exports = router;

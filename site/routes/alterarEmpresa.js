@@ -4,40 +4,8 @@ const Database = require('../Database');
 const config = require('../config');
 
 router.post('/', (req, res, next) => {
-    var sistema = req.body.idDispositivo;
-    idUsuario = req.body.codUsuario;
-    idClient = req.body.idClient;
 
-    empresa = req.body.nomeEmpresa;
-    representante = reeq.body.representante;
-    cnpj = req.body.cnpj;
-    email = req.body.email;
-    telefone = req.body.telefone;
-    senha = req.body.password;
-    updateEmpresa(representante, empresa, cnpj, email, telefone, senha, res);
-    carregaTabela(sistema, res);
-});
-
-router.post('/consultarCliente', (req, res, next) => {
-
-    let querystring = `SELECT Client.idClient, Client.name, Client.compName, email, phone, pswd FROM where idClient = ${idClient};`;
-    return new Promise((resolve, reject) => {
-        Database.query(querystring).then(results => {
-
-            let existe = results.recordsets[0].length > 0;
-
-            resolve(existe);
-            console.log(results);
-            res.send(results.recordset);
-        }).catch(error => {
-            reject(error);
-        });
-    });
-});
-
-function updateEmpresa(idClient, representante, empresa, cnpj, email, pswd, req, res) {
-
-    var idClient = req.body.idClient;
+    var idClient = req.body.idCliente;
     var empresa = req.body.nomeEmpresa;
     var representante = req.body.representante;
     var cnpj = req.body.cnpj;
@@ -45,9 +13,15 @@ function updateEmpresa(idClient, representante, empresa, cnpj, email, pswd, req,
     var telefone = req.body.telefone;
     var senha = req.body.password;
 
-    consele.log(empresa, + "==" + representante, + "==" + cnpj, + "==" + email, + "==" + telefone, + "==" + senha);
 
-    let querystring = `UPDATE Client SET  name = '${representante}', compName = '${empresa}', cnpj = '${cnpj}', phone = '${telefone}', email = '${email}', pswd = '${senha}' where idClient = '${idCliente}'`;
+
+    updateEmpresa(idClient, representante, empresa, cnpj, email, telefone, senha, res);
+
+});
+
+function updateEmpresa(idClient, representante, empresa, cnpj, email, telefone, senha, res) {
+    console.log(empresa + "==" + representante + "==" + cnpj + "==" + email + "==" + telefone + "==" + senha);
+    let querystring = `UPDATE Client SET  name = '${representante}', compName = '${empresa}', cnpj = '${cnpj}', phone = '${telefone}', email = '${email}', pswd = '${senha}' where idClient = ${idClient}`;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
             res.sendStatus(201);
