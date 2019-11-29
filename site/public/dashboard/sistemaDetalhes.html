@@ -20,8 +20,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -34,8 +33,12 @@
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
     <!-- biblioteca Swall - alerts-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
     <script src="../js/logout.js"></script>
+    <script src="../js/graficoDetalhes.js"></script>
 
 </head>
 
@@ -46,26 +49,32 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="index.html"><i class="menu-icon ti-home"></i>Dashboard </a>
+                        <a href="index.html">
+                            <i class="menu-icon ti-home"></i>Dashboard </a>
                     </li>
                     <li>
-                        <a href="cadastroDispositivo.html"><i class="menu-icon ti-plus"></i>Cadastros </a>
+                        <a href="cadastroDispositivo.html">
+                            <i class="menu-icon ti-plus"></i>Cadastros </a>
                     </li>
                     <li>
-                        <a href="consultaSistemas.html"><i class="menu-icon ti-search"></i>Sistemas </a>
+                        <a href="consultaSistemas.html">
+                            <i class="menu-icon ti-search"></i>Sistemas </a>
                     </li>
                     <li>
-                        <a href="alertas.html"><i class="menu-icon ti-alert"></i>Alertas </a>
+                        <a href="alertas.html">
+                            <i class="menu-icon ti-alert"></i>Alertas </a>
                     </li>
                     <li>
-                        <a href="configuracoes.html"><i class="menu-icon  ti-settings "></i>Configurações </a>
+                        <a href="configuracoes.html">
+                            <i class="menu-icon  ti-settings "></i>Configurações </a>
                     </li>
 
                     <li>
                         <a href="configuracoes.html"></a>
                     </li>
                 </ul>
-            </div><!-- /.navbar-collapse -->
+            </div>
+            <!-- /.navbar-collapse -->
         </nav>
     </aside>
     <!-- /#left-panel -->
@@ -75,9 +84,15 @@
         <header id="header" class="header">
             <div class="top-left">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="./"><img src="images/logo.png" alt="Logo"></a>
-                    <a class="navbar-brand hidden" href="./"><img src="images/logo2.png" alt="Logo"></a>
-                    <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+                    <a class="navbar-brand" href="./">
+                        <img src="images/logo.png" alt="Logo">
+                    </a>
+                    <a class="navbar-brand hidden" href="./">
+                        <img src="images/logo2.png" alt="Logo">
+                    </a>
+                    <a id="menuToggle" class="menutoggle">
+                        <i class="fa fa-bars"></i>
+                    </a>
                 </div>
             </div>
             <div class="top-right">
@@ -116,13 +131,13 @@
                     </div>
 
                     <div class="user-area dropdown float-right">
-                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
+                        <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="user-avatar rounded-circle" src="images/admin1.jpg" alt="User Avatar">
                         </a>
 
                         <div class="user-menu dropdown-menu">
-                            <a class="nav-link" onclick="logoff()"><i class="fa fa-power -off"></i>Logout</a>
+                            <a class="nav-link" onclick="logoff()">
+                                <i class="fa fa-power -off"></i>Logout</a>
                         </div>
                     </div>
 
@@ -176,7 +191,8 @@
                                                     <div class="texto-componentes">
                                                         <span class="pr-2">CPU</span>
 
-                                                        <span class="pr-1"><span id="cpuValue">0</span>%</span>
+                                                        <span class="pr-1">
+                                                            <span id="cpuValue">0</span>%</span>
 
                                                         <span class="small">UTILIZAÇÃO</span>
                                                     </div>
@@ -218,7 +234,8 @@
                                                     <div class="texto-componentes">
                                                         <span class="pr-2">Memória</span>
 
-                                                        <span class="pr-1"><span id="memoriaValue">0</span>%</span>
+                                                        <span class="pr-1">
+                                                            <span id="memoriaValue">0</span>%</span>
 
                                                         <span class="small">UTILIZAÇÃO</span>
                                                     </div>
@@ -253,7 +270,8 @@
                                                     <div class="texto-componentes">
                                                         <span class="pr-2">Disco</span>
 
-                                                        <span class="pr-1"><span id="hdValue">0</span>%</span>
+                                                        <span class="pr-1">
+                                                            <span id="hdValue">0</span>%</span>
 
                                                         <span class="small">UTILIZAÇÃO</span>
                                                     </div>
@@ -317,29 +335,22 @@
 
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+
     <!-- <script src="assets/js/main.js"></script> -->
 
     <!--  Chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
     <!-- <script src="assets/js/init/chartjs-init.js"></script> -->
 
-    <!-- 
-    <script src="assets/js/lib/data-table/datatables.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-    <script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-    <script src="assets/js/lib/data-table/jszip.min.js"></script>
-    <script src="assets/js/lib/data-table/vfs_fonts.js"></script>
-    <script src="assets/js/lib/data-table/buttons.html5.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.print.min.js"></script>
-    <script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
-    <script src="assets/js/init/datatables-init.js"></script> -->
 
     <script type="text/javascript">
+        async function carregarTela() {
+            await verComponentes();
+            await atualizarGrafico();
+        }
+
+
+        setTimeout(chamarMudaCor, 10000);
         $(document).ready(function ($) {
 
             verificarAutenticacao();
@@ -352,209 +363,44 @@
             //GUARDAR O NOME DA EMPRESA - funciona
             var NomeDaEmpresa = sessionStorage.empresa;
             empresaNome.innerHTML = NomeDaEmpresa
-            // alert(NomeDaEmpresa);
-
-
-            // $('#bootstrap-data-table').DataTable();
 
             // COMEÇA O GRÁFICO COM TITULO CPU E NUMEROS ALEATÓRIOS
             $("#title-graph").text("CPU");
-            consultarHistorico('cpu', dataHoraLista, "CPU");
+            carregarTela();
 
             // FUNÇÃO QUE MUDA O CONTÉUDO DO GRÁFICO 
             // TITULO E ACIONA A BORDA DOURADA NO CARD
             $('.openGraph').each(function () {
+                console.log('asdf');
                 $(this).on('click', function (event) {
                     $(".card").removeClass("activeCard");
-
+                    console.log('asdf');
                     const componente = $(this).attr('class').split(' ')[1];
                     let card = $(this).children(".card");
                     card.toggleClass('activeCard');
 
-                    var nomeComponente = '';
-                    if (componente == 'cpu') {
-                        var nomeComponente = componente.toLocaleUpperCase();
-                    } else if (componente == 'memoria') {
-                        var nomeComponente = 'RAM';
-                    } else {
-                        var nomeComponente = 'HD';
-                    }
 
-                    consultarHistorico(nomeComponente);
+                    if (componente == 'cpu') {
+                        nomeComponente = componente.toLocaleUpperCase();
+                    } else if (componente == 'memoria') {
+                        nomeComponente = 'RAM';
+                    } else {
+                        nomeComponente = 'HD';
+                    }
+                    console.log('asdf');
+                    obterDadosGrafico();
 
                     $("#title-graph").text(componente.toLocaleUpperCase());
-
-                    // const numAleatorio = [gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(), gerarNumAleatorio(),]
-                    // grafico(numAleatorio);
                 });
             });
+
+            nomeComponente = "CPU";
+
         });
-
-
-        function consultarComponentes() {
-
-            var codigosistema = { codigosistema: sessionStorage.codigo_sistema }
-
-            var corpo = new URLSearchParams(codigosistema);
-            fetch("../consultaUser/consultaComponentsAtual", {
-                method: "POST",
-                body: corpo
-            }).then(function (resposta) {
-
-                resposta.json().then(function (rer) {
-                    console.log(rer);
-                    for (r = 0; r < rer.length; r++) {
-                        var atual = rer[r];
-                        if (atual.name.includes('CPU')) {
-                            cpuValue.innerHTML = atual.value;
-                        } else if (atual.name.includes('RAM')) {
-                            memoriaValue.innerHTML = atual.value;
-                        } else {
-                            hdValue.innerHTML = atual.value;
-                        }
-                    } verComponentes();
-                }
-                );
-            });
-        }
-
-        function chamarMudaCor() {
-            mudarCor(cpuValue, cardCpu);
-            mudarCor(memoriaValue, cardMemoria);
-            mudarCor(hdValue, cardDisco);
-            console.log('asdf asdf');
-        }
-
-        setInterval(chamarMudaCor, 1000);
-
-
-        function mudarCor(comp, divcomp) {
-            if (parseFloat(comp.innerHTML) > 90) {
-                console.log(divcomp.style.border);
-                divcomp.style.border = "2px solid red";
-            } else {
-
-                if (divcomp.className.includes('activeCard')) {
-                    divcomp.style.border = "2px solid  #c7911d87";
-                } else {
-                    divcomp.style.border = "2px solid  #fff";
-                }
-            }
-        }
-
-
-        function verComponentes() {
-
-            var codigosistema = { codigosistema: sessionStorage.codigo_sistema }
-
-            var corpo = new URLSearchParams(codigosistema);
-            fetch("../consultaUser/informacaoComponentes", {
-                method: "POST",
-                body: corpo
-            }).then(function (resposta) {
-
-                resposta.json().then(function (rer) {
-                    console.log(rer);
-                    for (r = 0; r < rer.length; r++) {
-                        var atual = rer[r];
-                        if (atual.name.includes('CPU')) {
-                            nomeCPU.innerHTML = atual.name;
-                            freq.innerHTML = atual.size;
-                        } else if (atual.name.includes('RAM')) {
-                            capacidadeMemoria.innerHTML = atual.size;
-                        } else {
-                            capacidadeHD.innerHTML = atual.size;
-                        }
-                    }
-                }
-                );
-            });
-        }
-
-        var historico = [];
-        var dataHoraLista = [];
-        function consultarHistorico(nomeComponente) {
-            historico = [];
-            dataHoraLista = [];
-            var info = {
-                codigosistema: sessionStorage.codigo_sistema,
-                componenteNome: nomeComponente
-            };
-
-            var corpo = new URLSearchParams(info);
-            fetch("../consultaUser/consultaComponentesHistorico", {
-                method: "POST",
-                body: corpo
-            }).then(function (resposta) {
-
-                resposta.json().then(function (rer) {
-                    if (rer.length > 0) {
-                        console.log(rer);
-                        for (r = 0; r < rer.length; r++) {
-                            var atual = rer[r];
-                            historico.push(atual.value);
-                            var dataLabel = atual.date_time;
-                            dataLabel = dataLabel.substring(11, 19);
-                            dataHoraLista.push(dataLabel);
-                        }
-                        console.log(historico)
-                        grafico(historico, dataHoraLista, nomeComponente);
-
-                        consultarComponentes();
-                    } else {
-                        swal({
-                            title: "Aviso!",
-                            type: "warning",
-                            dangerMode: true,
-                            text: "Você ainda não começoçu a utilizar a nossa aplicação! Inicie a aplicação para ver os dados!",
-                            closeOnClickOutside: true,
-                        });
-                    }
-                });
-            });
-
-
-        }
-
-        function gerarNumAleatorio() {
-            return Math.floor(Math.random() * 100);
-        }
-
-        function grafico(dadosAleatorios, dataHoraLabel, nome) {
-            var ctx = document.getElementById("singelBarChart");
-            ctx.width = 500;
-            ctx.height = 500;
-            var myChart = Chart.Line(ctx, {
-                type: 'line',
-                data: {
-                    labels: dataHoraLabel,
-                    datasets: [
-                        {
-                            label: nome,
-                            data: dadosAleatorios,
-                            borderColor: "#fdb416",
-                            borderWidth: "2",
-                            backgroundColor: "rgba(253, 180, 22, 0.27)",
-
-                        }
-                    ]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
-                }
-            });
-        }
     </script>
 
     <!-- Start of securithelp Zendesk Widget script -->
-    <script id="ze-snippet"
-        src="https://static.zdassets.com/ekr/snippet.js?key=2f1c47af-6ca3-4ce8-9188-958944ef0eb5"> </script>
+    <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=2f1c47af-6ca3-4ce8-9188-958944ef0eb5"> </script>
     <!-- End of securithelp Zendesk Widget script -->
 </body>
 
