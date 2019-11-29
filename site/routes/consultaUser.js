@@ -91,20 +91,20 @@ router.post('/consultaComponentesHistorico', (req, res, next) => {
 });
 
 
-router.post('/consultaMaiorUtilizacao', (req, res, next) => {
-    var sistema = req.body.codigosistema;
-    let querystring = `select value, name from ServerLog inner join ServerComponents on idServerComponents = FK_ServerComponents where ServerLog.FK_Server = ${sistema} and value > 80`;
+router.get('/consultaMaiorUtilizacao', (req, res, next) => {
+    // var sistema = req.body.codigosistema;
+    let querystring = `select name, count(*) as 'alertas' from ServerLog 
+    inner join Server on 
+    FK_Server = idServer where value > 90 group by name`;
 
+    //let querystring = `select value, name from ServerLog inner join ServerComponents on idServerComponents = FK_ServerComponents where ServerLog.FK_Server = ${sistema} and value > 80`;
+    console.log(querystring);
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
-
-            let existe = results.recordsets[0].length > 0;
-
-            resolve(existe);
-            console.log(results);
+            console.log(results.recordset);
             res.send(results.recordset);
         }).catch(error => {
-            console.log(error);
+            res.status(500).send(error);
         });
     });
 });
@@ -116,11 +116,7 @@ router.post('/alertas', (req, res, next) => {
     let querystring = `select Server.name as 'serverName', value, ServerComponents.name as 'component', date_time as 'date' from ServerLog inner join ServerComponents on idServerComponents = FK_ServerComponents inner join Server on idServer = ServerLog.FK_Server where value > ${valorAlerta} and FK_client = ${idCliente}`;
     return new Promise((resolve, reject) => {
         Database.query(querystring).then(results => {
-
-            let existe = results.recordsets[0].length > 0;
-
-            resolve(existe);
-            console.log(results);
+            console.log(results.recordset);
             res.send(results.recordset);
         }).catch(error => {
             console.log(error);
