@@ -58,7 +58,7 @@
 
     function validar(e) {
         e.preventDefault();
-        if (email.value == "") {
+        if (email.value == "" || email.value.indexOf('@') == -1 || email.value.indexOf('.com') == -1) {
             swal({
                 icon: "error",
                 title: `Por Favor, Insira Seu Email!`
@@ -80,18 +80,19 @@
         console.log("chama redefinir");
         var formRedefinir = $("#redefinir").serialize();
         console.log(formRedefinir);
-
+      
         $.ajax({
             url: "../email/enviarEmail",
             type: 'post',
             data: formRedefinir
-
         }).done(function (response) {
-            console.log("res OK");
+            console.log(response);
 
-            if (response.ok) {
+            if (response) {
                 swal({
-                    title: `Enviamos um Email de Redefinição de Senha para seu E-mail!`
+                    icon: "success",
+                    title: 'Sucesso',
+                    text: `Enviamos um Email de Redefinição de Senha para seu E-mail!`,
                 }); consultarEmail();
             } else {
                 console.log('Não deu!');
@@ -102,8 +103,10 @@
 
             }
         });
-        return false;
 
+        return false;
     }
+
+
 
 </script>

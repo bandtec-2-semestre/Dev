@@ -12,7 +12,7 @@ router.post('/enviarEmail', function (req, res, next) {
     // dados da SecurIT q vai enviar
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
-        port: 587,  // 465,
+        port: 465,  // 465,
         secure: true, // true for 465, false for other ports
         auth: {
             user: "securitbrasil@gmail.com",
@@ -36,11 +36,11 @@ router.post('/enviarEmail', function (req, res, next) {
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
-            res.status(500).send(error);
+            res.sendStatus(500);
 
         } else {
             console.log('Email enviado: ' + info.response);
-            res.send(info.response);
+            res.status(200).send(info.response);
         }
     });
 });
