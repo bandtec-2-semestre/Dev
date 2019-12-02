@@ -22,16 +22,19 @@ router.post('/enviarEmail', function (req, res, next) {
     });
 
     // dados do usuario q vamos enviar
+
     var email = req.body.email; // email do usuario
     const mailOptions = {// email q será enviado
         from: 'securitbrasil@gmail.com',
         to: email,
         subject: 'Redefinição de senha',
         html: `<h1>Redefinição de senha</h1> <br>
-    <p>Sua nova senha temporaria é <b>1234</b></p>
-    <p>Por favor altere essa senha quando logar</p>`
-    };
+    <p>Clique <a href=" http://localhost:3000/dashboard/AlterarSenha.html">aqui</a> para acessar a página de redefinição de senha.</b></p>
+   
+    '<small>Para mais informações, entrar em contato com a central de atendimento. </small>' 
+    `};
 
+    //colocar o url da tela no html
     // Autentifica se foi enviado e envia notificação
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
