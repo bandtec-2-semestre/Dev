@@ -22,7 +22,7 @@ a {
 }
 .login {
   width: 30%;
-  height: 100vh;
+  
   background: #FFF;
   padding: 50px;
   display: flex;
@@ -104,7 +104,7 @@ input[type="submit"] {
   height: 100vh;
   background: url(../../images/monitoracao.png) center no-repeat;
   background-size: cover;
-  height: 55vw;
+  
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
@@ -119,9 +119,7 @@ input[type="submit"] {
      -o-filter: brightness(0.8); */
   
 }
-/* .slide {
-  height: 100vh;
-} */
+
 ::-webkit-scrollbar {
   width: 0px;
 }
