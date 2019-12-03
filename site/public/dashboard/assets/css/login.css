@@ -24,10 +24,6 @@ a {
 
 .login {
   width: 30%;
-<<<<<<< HEAD
-=======
-  
->>>>>>> node
   background: #FFF;
   padding: 50px;
   display: flex;
@@ -150,9 +146,6 @@ input[type="submit"] {
   margin-top: 10px;
 }
 
-
-<<<<<<< HEAD
-=======
 .background {
   width: 70%;
   padding: 40px;
@@ -174,7 +167,6 @@ input[type="submit"] {
      -o-filter: brightness(0.8); */
   
 }
->>>>>>> node
 
 ::-webkit-scrollbar {
   width: 0px;
@@ -211,12 +203,12 @@ a:hover{
 .alinhar{
     display: flex;
     flex-direction: column;
-<<<<<<< HEAD
+
     width: 100%;
 }
-=======
-}
+
 .center{
-  margin-left: 35%;
+    margin-left: 35%;
+    width: 100%;
 }
->>>>>>> node
+
