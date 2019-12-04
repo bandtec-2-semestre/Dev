@@ -18,7 +18,7 @@ a {
 #login-page {
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  height: 100%;
 }
 
 
@@ -146,27 +146,7 @@ input[type="submit"] {
   margin-top: 10px;
 }
 
-.background {
-  width: 70%;
-  padding: 40px;
-  height: 100vh;
-  background: url(../../images/monitoracao.png) center no-repeat;
-  background-size: cover;
-  
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: flex-end;
-  align-content: center;
-  flex-direction: row;
-  filter:drop-shadow(0.1);
-   /* filter: brightness(0.8); 
-  -webkit-filter: brightness(0.8);
-   -moz-filter: brightness(0.8);
-    -ms-filter: brightness(0.8);
-     -o-filter: brightness(0.8); */
-  
-}
+
 
 ::-webkit-scrollbar {
   width: 0px;
@@ -203,12 +183,5 @@ a:hover{
 .alinhar{
     display: flex;
     flex-direction: column;
-
     width: 100%;
 }
-
-.center{
-    margin-left: 35%;
-    width: 100%;
-}
-
